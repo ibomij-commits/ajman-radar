@@ -89,6 +89,13 @@ input::placeholder{color:var(--muted);opacity:.8}
 .addform.open{display:flex}
 .addform input{height:44px;border-radius:10px;border:1px solid var(--line);padding:0 12px;font:inherit;background:transparent;color:inherit}
 .addform small{opacity:.75;line-height:1.6}
+.ownbtn{width:100%;height:50px;border-radius:12px;border:0;background:var(--gold);color:var(--on-gold);font:inherit;font-weight:800;font-size:16px;cursor:pointer}
+.ownform{display:none;margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:14px;gap:10px;flex-direction:column}
+.ownform.open{display:flex}
+.ownform label{font-size:13px;opacity:.8;display:block;margin-bottom:4px}
+.ownform input,.ownform select,.ownform textarea{width:100%;box-sizing:border-box;height:44px;border-radius:10px;border:1px solid var(--line);padding:0 12px;font:inherit;background:transparent;color:inherit}
+.ownform textarea{height:80px;padding:10px 12px}
+.ownform .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .rm{background:none;border:0;color:#c0392b;font:inherit;cursor:pointer;margin-top:6px}
 </style>
 </head>
@@ -126,6 +133,23 @@ input::placeholder{color:var(--muted);opacity:.8}
       <small>اختياري: ضع {q} في الرابط ليُستبدل ببحثك (النوع + المنطقة + الميزانية)، مثل https://www.tiktok.com/search?q={q}</small>
       <button type="button" class="go" id="cSave">حفظ</button>
     </div>
+  </section>
+
+  <section aria-labelledby="h-o">
+    <h2 id="h-o">هل تملك عقارًا وتريد عرضه؟</h2>
+    <p class="sub">أرسل بيانات عقارك إلى الوسيط، وسيتواصل معك لعرضه على الزبائن.</p>
+    <button type="button" class="ownbtn" id="ownBtn">+ أريد عرض عقاري</button>
+    <form class="ownform" id="ownForm" autocomplete="off">
+      <div class="two"><div><label>الصفقة</label><select id="oDeal"><option>بيع</option><option>إيجار</option></select></div>
+      <div><label>نوع العقار</label><select id="oType"><option>شقة</option><option>فيلا</option><option>أرض</option><option>محل / مكتب</option></select></div></div>
+      <div><label>المنطقة</label><select id="oArea"></select></div>
+      <div><label>رابط الموقع على الخريطة (اختياري)</label><input id="oMap" dir="ltr" inputmode="url" placeholder="https://maps.google.com/..."></div>
+      <div class="two"><div><label>عدد الغرف</label><input id="oBeds" inputmode="numeric"></div><div><label>عدد الحمامات</label><input id="oBaths" inputmode="numeric"></div></div>
+      <div class="two"><div><label>المساحة (قدم² أو م²)</label><input id="oSize"></div><div><label>السعر المطلوب (درهم)</label><input id="oPrice" inputmode="numeric"></div></div>
+      <div class="two"><div><label>اسمك</label><input id="oName"></div><div><label>رقم هاتفك</label><input id="oPhone" dir="ltr" inputmode="tel"></div></div>
+      <div><label>ملاحظات (طابق، تشطيب، مفروش...)</label><textarea id="oNote"></textarea></div>
+      <button type="submit" class="ownbtn" id="oSend">إرسال عبر واتساب</button>
+    </form>
   </section>
 
   <section aria-labelledby="h-m">
@@ -319,6 +343,22 @@ input::placeholder{color:var(--muted);opacity:.8}
       Promise.all(tasks).then(done,done);
     }catch(e){done();}
   });
+  var BROKER_WA=''; /* رقم واتساب الوسيط مع رمز الدولة، مثال: 9715XXXXXXXX */
+  (function(){
+    $('oArea').innerHTML='<option value="">اختر المنطقة</option>'+AREAS.map(function(a){return '<option>'+esc(a[2])+'</option>';}).join('');
+    $('ownBtn').addEventListener('click',function(){$('ownForm').classList.toggle('open');});
+    $('ownForm').addEventListener('submit',function(e){
+      e.preventDefault();
+      var v=function(i){return $(i).value.trim();};
+      if(!v('oName')||!v('oPhone')){(v('oName')?$('oPhone'):$('oName')).focus();return;}
+      var L=['طلب عرض عقار','الصفقة: '+v('oDeal'),'النوع: '+v('oType'),'المنطقة: '+(v('oArea')||'-'),
+        'الغرف: '+(v('oBeds')||'-')+' | الحمامات: '+(v('oBaths')||'-'),'المساحة: '+(v('oSize')||'-'),
+        'السعر المطلوب: '+(v('oPrice')||'-')+' درهم','الموقع: '+(v('oMap')||'-'),
+        'الاسم: '+v('oName'),'الهاتف: '+v('oPhone')];
+      if(v('oNote'))L.push('ملاحظات: '+v('oNote'));
+      window.open('https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(L.join('\n')),'_blank','noopener');
+    });
+  })();
   function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?'ميزانيتك السنوية (درهم)':'ميزانيتك (درهم)';renderSeg();renderChips();renderSummary();renderPlatforms();renderListings();}
   refresh();
 
