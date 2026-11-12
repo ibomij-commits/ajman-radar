@@ -96,6 +96,10 @@ input::placeholder{color:var(--muted);opacity:.8}
 .ownform input,.ownform select,.ownform textarea{width:100%;box-sizing:border-box;height:44px;border-radius:10px;border:1px solid var(--line);padding:0 12px;font:inherit;background:transparent;color:inherit}
 .ownform textarea{height:80px;padding:10px 12px}
 .ownform .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.card.brand{border:1.5px solid var(--gold)}
+.brow{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.blogo{width:56px;height:56px;flex:none}.blogo.sm{width:30px;height:30px}
+.sub2{margin:12px 0 0;font-size:13px;opacity:.85}
 .rm{background:none;border:0;color:#c0392b;font:inherit;cursor:pointer;margin-top:6px}
 </style>
 </head>
@@ -242,7 +246,7 @@ input::placeholder{color:var(--muted);opacity:.8}
     var base=[
       {n:'Bayut',d:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:bayut,u2:bt?bayut0:'',ok:1},
       {n:'Property Finder',d:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:pf,u2:bt?pf0:'',ok:1},
-      {n:'Dubizzle',d:'إعلانات مبوّبة، فيها عروض من المالك مباشرة وأراضٍ ومبانٍ كاملة.',k:'إعلانات مبوّبة',u:duby,u2:filtered?duby2:'',ok:0},
+      {brand:1,n:'LYD Real Estate'},
       {n:'Facebook',d:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',k:'بحث موجّه في Google',u:fb,ok:0},
       {n:'Facebook Marketplace',d:(rent?'عقارات للإيجار':'عقارات للبيع')+' في سوق فيسبوك. يتطلب تسجيل دخولك.',k:'يتطلب حسابًا',u:mkt,ok:0},
       {n:'Instagram',d:'منشورات الوسطاء تحت وسم '+(rent?'ايجارات عجمان.':'عقارات عجمان.'),k:'وسم',u:ig,ok:0},
@@ -258,8 +262,10 @@ input::placeholder{color:var(--muted);opacity:.8}
   }
   function loadCustom(){try{var v=JSON.parse(localStorage.getItem('ajman_custom')||'[]');return Array.isArray(v)?v:[];}catch(e){return [];}}
   function saveCustom(a){try{localStorage.setItem('ajman_custom',JSON.stringify(a));}catch(e){}}
+  var BRAND_CARD='<div class="card brand"><div class="brow"><svg class="blogo" viewBox="85 5 130 130" aria-hidden="true"><rect x="85" y="5" width="130" height="130" rx="30" fill="#0f1f3d"/><path d="M110 88 L150 52 L190 88" fill="none" stroke="#c9a14a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M122 84 V112 H178 V84" fill="none" stroke="#c9a14a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><rect x="142" y="94" width="16" height="18" rx="3" fill="#c9a14a"/></svg><div><h3 dir="ltr" style="margin:0">LYD Real Estate</h3><p style="margin:4px 0 0">وسيط عقاري في عجمان · عروض مباشرة من المُلّاك</p></div></div><a class="go" href="#h-o" id="brandGo">أريد عرض عقاري</a><div class="brow sub2"><svg class="blogo sm" viewBox="85 5 130 130" aria-hidden="true"><rect x="85" y="5" width="130" height="130" rx="30" fill="#c9a14a"/><rect x="112" y="32" width="76" height="76" rx="10" fill="none" stroke="#0f1f3d" stroke-width="8"/><rect x="130" y="50" width="40" height="40" rx="5" fill="#0f1f3d"/><g stroke="#0f1f3d" stroke-width="6" stroke-linecap="round"><path d="M125 22v10M150 22v10M175 22v10M125 108v10M150 108v10M175 108v10M102 55h10M102 85h10M188 55h10M188 85h10"/></g></svg><span dir="ltr">LYD Digital</span><span>· تطبيقي: رادار صفقات عجمان</span></div></div>';
   function renderPlatforms(){
     $('platforms').innerHTML=links().map(function(p){
+      if(p.brand)return BRAND_CARD;
       return '<div class="card"><span class="tag'+(p.ok?' ok':'')+'">'+esc(p.k)+'</span><h3 dir="auto">'+esc(p.n)+'</h3><p>'+esc(p.d)+
         '</p><a class="go" href="'+esc(p.u)+'" target="_blank" rel="noopener noreferrer">فتح النتائج</a>'+
         (p.u2?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">'+(p.n==='Dubizzle'?'بحث عن إعلانات مماثلة (Google)':'بدون ميزانية (كل الأسعار)')+'</a>':'')+
@@ -331,6 +337,7 @@ input::placeholder{color:var(--muted);opacity:.8}
     $('cName').value='';$('cUrl').value='';$('addForm').classList.remove('open');renderPlatforms();
   });
   $('platforms').addEventListener('click',function(e){
+    if(e.target.id==='brandGo'){$('ownForm').classList.add('open');}
     var r=e.target.getAttribute&&e.target.getAttribute('data-rm');
     if(r===null||r===undefined)return;
     var a=loadCustom();a.splice(+r,1);saveCustom(a);renderPlatforms();
