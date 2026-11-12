@@ -148,7 +148,8 @@ input::placeholder{color:var(--muted);opacity:.8}
       <div class="two"><div><label>المساحة (قدم² أو م²)</label><input id="oSize"></div><div><label>السعر المطلوب (درهم)</label><input id="oPrice" inputmode="numeric"></div></div>
       <div class="two"><div><label>اسمك</label><input id="oName"></div><div><label>رقم هاتفك</label><input id="oPhone" dir="ltr" inputmode="tel"></div></div>
       <div><label>ملاحظات (طابق، تشطيب، مفروش...)</label><textarea id="oNote"></textarea></div>
-      <button type="submit" class="ownbtn" id="oSend">إرسال عبر واتساب</button>
+      <button type="submit" class="ownbtn" id="oSend">إرسال الطلب</button>
+      <p id="oStatus" aria-live="polite" style="margin:0;font-weight:700"></p>
     </form>
   </section>
 
@@ -232,7 +233,8 @@ input::placeholder{color:var(--muted);opacity:.8}
     var bayut0='https://www.bayut.com/'+(rent?'to-rent':'for-sale')+'/'+(t==='all'?'property':t)+'/ajman/'+(a?bayutKey()+'/':'');
     var pf0='https://www.propertyfinder.ae/en/'+(rent?'rent':'buy')+'/ajman/'+(t==='all'?'properties':t)+(rent?'-for-rent':'-for-sale')+(a?'-'+a:'')+'.html';
     var filtered=(t!=='all')||a||bt||rent;
-    var duby=filtered?google('site:dubizzle.com '+tw+' '+dw+' '+ar+' عجمان '+bt):'https://ajman.dubizzle.com/property-for-sale/';
+    var duby='https://ajman.dubizzle.com/'+(rent?'property-for-rent/':'property-for-sale/');
+    var duby2=google('site:ajman.dubizzle.com '+tw+' '+dw+' '+ar+' '+bt);
     var fb=google('site:facebook.com '+tw+' '+dw+' '+ar+' عجمان '+bt);
     var ig='https://www.instagram.com/explore/tags/'+encodeURIComponent(rent?'ايجارات_عجمان':'عقارات_عجمان')+'/';
     var gg=google(tw+' '+dw+' '+ar+' عجمان '+bt);
@@ -240,7 +242,7 @@ input::placeholder{color:var(--muted);opacity:.8}
     var base=[
       {n:'Bayut',d:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:bayut,u2:bt?bayut0:'',ok:1},
       {n:'Property Finder',d:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:pf,u2:bt?pf0:'',ok:1},
-      {n:'Dubizzle',d:'إعلانات مبوّبة، فيها عروض من المالك مباشرة وأراضٍ ومبانٍ كاملة.',k:filtered?'بحث موجّه في Google':'إعلانات مبوّبة',u:duby,ok:0},
+      {n:'Dubizzle',d:'إعلانات مبوّبة، فيها عروض من المالك مباشرة وأراضٍ ومبانٍ كاملة.',k:'إعلانات مبوّبة',u:duby,u2:filtered?duby2:'',ok:0},
       {n:'Facebook',d:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',k:'بحث موجّه في Google',u:fb,ok:0},
       {n:'Facebook Marketplace',d:(rent?'عقارات للإيجار':'عقارات للبيع')+' في سوق فيسبوك. يتطلب تسجيل دخولك.',k:'يتطلب حسابًا',u:mkt,ok:0},
       {n:'Instagram',d:'منشورات الوسطاء تحت وسم '+(rent?'ايجارات عجمان.':'عقارات عجمان.'),k:'وسم',u:ig,ok:0},
@@ -260,7 +262,7 @@ input::placeholder{color:var(--muted);opacity:.8}
     $('platforms').innerHTML=links().map(function(p){
       return '<div class="card"><span class="tag'+(p.ok?' ok':'')+'">'+esc(p.k)+'</span><h3 dir="auto">'+esc(p.n)+'</h3><p>'+esc(p.d)+
         '</p><a class="go" href="'+esc(p.u)+'" target="_blank" rel="noopener noreferrer">فتح النتائج</a>'+
-        (p.u2?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">بدون ميزانية (كل الأسعار)</a>':'')+
+        (p.u2?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">'+(p.n==='Dubizzle'?'بحث عن إعلانات مماثلة (Google)':'بدون ميزانية (كل الأسعار)')+'</a>':'')+
         (p.ci!==undefined?'<button type="button" class="rm" data-rm="'+p.ci+'">حذف من القائمة</button>':'')+'</div>';
     }).join('');
   }
@@ -343,6 +345,7 @@ input::placeholder{color:var(--muted);opacity:.8}
       Promise.all(tasks).then(done,done);
     }catch(e){done();}
   });
+  var NTFY_TOPIC='ajman-radar-7fc751bf5ac85b76'; /* موضوع الإشعارات الخاص بالوسيط */
   var BROKER_WA=''; /* رقم واتساب الوسيط مع رمز الدولة، مثال: 9715XXXXXXXX */
   (function(){
     $('oArea').innerHTML='<option value="">اختر المنطقة</option>'+AREAS.map(function(a){return '<option>'+esc(a[2])+'</option>';}).join('');
@@ -356,7 +359,15 @@ input::placeholder{color:var(--muted);opacity:.8}
         'السعر المطلوب: '+(v('oPrice')||'-')+' درهم','الموقع: '+(v('oMap')||'-'),
         'الاسم: '+v('oName'),'الهاتف: '+v('oPhone')];
       if(v('oNote'))L.push('ملاحظات: '+v('oNote'));
-      window.open('https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(L.join('\n')),'_blank','noopener');
+      var msg=L.join('\n'), st=$('oStatus'), btn=$('oSend');
+      btn.disabled=true; st.textContent='جارٍ الإرسال...';
+      fetch('https://ntfy.sh/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic:NTFY_TOPIC,title:'طلب عرض عقار: '+v('oType')+' '+v('oDeal')+(v('oArea')?' - '+v('oArea'):''),message:msg,priority:4,tags:['house']})})
+        .then(function(r){if(!r.ok)throw 0; st.textContent='✓ وصل طلبك إلى الوسيط، وسيتواصل معك قريبًا.'; $('ownForm').reset();})
+        .catch(function(){
+          st.textContent='تعذّر الإرسال المباشر. أرسله عبر واتساب:';
+          window.open('https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(msg),'_blank','noopener');
+        })
+        .then(function(){btn.disabled=false;});
     });
   })();
   function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?'ميزانيتك السنوية (درهم)':'ميزانيتك (درهم)';renderSeg();renderChips();renderSummary();renderPlatforms();renderListings();}
