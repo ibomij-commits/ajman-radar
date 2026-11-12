@@ -84,6 +84,12 @@ input::placeholder{color:var(--muted);opacity:.8}
 .install button{height:40px;padding:0 16px;border-radius:10px;border:0;background:var(--gold);color:var(--on-gold);font:inherit;font-weight:700;cursor:pointer}
 @media (min-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
 @media (min-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}main{padding:24px 16px}}
+.addbtn{margin-top:12px;width:100%;height:46px;border-radius:12px;border:1.5px dashed var(--gold);background:transparent;color:var(--link);font:inherit;font-weight:700;cursor:pointer}
+.addform{display:none;margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:14px;gap:8px;flex-direction:column}
+.addform.open{display:flex}
+.addform input{height:44px;border-radius:10px;border:1px solid var(--line);padding:0 12px;font:inherit;background:transparent;color:inherit}
+.addform small{opacity:.75;line-height:1.6}
+.rm{background:none;border:0;color:#c0392b;font:inherit;cursor:pointer;margin-top:6px}
 </style>
 </head>
 <body>
@@ -112,6 +118,14 @@ input::placeholder{color:var(--muted);opacity:.8}
     <h2 id="h-p">افتح الإعلانات الفعلية</h2>
     <p class="sub">كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق.</p>
     <div class="grid" id="platforms"></div>
+    <button type="button" class="addbtn" id="addBtn">+ إضافة موقع أو صفحة</button>
+    <button type="button" class="addbtn" id="updBtn">⟳ تحديث التطبيق والقائمة</button>
+    <div class="addform" id="addForm">
+      <input id="cName" placeholder="اسم الموقع أو الصفحة" dir="auto">
+      <input id="cUrl" placeholder="الرابط https://..." dir="ltr" inputmode="url">
+      <small>اختياري: ضع {q} في الرابط ليُستبدل ببحثك (النوع + المنطقة + الميزانية)، مثل https://www.tiktok.com/search?q={q}</small>
+      <button type="button" class="go" id="cSave">حفظ</button>
+    </div>
   </section>
 
   <section aria-labelledby="h-m">
@@ -199,21 +213,31 @@ input::placeholder{color:var(--muted);opacity:.8}
     var ig='https://www.instagram.com/explore/tags/'+encodeURIComponent(rent?'ايجارات_عجمان':'عقارات_عجمان')+'/';
     var gg=google(tw+' '+dw+' '+ar+' عجمان '+bt);
     var mkt=rent?'https://www.facebook.com/marketplace/category/propertyrentals':'https://www.facebook.com/marketplace/category/propertyforsale';
-    return [
+    var base=[
       {n:'Bayut',d:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:bayut,u2:bt?bayut0:'',ok:1},
       {n:'Property Finder',d:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:pf,u2:bt?pf0:'',ok:1},
       {n:'Dubizzle',d:'إعلانات مبوّبة، فيها عروض من المالك مباشرة وأراضٍ ومبانٍ كاملة.',k:filtered?'بحث موجّه في Google':'إعلانات مبوّبة',u:duby,ok:0},
       {n:'Facebook',d:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',k:'بحث موجّه في Google',u:fb,ok:0},
       {n:'Facebook Marketplace',d:(rent?'عقارات للإيجار':'عقارات للبيع')+' في سوق فيسبوك. يتطلب تسجيل دخولك.',k:'يتطلب حسابًا',u:mkt,ok:0},
       {n:'Instagram',d:'منشورات الوسطاء تحت وسم '+(rent?'ايجارات عجمان.':'عقارات عجمان.'),k:'وسم',u:ig,ok:0},
+      {n:'TikTok',d:'فيديوهات الوسطاء وجولات العقارات. لا تُعرض فيها أسعار مفلترة.',k:'فيديو',u:'https://www.tiktok.com/search?q='+encodeURIComponent(tw+' '+dw+' '+ar+' عجمان'),ok:0},
       {n:'Google',d:'بحث عام يجمع ما سبق ومواقع الوكالات الصغيرة.',k:'بحث عام',u:gg,ok:0}
     ];
+    var q=[tw,dw,ar,'عجمان',bt].join(' ').replace(/\s+/g,' ').trim();
+    loadCustom().forEach(function(c,i){
+      var u=c.u.indexOf('{q}')>-1?c.u.split('{q}').join(encodeURIComponent(q)):c.u;
+      base.push({n:c.n,d:'موقع أضفته أنت.',k:'مضاف',u:u,ok:0,ci:i});
+    });
+    return base;
   }
+  function loadCustom(){try{var v=JSON.parse(localStorage.getItem('ajman_custom')||'[]');return Array.isArray(v)?v:[];}catch(e){return [];}}
+  function saveCustom(a){try{localStorage.setItem('ajman_custom',JSON.stringify(a));}catch(e){}}
   function renderPlatforms(){
     $('platforms').innerHTML=links().map(function(p){
       return '<div class="card"><span class="tag'+(p.ok?' ok':'')+'">'+esc(p.k)+'</span><h3 dir="auto">'+esc(p.n)+'</h3><p>'+esc(p.d)+
         '</p><a class="go" href="'+esc(p.u)+'" target="_blank" rel="noopener noreferrer">فتح النتائج</a>'+
-        (p.u2?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">بدون ميزانية (كل الأسعار)</a>':'')+'</div>';
+        (p.u2?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">بدون ميزانية (كل الأسعار)</a>':'')+
+        (p.ci!==undefined?'<button type="button" class="rm" data-rm="'+p.ci+'">حذف من القائمة</button>':'')+'</div>';
     }).join('');
   }
   function renderSummary(){
@@ -272,6 +296,29 @@ input::placeholder{color:var(--muted);opacity:.8}
         '</h3><p>'+esc(x.m)+'</p><a class="go alt" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">'+esc(x.b||'فتح الإعلان')+'</a></div>';
     }).join(''):'<p class="empty">لا توجد عيّنات ضمن هذا الاختيار. افتح المنصات أعلاه لرؤية النتائج الحالية.</p>';
   }
+  $('addBtn').addEventListener('click',function(){$('addForm').classList.toggle('open');});
+  $('cSave').addEventListener('click',function(){
+    var n=$('cName').value.trim(), u=$('cUrl').value.trim();
+    if(!/^https?:\/\//i.test(u)){$('cUrl').focus();return;}
+    if(!n)n=u.replace(/^https?:\/\/(www\.)?/i,'').split('/')[0];
+    var a=loadCustom();a.push({n:n,u:u});saveCustom(a);
+    $('cName').value='';$('cUrl').value='';$('addForm').classList.remove('open');renderPlatforms();
+  });
+  $('platforms').addEventListener('click',function(e){
+    var r=e.target.getAttribute&&e.target.getAttribute('data-rm');
+    if(r===null||r===undefined)return;
+    var a=loadCustom();a.splice(+r,1);saveCustom(a);renderPlatforms();
+  });
+  $('updBtn').addEventListener('click',function(){
+    var b=this; b.textContent='جارٍ التحديث...';
+    var done=function(){location.reload();};
+    try{
+      var tasks=[];
+      if('caches' in window) tasks.push(caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x);}));}));
+      if('serviceWorker' in navigator) tasks.push(navigator.serviceWorker.getRegistrations().then(function(r){return Promise.all(r.map(function(x){return x.unregister();}));}));
+      Promise.all(tasks).then(done,done);
+    }catch(e){done();}
+  });
   function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?'ميزانيتك السنوية (درهم)':'ميزانيتك (درهم)';renderSeg();renderChips();renderSummary();renderPlatforms();renderListings();}
   refresh();
 
