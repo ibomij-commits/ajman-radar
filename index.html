@@ -74,6 +74,15 @@ input::placeholder{color:var(--muted);opacity:.8}
 .seg button[aria-pressed="true"]{background:var(--navy);color:#fff;font-weight:700}
 :root[data-theme="dark"] .seg button[aria-pressed="true"]{background:var(--gold);color:var(--on-gold)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .seg button[aria-pressed="true"]{background:var(--gold);color:var(--on-gold)}}
+.gorow{display:flex;justify-content:flex-start;margin-top:12px;direction:ltr}
+.gobtn{display:inline-flex;align-items:center;gap:8px;height:50px;padding:0 30px;border:0;border-radius:14px;background:var(--navy);color:#fff;font:inherit;font-size:17px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(15,31,61,.25);transition:transform .18s ease,box-shadow .18s ease}
+.gobtn .ic{font-size:20px;display:inline-block;animation:sway 2.6s ease-in-out infinite}
+.gobtn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(15,31,61,.32)}
+.gobtn:active{transform:scale(.96)}
+:root[data-theme="dark"] .gobtn{background:var(--gold);color:var(--on-gold)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gobtn{background:var(--gold);color:var(--on-gold)}}
+.flash{animation:flashr 1.1s ease}
+@keyframes flashr{0%{box-shadow:0 0 0 0 rgba(201,161,74,.7)}100%{box-shadow:0 0 0 18px rgba(201,161,74,0)}}
 .summary{margin-top:10px;padding:10px 14px;border-radius:12px;background:var(--surface);border:1px dashed var(--gold);font-size:14px;color:var(--ink)}
 .summary b{font-weight:700}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
@@ -160,6 +169,7 @@ header h1,header p{padding-inline-end:64px}
         <div class="chips" id="chips" role="group" data-al="chipsAria" aria-label="شرائح الميزانية"></div></div>
     </div>
     <div class="summary" id="summary" aria-live="polite"></div>
+    <div class="gorow"><button type="button" class="gobtn" id="goSearch"><span class="ic" aria-hidden="true">🔎</span><span data-t="bSearch">بحث</span></button></div>
   </section>
 
   <section aria-labelledby="h-p">
@@ -224,7 +234,7 @@ header h1,header p{padding-inline-end:64px}
    installT:'ثبّت التطبيق على شاشتك الرئيسية.',installB:'تثبيت',iosT:'لتثبيت التطبيق: اضغط زر المشاركة في سفاري، ثم «إضافة إلى الشاشة الرئيسية».',
    hF:'ابحث',lDeal:'الصفقة',lType:'نوع العقار',lArea:'المنطقة',budget:'ميزانيتك (درهم)',budgetRent:'ميزانيتك السنوية (درهم)',budgetMonth:'ميزانيتك الشهرية (درهم)',perMonth:' درهم شهريًا',pPart:'بارتيشن',pBed:'سرير',dDubRoom:'غرف وبارتيشنات وأسرّة للإيجار في عجمان، مع بحث موجّه داخل فروع المنطقة.',dubRoomK:'غرف ومشاركة',from:'من',to:'إلى',chipsAria:'شرائح الميزانية',
    buy:'شراء',rent:'إيجار',sell:'بيع',all:'الكل',apts:'شقق',villas:'فلل',lands:'أراضٍ',allTypes:'كل الأنواع',tPart:'بارتيشن',tBed:'سرير (بد سبيس)',tApt:'شقة',tVilla:'فيلا',tLand:'أرض',tShop:'محل / مكتب',
-   hP:'افتح الإعلانات الفعلية',subP:'كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق. منصات التواصل (فيسبوك وإنستغرام وتيك توك) لا تفرز بالسعر، فنرسل إليها النوع والمنطقة والميزانية ككلمات بحث وأنت تتصفح النتائج.',
+   hP:'افتح الإعلانات الفعلية',bSearch:'بحث',subP:'كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق. منصات التواصل (فيسبوك وإنستغرام وتيك توك) لا تفرز بالسعر، فنرسل إليها النوع والمنطقة والميزانية ككلمات بحث وأنت تتصفح النتائج.',
    addBtn:'+ إضافة موقع أو صفحة',updBtn:'⟳ تحديث التطبيق والقائمة',updating:'جارٍ التحديث...',cName:'اسم الموقع أو الصفحة',cUrl:'الرابط https://...',
    cHint:'اختياري: ضع {q} في الرابط ليُستبدل ببحثك (النوع + المنطقة + الميزانية)، مثل https://www.tiktok.com/search?q={q}',cSave:'حفظ',
    hO:'هل تملك عقارًا وتريد عرضه؟',subO:'أرسل بيانات عقارك إلى الوسيط، وسيتواصل معك لعرضه على الزبائن.',ownBtn:'+ أريد عرض عقاري',
@@ -245,7 +255,7 @@ header h1,header p{padding-inline-end:64px}
    installT:'Install the app on your home screen.',installB:'Install',iosT:'To install: tap Share in Safari, then "Add to Home Screen".',
    hF:'Search',lDeal:'Deal',lType:'Property type',lArea:'Area',budget:'Your budget (AED)',budgetRent:'Your yearly budget (AED)',budgetMonth:'Your monthly budget (AED)',perMonth:' AED per month',pPart:'Partition',pBed:'Bed space',dDubRoom:'Rooms, partitions and bed spaces for rent in Ajman, with a targeted search inside the area branches.',dubRoomK:'Rooms & sharing',from:'From',to:'To',chipsAria:'Budget bands',
    buy:'Buy',rent:'Rent',sell:'Sell',all:'All',apts:'Apartments',villas:'Villas',lands:'Land',allTypes:'All types',tPart:'Partition',tBed:'Bed space',tApt:'Apartment',tVilla:'Villa',tLand:'Land',tShop:'Shop / office',
-   hP:'Open live listings',subP:'Each button opens the current search results on the platform itself, with photos, details and advertiser info. If nothing matches your budget in this area, a platform may show other properties, so widen the budget or pick all areas. Social platforms (Facebook, Instagram, TikTok) cannot filter by price, so we send type, area and budget as search words and you browse the results.',
+   hP:'Open live listings',bSearch:'Search',subP:'Each button opens the current search results on the platform itself, with photos, details and advertiser info. If nothing matches your budget in this area, a platform may show other properties, so widen the budget or pick all areas. Social platforms (Facebook, Instagram, TikTok) cannot filter by price, so we send type, area and budget as search words and you browse the results.',
    addBtn:'+ Add a site or page',updBtn:'⟳ Update app & list',updating:'Updating...',cName:'Site or page name',cUrl:'Link https://...',
    cHint:'Optional: put {q} in the link to be replaced by your search (type + area + budget), e.g. https://www.tiktok.com/search?q={q}',cSave:'Save',
    hO:'Own a property and want to list it?',subO:'Send your property details to the broker, who will contact you to present it to clients.',ownBtn:'+ List my property',
@@ -426,6 +436,7 @@ header h1,header p{padding-inline-end:64px}
         (p.ci!==undefined?'<button type="button" class="rm" data-rm="'+p.ci+'">'+tr('rm')+'</button>':'')+'</div>';
     }).join('');
   }
+  $('goSearch').addEventListener('click',function(){var h=$('h-p');h.scrollIntoView({behavior:'smooth',block:'start'});var c=$('platforms');c.classList.remove('flash');void c.offsetWidth;c.classList.add('flash');});
   function renderSummary(){
     var t=typeSel.value, tl=t==='all'?tr('allTypes'):TA().concat(ROOMT()).filter(function(x){return x[0]===t;})[0][1], parts=[deal==='rent'?tr('rent'):tr('buy'), tl, sel.length?areaAr():nameOf('')];
     var bt=budgetText(); parts.push(bt||tr('noBudget'));
