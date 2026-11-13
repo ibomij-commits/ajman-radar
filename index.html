@@ -172,6 +172,12 @@ header h1,header p{padding-inline-end:64px}
     </form>
   </section>
 
+  <section aria-labelledby="h-c">
+    <h2 id="h-c" data-t="hC">منحنيات السوق (2026)</h2>
+    <p class="sub" data-t="subC">أرقام شهرية رسمية من دائرة الأراضي وتنظيم العقار في عجمان. الأشهر الناقصة تُترك فارغة ولا تُقدَّر. هذه أرقام شهرية وليست لحظية.</p>
+    <div class="grid" id="charts"></div>
+  </section>
+
   <section aria-labelledby="h-m">
     <h2 id="h-m" data-t="hM">نبض السوق (أرقام رسمية)</h2>
     <p class="sub" data-t="subM">من دائرة الأراضي وتنظيم العقار في عجمان، كما نُشرت في الصحافة.</p>
@@ -202,7 +208,7 @@ header h1,header p{padding-inline-end:64px}
    hO:'هل تملك عقارًا وتريد عرضه؟',subO:'أرسل بيانات عقارك إلى الوسيط، وسيتواصل معك لعرضه على الزبائن.',ownBtn:'+ أريد عرض عقاري',
    lMap:'رابط الموقع على الخريطة (اختياري)',lBeds:'عدد الغرف',lBaths:'عدد الحمامات',lSize:'المساحة (قدم² أو م²)',lPrice:'السعر المطلوب (درهم)',lName:'اسمك',lPhone:'رقم هاتفك',lNote:'ملاحظات (طابق، تشطيب، مفروش...)',send:'إرسال الطلب',chooseArea:'اختر المنطقة',
    sending:'جارٍ الإرسال...',sentOk:'✓ وصل طلبك إلى الوسيط، وسيتواصل معك قريبًا.',sentFail:'تعذّر الإرسال المباشر. أرسله عبر واتساب:',
-   hM:'نبض السوق (أرقام رسمية)',subM:'من دائرة الأراضي وتنظيم العقار في عجمان، كما نُشرت في الصحافة.',hL:'عيّنات من إعلانات اليوم',subL:'وُجدت يوم 13 نوفمبر 2026 على المنصات. قد يُباع العقار أو يتغير سعره، فتأكد من صفحة الإعلان.',
+   hC:'منحنيات السوق (2026)',subC:'أرقام شهرية رسمية من دائرة الأراضي وتنظيم العقار في عجمان. الأشهر الناقصة تُترك فارغة ولا تُقدَّر. هذه أرقام شهرية وليست لحظية.',cVal:'قيمة الصفقات (مليار درهم)',cCnt:'عدد الصفقات',cMonth:'رقم الشهر في 2026 (1 = يناير)',cLast:'آخر قراءة',cSrc:'المصادر: ',hM:'نبض السوق (أرقام رسمية)',subM:'من دائرة الأراضي وتنظيم العقار في عجمان، كما نُشرت في الصحافة.',hL:'عيّنات من إعلانات اليوم',subL:'وُجدت يوم 13 نوفمبر 2026 على المنصات. قد يُباع العقار أو يتغير سعره، فتأكد من صفحة الإعلان.',
    note:'<b>عن الصور وأرقام التواصل:</b> تظهر على صفحة كل إعلان لدى المنصة، ومعها اسم الوكيل ورقم رخصته. هذا التطبيق لا يجمع الأرقام ولا ينسخ الإعلانات، ويفتح لك المصدر مباشرة.',
    ajman:'عجمان',forSale:'للبيع',forRentW:'للإيجار',willOpen:'سيفتح:',noBudget:'بدون ميزانية',
    perYear:' درهم سنويًا',aed:' درهم',between:'بين {a} و {b}',upto:'حتى {b}',fromN:'من {a}',
@@ -223,7 +229,7 @@ header h1,header p{padding-inline-end:64px}
    hO:'Own a property and want to list it?',subO:'Send your property details to the broker, who will contact you to present it to clients.',ownBtn:'+ List my property',
    lMap:'Map location link (optional)',lBeds:'Bedrooms',lBaths:'Bathrooms',lSize:'Size (sq ft or m²)',lPrice:'Asking price (AED)',lName:'Your name',lPhone:'Your phone number',lNote:'Notes (floor, finishing, furnished...)',send:'Send request',chooseArea:'Choose area',
    sending:'Sending...',sentOk:'✓ Your request reached the broker, who will contact you soon.',sentFail:'Direct send failed. Send it via WhatsApp:',
-   hM:'Market pulse (official figures)',subM:'From Ajman Department of Land and Real Estate Regulation, as reported in the press.',hL:'Sample listings from today',subL:'Found on 13 November 2026 on the platforms. A property may be sold or its price may change, so check the listing page.',
+   hC:'Market curves (2026)',subC:'Official monthly figures from Ajman Department of Land and Real Estate Regulation. Missing months are left blank, not estimated. These are monthly numbers, not live.',cVal:'Deal value (AED billion)',cCnt:'Number of deals',cMonth:'Month of 2026 (1 = January)',cLast:'Latest',cSrc:'Sources: ',hM:'Market pulse (official figures)',subM:'From Ajman Department of Land and Real Estate Regulation, as reported in the press.',hL:'Sample listings from today',subL:'Found on 13 November 2026 on the platforms. A property may be sold or its price may change, so check the listing page.',
    note:'<b>About photos and contact numbers:</b> they appear on each listing page on the platform, along with the agent name and licence number. This app does not collect numbers or copy listings; it opens the source directly.',
    ajman:'Ajman',forSale:'for sale',forRentW:'for rent',willOpen:'Will open:',noBudget:'No budget',
    perYear:' AED per year',aed:' AED',between:'Between {a} and {b}',upto:'Up to {b}',fromN:'From {a}',
@@ -420,6 +426,27 @@ header h1,header p{padding-inline-end:64px}
     {n:'إمارات ستي',ne:'Emirates City',le:'Most traded in H1 2026, followed by City Towers then Ajman One',l:'الأكثر تداولًا في النصف الأول 2026، تليها سيتي تاورز ثم أجمان وان',u:'https://mena.entrepreneur.com/business-news/ajman-real-estate-transactions-reach-aed10-8-billion-in-first-half-of-2026',s:'Entrepreneur Middle East'},
     {n:'7.64 مليار',ne:'AED 7.64B',le:'value of 5,435 sale and trading transactions in H1 2026',l:'قيمة 5,435 معاملة بيع وتداول في النصف الأول 2026',u:'https://www.gulftoday.ae/business/2026/07/14/ajman-real-estate-transactions-reach-dhs108-billion-in-h1-2026',s:'Gulf Today'}
   ];
+  var MV=[2.07,null,1.66,null,1.6,null,1.65,1.53,1.9,1.95], MC=[1520,null,938,null,864,null,1517,994,1143,1140];
+  var MSRC=[['Skyline (Jan)','https://skylineholding.com/en/blog/ajman-real-estate-hits-aed-207-billion-in-jan-2026'],['Gulf Today (Mar)','https://www.gulftoday.ae/business/2026/04/07/ajman-real-estate-transactions-reach-dhs166-billion-in-march'],['Emirates 24|7 (May)','https://www.emirates247.com/business/dh16-billion-in-real-estate-transactions-in-ajman-during-may-2026/2234'],['Travels Dubai (Jul)','https://www.travelsdubai.com/06-Aug-2026/ajman-property-market-records-dh1-65-billion-july-1-517-transactions'],['Travels Dubai (Aug)','https://www.travelsdubai.com/08-Sep-2026/ajman-records-dh1-53-billion-real-estate-transactions-across-994-deals-august'],['Travels Dubai (Sep)','https://www.travelsdubai.com/06-Oct-2026/ajman-records-dh1-9-billion-real-estate-transactions-september'],['Economy Middle East (Oct)','https://economymiddleeast.com/news/ajmans-real-estate-transactions-hit-531-million-as-900-property-trades-reach-332-2-million/']];
+  function chartSvg(arr,f){
+    var W=300,H=150,L=20,R=20,T=22,B=26,pts=arr.map(function(v,i){return v==null?null:v;}), mx=0;
+    pts.forEach(function(v){if(v!=null&&v>mx)mx=v;}); mx*=1.18;
+    var X=function(i){return L+i*(W-L-R)/9;}, Y=function(v){return T+(H-T-B)*(1-v/mx);};
+    var out='<svg viewBox="0 0 '+W+' '+H+'" width="100%" role="img" aria-label="chart"><line x1="'+L+'" y1="'+(H-B)+'" x2="'+(W-R)+'" y2="'+(H-B)+'" stroke="var(--line)"/>';
+    var last=-1,i;
+    for(i=0;i<10;i++){out+='<text x="'+X(i)+'" y="'+(H-8)+'" font-size="10" text-anchor="middle" fill="var(--muted)">'+(i+1)+'</text>';}
+    for(i=0;i<10;i++){ if(pts[i]==null)continue;
+      if(last>-1)out+='<line x1="'+X(last)+'" y1="'+Y(pts[last])+'" x2="'+X(i)+'" y2="'+Y(pts[i])+'" stroke="var(--gold)" stroke-width="2.5"'+(i-last>1?' stroke-dasharray="4 4"':'')+'/>';
+      last=i; }
+    for(i=0;i<10;i++){ if(pts[i]==null)continue;
+      out+='<circle cx="'+X(i)+'" cy="'+Y(pts[i])+'" r="3.5" fill="var(--ink)"/><text x="'+X(i)+'" y="'+(Y(pts[i])-8)+'" font-size="10" text-anchor="middle" fill="var(--ink)">'+f(pts[i])+'</text>'; }
+    return out+'</svg>';
+  }
+  function renderCharts(){
+    var card=function(title,arr,f){return '<div class="card"><h3>'+esc(title)+'</h3>'+chartSvg(arr,f)+'<p class="meta">'+esc(tr('cMonth'))+' · '+esc(tr('cLast'))+': <b>'+f(arr[9])+'</b></p></div>';};
+    $('charts').innerHTML=card(tr('cVal'),MV,function(v){return v.toFixed(2);})+card(tr('cCnt'),MC,function(v){return fmt(v);})+
+      '<p class="meta" style="grid-column:1/-1;margin:0">'+esc(tr('cSrc'))+MSRC.map(function(x){return '<a href="'+esc(x[1])+'" target="_blank" rel="noopener noreferrer">'+esc(x[0])+'</a>';}).join(' · ')+'</p>';
+  }
   function renderStats(){ $('stats').innerHTML=STATS.map(function(s){
     return '<div class="card stat"><div class="n">'+esc(lang==='en'?s.ne:s.n)+'</div><div class="l">'+esc(lang==='en'?s.le:s.l)+'</div><a href="'+esc(s.u)+'" target="_blank" rel="noopener noreferrer">'+tr('src')+esc(s.s)+'</a></div>';
   }).join(''); }
@@ -502,7 +529,7 @@ header h1,header p{padding-inline-end:64px}
     [].forEach.call(document.querySelectorAll('[data-ph]'),function(el){el.placeholder=tr(el.getAttribute('data-ph'));});
     [].forEach.call(document.querySelectorAll('[data-al]'),function(el){el.setAttribute('aria-label',tr(el.getAttribute('data-al')));});
     $('langBtn').textContent=lang==='en'?'عربي':'EN';
-    fillAreas(); renderStats(); setInstall(); refresh();
+    fillAreas(); renderStats(); renderCharts(); setInstall(); refresh();
   }
   $('langBtn').addEventListener('click',function(){
     lang=lang==='en'?'ar':'en'; try{localStorage.setItem('ajman_lang',lang);}catch(e){} applyLang();
