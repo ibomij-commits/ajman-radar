@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>رادار صفقات عجمان</title>
+<title>LYD Real Estate | رادار صفقات عجمان</title>
 <meta name="theme-color" content="#14213d">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="رادار عجمان">
+<meta name="apple-mobile-web-app-title" content="LYD Real Estate">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
@@ -198,7 +198,7 @@ header h1,header p{padding-inline-end:64px}
 (function(){
   var lang='ar'; try{var sl=localStorage.getItem('ajman_lang'); if(sl==='en'||sl==='ar')lang=sl; else if(/^en/i.test(navigator.language||''))lang='en';}catch(e){}
   var T={
-  ar:{title:'رادار صفقات عجمان',tag:'اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.',
+  ar:{title:'LYD Real Estate · رادار عجمان',tag:'اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.',
    installT:'ثبّت التطبيق على شاشتك الرئيسية.',installB:'تثبيت',iosT:'لتثبيت التطبيق: اضغط زر المشاركة في سفاري، ثم «إضافة إلى الشاشة الرئيسية».',
    hF:'ماذا تبحث؟',lDeal:'الصفقة',lType:'نوع العقار',lArea:'المنطقة',budget:'ميزانيتك (درهم)',budgetRent:'ميزانيتك السنوية (درهم)',budgetMonth:'ميزانيتك الشهرية (درهم)',perMonth:' درهم شهريًا',pPart:'بارتيشن',pBed:'سرير',dDubRoom:'غرف وبارتيشنات وأسرّة للإيجار في عجمان، مع بحث موجّه داخل فروع المنطقة.',dubRoomK:'غرف ومشاركة',from:'من',to:'إلى',chipsAria:'شرائح الميزانية',
    buy:'شراء',rent:'إيجار',sell:'بيع',all:'الكل',apts:'شقق',villas:'فلل',lands:'أراضٍ',allTypes:'كل الأنواع',tPart:'بارتيشن',tBed:'سرير (بد سبيس)',tApt:'شقة',tVilla:'فيلا',tLand:'أرض',tShop:'محل / مكتب',
@@ -219,7 +219,7 @@ header h1,header p{padding-inline-end:64px}
    openP:'فتح: ',noBud:' — بدون ميزانية',openRes:'فتح النتائج',allPrices:'بدون ميزانية (كل الأسعار)',similar:'بحث عن إعلانات مماثلة (Google)',rm:'حذف من القائمة',
    brandSub:'وسيط عقاري في عجمان · عروض مباشرة من المُلّاك',brandGo:'أريد عرض عقاري',brandApp:'· تطبيقي: رادار صفقات عجمان',
    allOf:'كل {n}',remove:'إزالة',src:'المصدر: ',openL:'فتح الإعلان',emptyL:'لا توجد عيّنات ضمن هذا الاختيار. افتح المنصات أعلاه لرؤية النتائج الحالية.',orderTitle:'طلب عرض عقار'},
-  en:{title:'Ajman Deal Radar',tag:'Pick type, area and budget, then open the live listings on each platform.',
+  en:{title:'LYD Real Estate · Ajman Radar',tag:'Pick type, area and budget, then open the live listings on each platform.',
    installT:'Install the app on your home screen.',installB:'Install',iosT:'To install: tap Share in Safari, then "Add to Home Screen".',
    hF:'What are you looking for?',lDeal:'Deal',lType:'Property type',lArea:'Area',budget:'Your budget (AED)',budgetRent:'Your yearly budget (AED)',budgetMonth:'Your monthly budget (AED)',perMonth:' AED per month',pPart:'Partition',pBed:'Bed space',dDubRoom:'Rooms, partitions and bed spaces for rent in Ajman, with a targeted search inside the area branches.',dubRoomK:'Rooms & sharing',from:'From',to:'To',chipsAria:'Budget bands',
    buy:'Buy',rent:'Rent',sell:'Sell',all:'All',apts:'Apartments',villas:'Villas',lands:'Land',allTypes:'All types',tPart:'Partition',tBed:'Bed space',tApt:'Apartment',tVilla:'Villa',tLand:'Land',tShop:'Shop / office',
@@ -504,7 +504,7 @@ header h1,header p{padding-inline-end:64px}
     var row={deal:v('oDeal')==='إيجار'?'rent':'sale',ptype:PT[v('oType')]||'apartment',area:v('oArea')||'-',location_url:v('oMap')||null,beds:n(v('oBeds')),baths:n(v('oBaths')),size_sqft:n(v('oSize')),price:n(v('oPrice'))||0,owner_name:v('oName'),owner_phone:v('oPhone'),notes:v('oNote')||null,source:'owner_form',status:'new'};
     return fetch(SB_URL+'/rest/v1/properties',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Prefer':'return=minimal'},body:JSON.stringify(row)}).then(function(r){return r.ok;}).catch(function(){return false;});
   }
-  var BROKER_WA=''; /* رقم واتساب الوسيط مع رمز الدولة، مثال: 9715XXXXXXXX */
+  var BROKER_WA='971581896968'; /* رقم واتساب الوسيط مع رمز الدولة، مثال: 9715XXXXXXXX */
   (function(){
     $('ownBtn').addEventListener('click',function(){$('ownForm').classList.toggle('open');});
     $('ownForm').addEventListener('submit',function(e){
