@@ -672,7 +672,8 @@ header p{color:#dfe5f5}
     try{
       var tasks=[];
       if('caches' in window) tasks.push(caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x);}));}));
-      if('serviceWorker' in navigator) tasks.push(navigator.serviceWorker.getRegistrations().then(function(r){return Promise.all(r.map(function(x){return x.unregister();}));}));
+      
+  if('serviceWorker' in navigator) tasks.push(navigator.serviceWorker.getRegistrations().then(function(r){return Promise.all(r.map(function(x){return x.unregister();}));}));
       Promise.all(tasks).then(done,done);
     }catch(e){done();}
   });
@@ -799,6 +800,18 @@ header p{color:#dfe5f5}
     if(h)h.addEventListener('click',function(){var now=Date.now();if(now-t>2500)n=0;t=now;n++;if(n>=5){n=0;adminAsk();}});
     if(location.hash==='#admin'){adminAsk();}
     try{if(sessionStorage.getItem('lyd_admin')==='1')adminOn();}catch(e){}
+  })();
+  /* v27: على أندرويد تفتح تطبيقات Bayut/Property Finder/Dubizzle وتتجاهل فلتر السعر، لذلك نفتح الرابط داخل Chrome مباشرة */
+  (function(){
+    if(!/Android/i.test(navigator.userAgent))return;
+    document.addEventListener('click',function(e){
+      var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;if(!a)return;
+      var h=a.getAttribute('href')||'';
+      if(!/^https:\/\/([a-z0-9-]+\.)*(bayut\.com|propertyfinder\.ae|dubizzle\.com)\//i.test(h))return;
+      var m=/^https:\/\/([^\/]+)(\/[^#]*)?/.exec(h);if(!m)return;
+      e.preventDefault();
+      location.href='intent://'+m[1]+(m[2]||'/')+'#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url='+encodeURIComponent(h)+';end';
+    },true);
   })();
   try{ if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(function(){}); }catch(e){}
 })();
