@@ -147,6 +147,49 @@ header .wrap{position:relative}
 .langbtn{position:absolute;top:0;inset-inline-end:0;height:38px;min-width:54px;padding:0 14px;border-radius:99px;border:1.5px solid var(--gold);background:transparent;color:#fff;font:inherit;font-weight:700;cursor:pointer}
 header h1,header p{padding-inline-end:64px}
 .rm{background:none;border:0;color:#c0392b;font:inherit;cursor:pointer;margin-top:6px}
+
+/* ===== v22 modern theme ===== */
+header{background:linear-gradient(160deg,rgba(10,18,40,.80),rgba(20,33,61,.92)),url("https://images.unsplash.com/photo-1485172519194-996068591de1?auto=format&fit=crop&w=1200&q=60") center/cover;padding-bottom:84px;border-bottom:0;position:relative}
+header:after{content:'';position:absolute;inset:auto 0 0 0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+header h1{font-size:26px;letter-spacing:.2px}
+header p{color:#dfe5f5}
+#s-find{min-height:calc(100svh - 120px);margin-top:-44px;position:relative;display:flex;flex-direction:column}
+#s-find h2{color:#fff;border-inline-start-color:var(--gold);margin-bottom:14px}
+#s-find .filters{border-radius:22px;padding:18px;box-shadow:0 18px 40px rgba(10,18,40,.18);border:1px solid rgba(201,162,75,.35);backdrop-filter:blur(6px)}
+#s-find .gorow{margin-top:auto;position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:5;padding-top:18px;direction:inherit;justify-content:center}
+.gobtn{width:100%;max-width:520px;justify-content:center;height:60px;font-size:20px;border-radius:18px;background:linear-gradient(135deg,#c9a24b,#e6c66f);color:#14213d;box-shadow:0 10px 26px rgba(201,162,75,.45);position:relative;overflow:hidden}
+.gobtn:before{content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{0%{left:-60%}55%,100%{left:130%}}
+.gobtn .arr{font-size:22px;animation:bob 1.4s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(-2px)}50%{transform:translateY(5px)}}
+:root[data-theme="dark"] .gobtn,:root:not([data-theme="light"]) .gobtn{color:#14213d}
+.chips{gap:10px}
+.chips button{height:46px;padding:0 14px 0 12px;border-radius:14px;display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;background:linear-gradient(180deg,var(--field),var(--surface));box-shadow:0 2px 6px rgba(10,18,40,.06);transition:transform .18s ease,box-shadow .18s ease}
+.chips button .pi{font-size:20px;line-height:1;transition:transform .25s ease}
+.chips button:hover{transform:translateY(-2px);box-shadow:0 8px 16px rgba(10,18,40,.12)}
+.chips button:hover .pi{transform:scale(1.25) rotate(-8deg)}
+.chips button[aria-pressed="true"]{background:linear-gradient(135deg,#c9a24b,#e6c66f);box-shadow:0 8px 18px rgba(201,162,75,.45)}
+.chips button[aria-pressed="true"] .pi{animation:icpop .45s cubic-bezier(.3,1.6,.5,1)}
+.range{position:relative}
+.range input{padding-inline-start:44px;background-repeat:no-repeat}
+.range input#pmin{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22'><text y='17' font-size='16'>💵</text></svg>");background-position:12px center}
+.range input#pmax{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='22' height='22'><text y='17' font-size='16'>💎</text></svg>");background-position:12px center}
+[dir=rtl] .range input#pmin,[dir=rtl] .range input#pmax{background-position:right 12px center;padding-inline-start:12px;padding-inline-end:44px}
+#s-results{scroll-margin-top:8px;padding-top:6px}
+#s-results h2{display:flex;align-items:center;gap:8px;font-size:22px}
+#s-results h2:before{content:'🏙️'}
+.card{transition:transform .25s ease,box-shadow .25s ease}
+.card:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(10,18,40,.14)}
+.cover{height:130px}
+#platforms .card{opacity:0;transform:translateY(26px)}
+#s-results.revealed #platforms .card{animation:cardin .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*70ms)}
+@keyframes cardin{from{opacity:0;transform:translateY(26px) scale(.97)}to{opacity:1;transform:none}}
+.adslot{border:1.5px dashed var(--gold);border-radius:16px;background:repeating-linear-gradient(45deg,transparent 0 12px,rgba(201,162,75,.06) 12px 24px),var(--surface);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4px;padding:14px;margin:14px 0;min-height:96px;position:relative;overflow:hidden}
+.adslot .adl{position:absolute;top:6px;inset-inline-start:10px;font-size:11px;color:var(--muted);letter-spacing:.5px}
+.adslot b{font-size:16px}
+.adslot span.s{font-size:13px;color:var(--muted)}
+.adslot a.adbtn{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 18px;border-radius:10px;background:var(--gold);color:var(--on-gold);font-weight:700;text-decoration:none;font-size:14px}
+@media (prefers-reduced-motion:reduce){.gobtn:before,.gobtn .arr,#platforms .card{animation:none!important;opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
@@ -156,7 +199,7 @@ header h1,header p{padding-inline-end:64px}
 
   <div class="install" id="install"><span id="installText">ثبّت التطبيق على شاشتك الرئيسية.</span><button type="button" id="installBtn" data-t="installB" hidden>تثبيت</button></div>
 
-  <section aria-labelledby="h-f">
+  <section aria-labelledby="h-f" id="s-find">
     <h2 id="h-f" data-t="hF">ماذا تبحث؟</h2>
     <div class="filters">
       <div class="full"><span class="lbl sr" id="lbl-deal" data-t="lDeal">الصفقة</span>
@@ -168,14 +211,15 @@ header h1,header p{padding-inline-end:64px}
         <div class="range"><input id="pmin" inputmode="numeric" data-ph="from" placeholder="من" autocomplete="off"><input id="pmax" inputmode="numeric" data-ph="to" placeholder="إلى" autocomplete="off"></div>
         <div class="chips" id="chips" role="group" data-al="chipsAria" aria-label="شرائح الميزانية"></div></div>
     </div>
-    <div class="summary" id="summary" aria-live="polite"></div>
-    <div class="gorow"><button type="button" class="gobtn" id="goSearch"><span class="ic" aria-hidden="true">🔎</span><span data-t="bSearch">بحث</span></button></div>
+    <div class="gorow"><button type="button" class="gobtn" id="goSearch"><span class="ic" aria-hidden="true">🔎</span><span data-t="bSearch">بحث</span><span class="arr" aria-hidden="true">⌄</span></button></div>
   </section>
 
-  <section aria-labelledby="h-p">
+  <section aria-labelledby="h-p" id="s-results">
     <h2 id="h-p" data-t="hP">افتح الإعلانات الفعلية</h2>
     <p class="sub" data-t="subP">كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق. منصات التواصل (فيسبوك وإنستغرام وتيك توك) لا تفرز بالسعر، فنرسل إليها النوع والمنطقة والميزانية ككلمات بحث وأنت تتصفح النتائج.</p>
+    <div class="adslot" id="ad1" data-slot="top"></div>
     <div class="grid" id="platforms"></div>
+    <div class="adslot" id="ad2" data-slot="bottom"></div>
     <button type="button" class="addbtn" id="addBtn" data-t="addBtn">+ إضافة موقع أو صفحة</button>
     <button type="button" class="addbtn" id="updBtn" data-t="updBtn">⟳ تحديث التطبيق والقائمة</button>
     <div class="addform" id="addForm">
@@ -242,7 +286,7 @@ header h1,header p{padding-inline-end:64px}
    sending:'جارٍ الإرسال...',sentOk:'✓ وصل طلبك إلى الوسيط، وسيتواصل معك قريبًا.',sentFail:'تعذّر الإرسال المباشر. أرسله عبر واتساب:',
    hC:'منحنيات السوق (2026)',subC:'أرقام شهرية رسمية من دائرة الأراضي وتنظيم العقار في عجمان. الأشهر الناقصة تُترك فارغة ولا تُقدَّر. هذه أرقام شهرية وليست لحظية.',cVal:'قيمة الصفقات (مليار درهم)',cCnt:'عدد الصفقات',cMonth:'رقم الشهر في 2026 (1 = يناير)',cLast:'آخر قراءة',cSrc:'المصادر: ',hM:'نبض السوق (أرقام رسمية)',subM:'من دائرة الأراضي وتنظيم العقار في عجمان، كما نُشرت في الصحافة.',hL:'عيّنات من إعلانات اليوم',subL:'وُجدت يوم 13 نوفمبر 2026 على المنصات. قد يُباع العقار أو يتغير سعره، فتأكد من صفحة الإعلان.',
    note:'<b>عن الصور وأرقام التواصل:</b> تظهر على صفحة كل إعلان لدى المنصة، ومعها اسم الوكيل ورقم رخصته. هذا التطبيق لا يجمع الأرقام ولا ينسخ الإعلانات، ويفتح لك المصدر مباشرة.',
-   ajman:'عجمان',forSale:'للبيع',forRentW:'للإيجار',willOpen:'سيفتح:',noBudget:'بدون ميزانية',
+   ajman:'عجمان',forSale:'للبيع',forRentW:'للإيجار',willOpen:'سيفتح:',adLbl:'إعلان',adT:'📣 أعلن هنا · مساحة إعلانية',adS:'اوصل لآلاف الباحثين عن عقار في عجمان',adB:'تواصل معنا',adMsg:'مرحبًا، أرغب بالإعلان في تطبيق LYD Real Estate',noBudget:'بدون ميزانية',
    perYear:' درهم سنويًا',aed:' درهم',between:'بين {a} و {b}',upto:'حتى {b}',fromN:'من {a}',
    filt:'مفلتر بميزانيتك',portal:'منصة عقارية',gsearch:'بحث موجّه في Google',needAcc:'يتطلب حسابًا',hashtag:'وسم',video:'فيديو',general:'بحث عام',added:'مضاف',mine:'موقع أضفته أنت.',
    dBayut:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',dPF:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',dFB:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',
@@ -263,7 +307,7 @@ header h1,header p{padding-inline-end:64px}
    sending:'Sending...',sentOk:'✓ Your request reached the broker, who will contact you soon.',sentFail:'Direct send failed. Send it via WhatsApp:',
    hC:'Market curves (2026)',subC:'Official monthly figures from Ajman Department of Land and Real Estate Regulation. Missing months are left blank, not estimated. These are monthly numbers, not live.',cVal:'Deal value (AED billion)',cCnt:'Number of deals',cMonth:'Month of 2026 (1 = January)',cLast:'Latest',cSrc:'Sources: ',hM:'Market pulse (official figures)',subM:'From Ajman Department of Land and Real Estate Regulation, as reported in the press.',hL:'Sample listings from today',subL:'Found on 13 November 2026 on the platforms. A property may be sold or its price may change, so check the listing page.',
    note:'<b>About photos and contact numbers:</b> they appear on each listing page on the platform, along with the agent name and licence number. This app does not collect numbers or copy listings; it opens the source directly.',
-   ajman:'Ajman',forSale:'for sale',forRentW:'for rent',willOpen:'Will open:',noBudget:'No budget',
+   ajman:'Ajman',forSale:'for sale',forRentW:'for rent',willOpen:'Will open:',adLbl:'Ad',adT:'📣 Advertise here · ad space',adS:'Reach thousands of Ajman property seekers',adB:'Contact us',adMsg:'Hello, I would like to advertise in LYD Real Estate',noBudget:'No budget',
    perYear:' AED per year',aed:' AED',between:'Between {a} and {b}',upto:'Up to {b}',fromN:'From {a}',
    filt:'Filtered to your budget',portal:'Property portal',gsearch:'Targeted Google search',needAcc:'Account required',hashtag:'Hashtag',video:'Video',general:'General search',added:'Added',mine:'A site you added.',
    dBayut:'Property portal with licensed agents, a map and area price comparison.',dPF:'Listings from agents and developers, with photos and project payment plans.',dFB:'Public posts from agents and owners in pages and groups.',
@@ -436,11 +480,38 @@ header h1,header p{padding-inline-end:64px}
         (p.ci!==undefined?'<button type="button" class="rm" data-rm="'+p.ci+'">'+tr('rm')+'</button>':'')+'</div>';
     }).join('');
   }
-  $('goSearch').addEventListener('click',function(){var h=$('h-p');h.scrollIntoView({behavior:'smooth',block:'start'});var c=$('platforms');c.classList.remove('flash');void c.offsetWidth;c.classList.add('flash');});
+  function smoothTo(y,ms){var y0=window.pageYOffset,d=y-y0,t0=null;if(matchMedia('(prefers-reduced-motion:reduce)').matches){window.scrollTo(0,y);return;}
+    function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+    function step(ts){if(t0===null)t0=ts;var k=Math.min(1,(ts-t0)/ms);window.scrollTo(0,y0+d*ease(k));if(k<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);}
+  function revealResults(){var r=$('s-results');r.classList.remove('revealed');
+    [].forEach.call(r.querySelectorAll('#platforms .card'),function(c,i){c.style.setProperty('--i',i);});
+    void r.offsetWidth;r.classList.add('revealed');}
+  $('goSearch').addEventListener('click',function(){
+    var r=$('s-results');revealResults();
+    smoothTo(r.getBoundingClientRect().top+window.pageYOffset-8,1100);
+  });
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting&&!e.target.classList.contains('revealed')){revealResults();}});},{threshold:.15}).observe($('s-results'));}
+  else{$('s-results').classList.add('revealed');}
+  /* ===== Ad slots =====
+     To earn from clicks: set ADSENSE_CLIENT (ca-pub-XXXX) and AD_SLOT_TOP/AD_SLOT_BOTTOM from your Google AdSense account.
+     Until then each slot shows your own LYD offer (advertise-here via WhatsApp). */
+  var ADSENSE_CLIENT='', AD_SLOT_TOP='', AD_SLOT_BOTTOM='';
+  function renderAds(){
+    [['ad1',AD_SLOT_TOP],['ad2',AD_SLOT_BOTTOM]].forEach(function(a){
+      var el=$(a[0]); if(!el)return;
+      if(ADSENSE_CLIENT&&a[1]){
+        el.innerHTML='<span class="adl">'+tr('adLbl')+'</span><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="'+ADSENSE_CLIENT+'" data-ad-slot="'+a[1]+'" data-ad-format="auto" data-full-width-responsive="true"></ins>';
+        try{if(!window.__adsLoaded){var sc=document.createElement('script');sc.async=true;sc.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='+ADSENSE_CLIENT;sc.crossOrigin='anonymous';document.head.appendChild(sc);window.__adsLoaded=1;}(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+      }else{
+        el.innerHTML='<span class="adl">'+tr('adLbl')+'</span><b>'+tr('adT')+'</b><span class="s">'+tr('adS')+'</span><a class="adbtn" target="_blank" rel="noopener noreferrer" href="https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(tr('adMsg'))+'">'+tr('adB')+'</a>';
+      }
+    });
+  }
   function renderSummary(){
     var t=typeSel.value, tl=t==='all'?tr('allTypes'):TA().concat(ROOMT()).filter(function(x){return x[0]===t;})[0][1], parts=[deal==='rent'?tr('rent'):tr('buy'), tl, sel.length?areaAr():nameOf('')];
     var bt=budgetText(); parts.push(bt||tr('noBudget'));
-    $('summary').innerHTML=esc(tr('willOpen'))+' <b>'+esc(parts.join(' · '))+'</b>';
+    var sm=$('summary'); if(sm) sm.innerHTML='';
   }
 
   var BANDS_SALE=[['أقل من 300 ألف','Under 300K',0,300000],['300 – 500 ألف','300 – 500K',300000,500000],['500 – 800 ألف','500 – 800K',500000,800000],['800 ألف – 1.5 مليون','800K – 1.5M',800000,1500000],['أكثر من 1.5 مليون','Over 1.5M',1500000,0]];
@@ -448,11 +519,12 @@ header h1,header p{padding-inline-end:64px}
   var BANDS_PART=[['أقل من 800','Under 800',0,800],['800 – 1,200','800 – 1,200',800,1200],['1,200 – 1,800','1,200 – 1,800',1200,1800],['1,800 – 2,500','1,800 – 2,500',1800,2500],['أكثر من 2,500','Over 2,500',2500,0]];
   var BANDS_BED=[['أقل من 300','Under 300',0,300],['300 – 500','300 – 500',300,500],['500 – 800','500 – 800',500,800],['800 – 1,200','800 – 1,200',800,1200],['أكثر من 1,200','Over 1,200',1200,0]];
   function bands(){var t=typeSel.value;return t==='partition'?BANDS_PART:t==='bed'?BANDS_BED:(deal==='rent'?BANDS_RENT:BANDS_SALE);}
+  var PIC=['🪙','💵','💰','💎','👑'];
   function renderChips(){
     var b=budget();
     $('chips').innerHTML=bands().map(function(x,i){
       var on=(b[0]===x[2]&&b[1]===x[3]&&(b[0]||b[1]))?'true':'false';
-      return '<button type="button" data-i="'+i+'" aria-pressed="'+on+'">'+(lang==='en'?x[1]:x[0])+'</button>';
+      return '<button type="button" data-i="'+i+'" aria-pressed="'+on+'"><span class="pi" aria-hidden="true">'+PIC[i]+'</span>'+(lang==='en'?x[1]:x[0])+'</button>';
     }).join('');
   }
   $('chips').addEventListener('click',function(e){
@@ -578,7 +650,7 @@ header h1,header p{padding-inline-end:64px}
       });
     });
   })();
-  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();}
+  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();renderAds();}
   function setInstall(){ $('installText').textContent=(isiOS&&!standalone)?tr('iosT'):tr('installT'); }
   function applyLang(){
     var h=document.documentElement; h.lang=lang; h.dir=lang==='en'?'ltr':'rtl';
