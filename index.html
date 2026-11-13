@@ -160,7 +160,7 @@ header h1,header p{padding-inline-end:64px}
     <button type="button" class="ownbtn" id="ownBtn" data-t="ownBtn">+ أريد عرض عقاري</button>
     <form class="ownform" id="ownForm" autocomplete="off">
       <div class="two"><div><label data-t="lDeal">الصفقة</label><select id="oDeal"><option value="بيع" data-t="sell">بيع</option><option value="إيجار" data-t="rent">إيجار</option></select></div>
-      <div><label data-t="lType">نوع العقار</label><select id="oType"><option value="شقة" data-t="tApt">شقة</option><option value="فيلا" data-t="tVilla">فيلا</option><option value="أرض" data-t="tLand">أرض</option><option value="محل / مكتب" data-t="tShop">محل / مكتب</option></select></div></div>
+      <div><label data-t="lType">نوع العقار</label><select id="oType"><option value="شقة" data-t="tApt">شقة</option><option value="فيلا" data-t="tVilla">فيلا</option><option value="أرض" data-t="tLand">أرض</option><option value="بارتيشن" data-t="tPart">بارتيشن</option><option value="سرير (بد سبيس)" data-t="tBed">سرير (بد سبيس)</option><option value="محل / مكتب" data-t="tShop">محل / مكتب</option></select></div></div>
       <div><label data-t="lArea">المنطقة</label><select id="oArea"></select></div>
       <div><label data-t="lMap">رابط الموقع على الخريطة (اختياري)</label><input id="oMap" dir="ltr" inputmode="url" placeholder="https://maps.google.com/..."></div>
       <div class="two"><div><label data-t="lBeds">عدد الغرف</label><input id="oBeds" inputmode="numeric"></div><div><label data-t="lBaths">عدد الحمامات</label><input id="oBaths" inputmode="numeric"></div></div>
@@ -194,8 +194,8 @@ header h1,header p{padding-inline-end:64px}
   var T={
   ar:{title:'رادار صفقات عجمان',tag:'اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.',
    installT:'ثبّت التطبيق على شاشتك الرئيسية.',installB:'تثبيت',iosT:'لتثبيت التطبيق: اضغط زر المشاركة في سفاري، ثم «إضافة إلى الشاشة الرئيسية».',
-   hF:'ماذا تبحث؟',lDeal:'الصفقة',lType:'نوع العقار',lArea:'المنطقة',budget:'ميزانيتك (درهم)',budgetRent:'ميزانيتك السنوية (درهم)',from:'من',to:'إلى',chipsAria:'شرائح الميزانية',
-   buy:'شراء',rent:'إيجار',sell:'بيع',all:'الكل',apts:'شقق',villas:'فلل',lands:'أراضٍ',allTypes:'كل الأنواع',tApt:'شقة',tVilla:'فيلا',tLand:'أرض',tShop:'محل / مكتب',
+   hF:'ماذا تبحث؟',lDeal:'الصفقة',lType:'نوع العقار',lArea:'المنطقة',budget:'ميزانيتك (درهم)',budgetRent:'ميزانيتك السنوية (درهم)',budgetMonth:'ميزانيتك الشهرية (درهم)',perMonth:' درهم شهريًا',pPart:'بارتيشن',pBed:'سرير',dDubRoom:'غرف وبارتيشنات وأسرّة للإيجار في عجمان، مع بحث موجّه داخل فروع المنطقة.',dubRoomK:'غرف ومشاركة',from:'من',to:'إلى',chipsAria:'شرائح الميزانية',
+   buy:'شراء',rent:'إيجار',sell:'بيع',all:'الكل',apts:'شقق',villas:'فلل',lands:'أراضٍ',allTypes:'كل الأنواع',tPart:'بارتيشن',tBed:'سرير (بد سبيس)',tApt:'شقة',tVilla:'فيلا',tLand:'أرض',tShop:'محل / مكتب',
    hP:'افتح الإعلانات الفعلية',subP:'كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق.',
    addBtn:'+ إضافة موقع أو صفحة',updBtn:'⟳ تحديث التطبيق والقائمة',updating:'جارٍ التحديث...',cName:'اسم الموقع أو الصفحة',cUrl:'الرابط https://...',
    cHint:'اختياري: ضع {q} في الرابط ليُستبدل ببحثك (النوع + المنطقة + الميزانية)، مثل https://www.tiktok.com/search?q={q}',cSave:'حفظ',
@@ -215,8 +215,8 @@ header h1,header p{padding-inline-end:64px}
    allOf:'كل {n}',remove:'إزالة',src:'المصدر: ',openL:'فتح الإعلان',emptyL:'لا توجد عيّنات ضمن هذا الاختيار. افتح المنصات أعلاه لرؤية النتائج الحالية.',orderTitle:'طلب عرض عقار'},
   en:{title:'Ajman Deal Radar',tag:'Pick type, area and budget, then open the live listings on each platform.',
    installT:'Install the app on your home screen.',installB:'Install',iosT:'To install: tap Share in Safari, then "Add to Home Screen".',
-   hF:'What are you looking for?',lDeal:'Deal',lType:'Property type',lArea:'Area',budget:'Your budget (AED)',budgetRent:'Your yearly budget (AED)',from:'From',to:'To',chipsAria:'Budget bands',
-   buy:'Buy',rent:'Rent',sell:'Sell',all:'All',apts:'Apartments',villas:'Villas',lands:'Land',allTypes:'All types',tApt:'Apartment',tVilla:'Villa',tLand:'Land',tShop:'Shop / office',
+   hF:'What are you looking for?',lDeal:'Deal',lType:'Property type',lArea:'Area',budget:'Your budget (AED)',budgetRent:'Your yearly budget (AED)',budgetMonth:'Your monthly budget (AED)',perMonth:' AED per month',pPart:'Partition',pBed:'Bed space',dDubRoom:'Rooms, partitions and bed spaces for rent in Ajman, with a targeted search inside the area branches.',dubRoomK:'Rooms & sharing',from:'From',to:'To',chipsAria:'Budget bands',
+   buy:'Buy',rent:'Rent',sell:'Sell',all:'All',apts:'Apartments',villas:'Villas',lands:'Land',allTypes:'All types',tPart:'Partition',tBed:'Bed space',tApt:'Apartment',tVilla:'Villa',tLand:'Land',tShop:'Shop / office',
    hP:'Open live listings',subP:'Each button opens the current search results on the platform itself, with photos, details and advertiser info. If nothing matches your budget in this area, a platform may show other properties, so widen the budget or pick all areas.',
    addBtn:'+ Add a site or page',updBtn:'⟳ Update app & list',updating:'Updating...',cName:'Site or page name',cUrl:'Link https://...',
    cHint:'Optional: put {q} in the link to be replaced by your search (type + area + budget), e.g. https://www.tiktok.com/search?q={q}',cSave:'Save',
@@ -237,7 +237,7 @@ header h1,header p{padding-inline-end:64px}
   };
   function tr(k){return T[lang][k]||T.ar[k]||k;}
   var AREA_EN={'':'All Ajman areas','al-nuaimiya':'Al Nuaimiya','al-rashidiya':'Al Rashidiya','emirates-city':'Emirates City','ajman-downtown':'Ajman Downtown','ajman-uptown':'Ajman Uptown','al-helio':'Al Helio','al-yasmeen':'Al Yasmeen','al-zahya':'Al Zahya','al-zorah':'Al Zorah','al-amerah':'Al Amerah','al-mowaihat':'Al Mowaihat','al-rawda':'Al Rawda','al-alia':'Al Alia','al-bahia':'Al Bahia','al-bustan':'Al Bustan','al-jurf':'Al Jurf','al-sawan':'Al Sawan','al-raqaib':'Al Raqaib','al-hamidiya':'Al Hamidiya','garden-city':'Garden City','liwara-1':'Liwara 1','liwara-2':'Liwara 2','al-tallah-2':'Al Tallah 2','masfoot':'Masfout'};
-  var TYPE_W={ar:{all:'عقار',apartments:'شقة',villas:'فيلا',land:'أرض'},en:{all:'property',apartments:'apartment',villas:'villa',land:'land'}};
+  var TYPE_W={ar:{all:'عقار',apartments:'شقة',villas:'فيلا',land:'أرض',partition:'بارتيشن',bed:'سرير مشترك'},en:{all:'property',apartments:'apartment',villas:'villa',land:'land',partition:'partition room',bed:'bed space'}};
   /* [مفتاح Property Finder، مفتاح Bayut، الاسم]. الرمزان مأخوذان من قوائم المناطق في المنصتين. */
   var AREAS=[
     ['','','كل مناطق عجمان'],['al-nuaimiya','al-nuaimiya','النعيمية'],['al-rashidiya','al-rashidiya','الراشدية'],
@@ -255,21 +255,23 @@ header h1,header p{padding-inline-end:64px}
   var deal='sale';
   function DEALS(){return [['sale',tr('buy')],['rent',tr('rent')]];}
   function TA(){return [['all',tr('all')],['apartments',tr('apts')],['villas',tr('villas')],['land',tr('lands')]];}
-  function types(){var a=TA();return deal==='rent'?a.slice(0,3):a;}
+  function ROOMT(){return [['partition',tr('pPart')],['bed',tr('pBed')]];}
+  function isRoom(t){return t==='partition'||t==='bed';}
+  function types(){var a=TA();return deal==='rent'?a.slice(0,3).concat(ROOMT()):a;}
   function renderDeal(){
     $('dealSeg').innerHTML=DEALS().map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(deal===x[0])+'">'+x[1]+'</button>';}).join('');
   }
   $('dealSeg').addEventListener('click',function(e){
     var b=e.target.closest('button'); if(!b||b.dataset.v===deal)return;
     deal=b.dataset.v; $('pmin').value=''; $('pmax').value='';
-    if(deal==='rent'&&typeSel.value==='land')typeSel.value='all';
+    if(deal==='rent'&&typeSel.value==='land')typeSel.value='all'; if(deal==='sale'&&isRoom(typeSel.value))typeSel.value='all';
     refresh();
   });
   function renderSeg(){
-    $('seg').style.gridTemplateColumns='repeat('+types().length+',1fr)';
+    $('seg').style.gridTemplateColumns='repeat('+(types().length>4?3:types().length)+',1fr)';
     $('seg').innerHTML=types().map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(typeSel.value===x[0])+'">'+x[1]+'</button>';}).join('');
   }
-  $('seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;typeSel.value=b.dataset.v;refresh();});
+  $('seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var was=typeSel.value;typeSel.value=b.dataset.v;if(isRoom(was)!==isRoom(b.dataset.v)||(isRoom(was)&&was!==b.dataset.v)){$('pmin').value='';$('pmax').value='';}refresh();});
   function fillAreas(){
     var v=areaSel.value; areaSel.innerHTML='';
     AREAS.forEach(function(a){var o=document.createElement('option');o.value=a[0];o.textContent=nameOf(a[0]);areaSel.appendChild(o);});
@@ -316,7 +318,7 @@ header h1,header p{padding-inline-end:64px}
   function budget(){var lo=num($('pmin').value),hi=num($('pmax').value);if(hi&&lo>hi){var x=lo;lo=hi;hi=x;}return [lo,hi];}
   function budgetText(){
     var b=budget();
-    var suf=deal==='rent'?tr('perYear'):tr('aed');
+    var suf=isRoom(typeSel.value)?tr('perMonth'):(deal==='rent'?tr('perYear'):tr('aed'));
     if(b[0]&&b[1])return tr('between').replace('{a}',fmt(b[0])).replace('{b}',fmt(b[1]))+suf;
     if(b[1])return tr('upto').replace('{b}',fmt(b[1]))+suf;
     if(b[0])return tr('fromN').replace('{a}',fmt(b[0]))+suf;
@@ -341,16 +343,24 @@ header h1,header p{padding-inline-end:64px}
     var ig='https://www.instagram.com/explore/tags/'+encodeURIComponent(lang==='en'?(rent?'ajmanrentals':'ajmanrealestate'):(rent?'ايجارات_عجمان':'عقارات_عجمان'))+'/';
     var gg=google(tw+' '+dw+' '+ar+' '+AJ+' '+bt);
     var mkt=rent?'https://www.facebook.com/marketplace/category/propertyrentals':'https://www.facebook.com/marketplace/category/propertyforsale';
-    var base=[
+    var room=isRoom(t), TW_EN=(t==='partition'?'partition':'bed space');
+    function enLbl(o){return (AREA_EN[o.k]||o.k)+(o.s?' '+o.s:'');}
+    var DZ={'al-rashidiya':'al-rashidya/60325','al-jurf':'al-jurf/62167','al-bustan':'al-bustan/60235','al-zahya':'al-zahra/62073'};
+    var DZB='https://ajman.dubizzle.com/en/property-for-rent/rooms-for-rent-flatmates/';
+    function dzDirect(o){if(!o)return DZB;var k=o.k==='al-nuaimiya'&&o.s===3?'al-nuaimia-3/62489':DZ[o.k];return k?DZB+'in/'+k+'/':DZB;}
+    function dzGoogle(o){return google('site:ajman.dubizzle.com '+TW_EN+' '+(o?enLbl(o):'Ajman')+' '+(bt&&lang==='en'?bt:''));}
+    var dubRoom={n:'Dubizzle',d:tr('dDubRoom'),k:tr('dubRoomK'),u:dzDirect(AL[0]),u2:dzGoogle(AL[0]),ok:1,multi:AL.length>1?AL.map(function(o){return {l:lbl(o),u:dzGoogle(o),u0:''};}):null};
+    var bp=room?[dubRoom]:[
       {n:'Bayut',d:tr('dBayut'),k:bt?tr('filt'):tr('portal'),u:bayut,u2:bt?bayut0:'',ok:1,multi:multiOf(bU)},
-      {n:'Property Finder',d:tr('dPF'),k:bt?tr('filt'):tr('portal'),u:pf,u2:bt?pf0:'',ok:1,multi:multiOf(pU)},
+      {n:'Property Finder',d:tr('dPF'),k:bt?tr('filt'):tr('portal'),u:pf,u2:bt?pf0:'',ok:1,multi:multiOf(pU)}];
+    var base=bp.concat([
       {brand:1,n:'LYD Real Estate'},
       {n:'Facebook',d:tr('dFB'),k:tr('gsearch'),u:fb,ok:0},
       {n:'Facebook Marketplace',d:rent?tr('dMktRent'):tr('dMktSale'),k:tr('needAcc'),u:mkt,ok:0},
       {n:'Instagram',d:rent?tr('dIGRent'):tr('dIGSale'),k:tr('hashtag'),u:ig,ok:0},
       {n:'TikTok',d:tr('dTT'),k:tr('video'),u:'https://www.tiktok.com/search?q='+encodeURIComponent(tw+' '+dw+' '+ar+' '+AJ),ok:0},
       {n:'Google',d:tr('dGG'),k:tr('general'),u:gg,ok:0}
-    ];
+    ]);
     var q=[tw,dw,ar,AJ,bt].join(' ').replace(/\s+/g,' ').trim();
     loadCustom().forEach(function(c,i){
       var u=c.u.indexOf('{q}')>-1?c.u.split('{q}').join(encodeURIComponent(q)):c.u;
@@ -371,14 +381,16 @@ header h1,header p{padding-inline-end:64px}
     }).join('');
   }
   function renderSummary(){
-    var t=typeSel.value, tl=t==='all'?tr('allTypes'):TA().filter(function(x){return x[0]===t;})[0][1], parts=[deal==='rent'?tr('rent'):tr('buy'), tl, sel.length?areaAr():nameOf('')];
+    var t=typeSel.value, tl=t==='all'?tr('allTypes'):TA().concat(ROOMT()).filter(function(x){return x[0]===t;})[0][1], parts=[deal==='rent'?tr('rent'):tr('buy'), tl, sel.length?areaAr():nameOf('')];
     var bt=budgetText(); parts.push(bt||tr('noBudget'));
     $('summary').innerHTML=esc(tr('willOpen'))+' <b>'+esc(parts.join(' · '))+'</b>';
   }
 
   var BANDS_SALE=[['أقل من 300 ألف','Under 300K',0,300000],['300 – 500 ألف','300 – 500K',300000,500000],['500 – 800 ألف','500 – 800K',500000,800000],['800 ألف – 1.5 مليون','800K – 1.5M',800000,1500000],['أكثر من 1.5 مليون','Over 1.5M',1500000,0]];
   var BANDS_RENT=[['أقل من 20 ألف','Under 20K',0,20000],['20 – 40 ألف','20 – 40K',20000,40000],['40 – 70 ألف','40 – 70K',40000,70000],['70 – 120 ألف','70 – 120K',70000,120000],['أكثر من 120 ألف','Over 120K',120000,0]];
-  function bands(){return deal==='rent'?BANDS_RENT:BANDS_SALE;}
+  var BANDS_PART=[['أقل من 800','Under 800',0,800],['800 – 1,200','800 – 1,200',800,1200],['1,200 – 1,800','1,200 – 1,800',1200,1800],['1,800 – 2,500','1,800 – 2,500',1800,2500],['أكثر من 2,500','Over 2,500',2500,0]];
+  var BANDS_BED=[['أقل من 300','Under 300',0,300],['300 – 500','300 – 500',300,500],['500 – 800','500 – 800',500,800],['800 – 1,200','800 – 1,200',800,1200],['أكثر من 1,200','Over 1,200',1200,0]];
+  function bands(){var t=typeSel.value;return t==='partition'?BANDS_PART:t==='bed'?BANDS_BED:(deal==='rent'?BANDS_RENT:BANDS_SALE);}
   function renderChips(){
     var b=budget();
     $('chips').innerHTML=bands().map(function(x,i){
@@ -480,7 +492,7 @@ header h1,header p{padding-inline-end:64px}
         .then(function(){btn.disabled=false;});
     });
   })();
-  function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?tr('budgetRent'):tr('budget');renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();}
+  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();}
   function setInstall(){ $('installText').textContent=(isiOS&&!standalone)?tr('iosT'):tr('installT'); }
   function applyLang(){
     var h=document.documentElement; h.lang=lang; h.dir=lang==='en'?'ltr':'rtl';
