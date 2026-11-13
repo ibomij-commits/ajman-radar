@@ -105,6 +105,12 @@ input::placeholder{color:var(--muted);opacity:.8}
 @keyframes subin{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 .subpanel button{height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:inherit;font:inherit;cursor:pointer}
 .subpanel button.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold);font-weight:800}
+.seltags{display:none;margin-top:10px;gap:8px;flex-wrap:wrap}
+.seltags.open{display:flex}
+.seltags span{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--on-gold);font-weight:800;border-radius:999px;padding:6px 8px 6px 14px}
+.seltags button{width:26px;height:26px;border-radius:50%;border:0;background:#0003;color:inherit;font:inherit;cursor:pointer;line-height:1}
+.multi{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.multi a{font-size:14px;height:40px}
 .rm{background:none;border:0;color:#c0392b;font:inherit;cursor:pointer;margin-top:6px}
 </style>
 </head>
@@ -122,7 +128,7 @@ input::placeholder{color:var(--muted);opacity:.8}
         <div class="seg seg2" id="dealSeg" role="group" aria-labelledby="lbl-deal"></div></div>
       <div class="full"><span class="lbl" id="lbl-type">نوع العقار</span>
         <div class="seg" id="seg" role="group" aria-labelledby="lbl-type"></div></div>
-      <div class="full"><label for="area">المنطقة</label><select id="area"></select><div class="subpanel" id="subPanel" aria-live="polite"></div></div>
+      <div class="full"><label for="area">المنطقة</label><select id="area"></select><div class="seltags" id="selTags"></div><div class="subpanel" id="subPanel" aria-live="polite"></div></div>
       <div class="full"><label for="pmin" id="budgetLbl">ميزانيتك (درهم)</label>
         <div class="range"><input id="pmin" inputmode="numeric" placeholder="من" autocomplete="off"><input id="pmax" inputmode="numeric" placeholder="إلى" autocomplete="off"></div>
         <div class="chips" id="chips" role="group" aria-label="شرائح الميزانية"></div></div>
@@ -217,19 +223,36 @@ input::placeholder{color:var(--muted);opacity:.8}
 
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function google(q){return 'https://www.google.com/search?q='+encodeURIComponent(q);}
-  var SUBS={'al-nuaimiya':3,'al-rashidiya':3,'al-rawda':3,'al-jurf':3,'al-mowaihat':3,'al-helio':2}, sub=0;
-  function areaAr(){return areaSel.value?areaSel.options[areaSel.selectedIndex].textContent+(sub?' '+sub:''):'';}
-  function bayutPath(){var k=bayutKey();return k?k+'/'+(sub?areaSel.value+'-'+sub+'/':''):'';}
+  var SUBS={'al-nuaimiya':3,'al-rashidiya':3,'al-rawda':3,'al-jurf':3,'al-mowaihat':3,'al-helio':2}, sel=[];
   var EM=['🏙️','🏘️','🏡'];
+  function nameOf(k){for(var i=0;i<AREAS.length;i++)if(AREAS[i][0]===k)return AREAS[i][2];return k;}
+  function bayutKeyOf(k){for(var i=0;i<AREAS.length;i++)if(AREAS[i][0]===k)return AREAS[i][1];return '';}
+  function areaList(){return sel.map(function(x){var p=x.split('|');return {k:p[0],s:+p[1]};});}
+  function lbl(o){return nameOf(o.k)+(o.s?' '+o.s:'');}
+  function areaAr(){return areaList().map(lbl).join(' · ');}
+  function bayutPathOf(o){var k=bayutKeyOf(o.k);return k+'/'+(o.s?o.k+'-'+o.s+'/':'');}
+  function toggleArea(k,s){
+    var key=k+'|'+s, i=sel.indexOf(key);
+    if(i>-1){sel.splice(i,1);return;}
+    if(s===0){sel=sel.filter(function(x){return x.split('|')[0]!==k;});}
+    else{sel=sel.filter(function(x){return x!==k+'|0';});}
+    sel.push(key);
+  }
   function renderSub(){
-    var n=SUBS[areaSel.value]||0, el=$('subPanel');
+    var k=areaSel.value, n=SUBS[k]||0, el=$('subPanel');
     if(!n){el.className='subpanel';el.innerHTML='';return;}
-    var nm=areaSel.options[areaSel.selectedIndex].textContent, h='<button type="button" data-s="0" class="'+(sub===0?'on':'')+'">📍 كل '+esc(nm)+'</button>';
-    for(var i=1;i<=n;i++)h+='<button type="button" data-s="'+i+'" class="'+(sub===i?'on':'')+'">'+EM[(i-1)%3]+' '+esc(nm)+' '+i+'</button>';
+    var nm=nameOf(k), h='<button type="button" data-s="0" class="'+(sel.indexOf(k+'|0')>-1?'on':'')+'">📍 كل '+esc(nm)+'</button>';
+    for(var i=1;i<=n;i++)h+='<button type="button" data-s="'+i+'" class="'+(sel.indexOf(k+'|'+i)>-1?'on':'')+'">'+EM[(i-1)%3]+' '+esc(nm)+' '+i+'</button>';
     el.innerHTML=h; el.className='subpanel open';
   }
-  $('subPanel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;sub=+b.getAttribute('data-s');refresh();});
-  function bayutKey(){var k=areaSel.value;for(var i=0;i<AREAS.length;i++)if(AREAS[i][0]===k)return AREAS[i][1];return '';}
+  function renderTags(){
+    var el=$('selTags');
+    if(!sel.length){el.className='seltags';el.innerHTML='';return;}
+    el.innerHTML=areaList().map(function(o,i){return '<span>'+esc(lbl(o))+'<button type="button" data-x="'+i+'" aria-label="إزالة">×</button></span>';}).join('');
+    el.className='seltags open';
+  }
+  $('selTags').addEventListener('click',function(e){var x=e.target.getAttribute&&e.target.getAttribute('data-x');if(x===null||x===undefined)return;sel.splice(+x,1);refresh();});
+  $('subPanel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;toggleArea(areaSel.value,+b.getAttribute('data-s'));refresh();});
   function num(s){var d=String(s).replace(/[٠-٩]/g,function(c){return c.charCodeAt(0)-1632;}).replace(/\D/g,'');return d?parseInt(d,10):0;}
   function fmt(n){return n.toLocaleString('en-US');}
   function budget(){var lo=num($('pmin').value),hi=num($('pmax').value);if(hi&&lo>hi){var x=lo;lo=hi;hi=x;}return [lo,hi];}
@@ -243,15 +266,16 @@ input::placeholder{color:var(--muted);opacity:.8}
   }
 
   function links(){
-    var t=typeSel.value, a=areaSel.value, ar=areaAr(), tw=TYPE_AR[t], b=budget(), bt=budgetText();
+    var t=typeSel.value, AL=areaList(), a=AL.length, ar=areaAr(), tw=TYPE_AR[t], b=budget(), bt=budgetText();
     var bq=[], pq=[];
     if(b[0]){bq.push('price_min='+b[0]);pq.push('pf='+b[0]);}
     if(b[1]){bq.push('price_max='+b[1]);pq.push('pt='+b[1]);}
     var rent=deal==='rent', dw=rent?'للإيجار':'للبيع';
-    var bayut='https://www.bayut.com/'+(rent?'to-rent':'for-sale')+'/'+(t==='all'?'property':t)+'/ajman/'+(a?bayutPath():'')+(bq.length?'?'+bq.join('&'):'');
-    var pf='https://www.propertyfinder.ae/en/'+(rent?'rent':'buy')+'/ajman/'+(t==='all'?'properties':t)+(rent?'-for-rent':'-for-sale')+(a?'-'+a:'')+'.html'+(pq.length?'?'+pq.join('&'):'');
-    var bayut0='https://www.bayut.com/'+(rent?'to-rent':'for-sale')+'/'+(t==='all'?'property':t)+'/ajman/'+(a?bayutPath():'');
-    var pf0='https://www.propertyfinder.ae/en/'+(rent?'rent':'buy')+'/ajman/'+(t==='all'?'properties':t)+(rent?'-for-rent':'-for-sale')+(a?'-'+a:'')+'.html';
+    var tb=(t==='all'?'property':t), tp=(t==='all'?'properties':t), rb=(rent?'to-rent':'for-sale');
+    function bU(o,q){return 'https://www.bayut.com/'+rb+'/'+tb+'/ajman/'+(o?bayutPathOf(o):'')+(q&&bq.length?'?'+bq.join('&'):'');}
+    function pU(o,q){return 'https://www.propertyfinder.ae/en/'+(rent?'rent':'buy')+'/ajman/'+tp+(rent?'-for-rent':'-for-sale')+(o?'-'+o.k:'')+'.html'+(q&&pq.length?'?'+pq.join('&'):'');}
+    var bayut=bU(AL[0],1), pf=pU(AL[0],1), bayut0=bU(AL[0],0), pf0=pU(AL[0],0);
+    function multiOf(f){return AL.length>1?AL.map(function(o){return {l:lbl(o),u:f(o,1),u0:bt?f(o,0):''};}):null;}
     var filtered=(t!=='all')||a||bt||rent;
     var duby='https://ajman.dubizzle.com/'+(rent?'property-for-rent/':'property-for-sale/');
     var duby2=google('site:ajman.dubizzle.com '+tw+' '+dw+' '+ar+' '+bt);
@@ -260,8 +284,8 @@ input::placeholder{color:var(--muted);opacity:.8}
     var gg=google(tw+' '+dw+' '+ar+' عجمان '+bt);
     var mkt=rent?'https://www.facebook.com/marketplace/category/propertyrentals':'https://www.facebook.com/marketplace/category/propertyforsale';
     var base=[
-      {n:'Bayut',d:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:bayut,u2:bt?bayut0:'',ok:1},
-      {n:'Property Finder',d:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:pf,u2:bt?pf0:'',ok:1},
+      {n:'Bayut',d:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:bayut,u2:bt?bayut0:'',ok:1,multi:multiOf(bU)},
+      {n:'Property Finder',d:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:pf,u2:bt?pf0:'',ok:1,multi:multiOf(pU)},
       {brand:1,n:'LYD Real Estate'},
       {n:'Facebook',d:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',k:'بحث موجّه في Google',u:fb,ok:0},
       {n:'Facebook Marketplace',d:(rent?'عقارات للإيجار':'عقارات للبيع')+' في سوق فيسبوك. يتطلب تسجيل دخولك.',k:'يتطلب حسابًا',u:mkt,ok:0},
@@ -283,13 +307,13 @@ input::placeholder{color:var(--muted);opacity:.8}
     $('platforms').innerHTML=links().map(function(p){
       if(p.brand)return BRAND_CARD;
       return '<div class="card"><span class="tag'+(p.ok?' ok':'')+'">'+esc(p.k)+'</span><h3 dir="auto">'+esc(p.n)+'</h3><p>'+esc(p.d)+
-        '</p><a class="go" href="'+esc(p.u)+'" target="_blank" rel="noopener noreferrer">فتح النتائج</a>'+
-        (p.u2?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">'+(p.n==='Dubizzle'?'بحث عن إعلانات مماثلة (Google)':'بدون ميزانية (كل الأسعار)')+'</a>':'')+
+        '</p>'+(p.multi?'<div class="multi">'+p.multi.map(function(m){return '<a class="go" href="'+esc(m.u)+'" target="_blank" rel="noopener noreferrer">فتح: '+esc(m.l)+'</a>'+(m.u0?'<a class="go alt" href="'+esc(m.u0)+'" target="_blank" rel="noopener noreferrer">'+esc(m.l)+' — بدون ميزانية</a>':'');}).join('')+'</div>':'<a class="go" href="'+esc(p.u)+'" target="_blank" rel="noopener noreferrer">فتح النتائج</a>')+
+        (p.u2&&!p.multi?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">'+(p.n==='Dubizzle'?'بحث عن إعلانات مماثلة (Google)':'بدون ميزانية (كل الأسعار)')+'</a>':'')+
         (p.ci!==undefined?'<button type="button" class="rm" data-rm="'+p.ci+'">حذف من القائمة</button>':'')+'</div>';
     }).join('');
   }
   function renderSummary(){
-    var t=typeSel.value, parts=[deal==='rent'?'إيجار':'شراء', t==='all'?'كل الأنواع':TYPE_AR[t]==='شقة'?'شقق':TYPE_AR[t]==='فيلا'?'فلل':'أراضٍ', areaSel.value?areaAr():'كل مناطق عجمان'];
+    var t=typeSel.value, parts=[deal==='rent'?'إيجار':'شراء', t==='all'?'كل الأنواع':TYPE_AR[t]==='شقة'?'شقق':TYPE_AR[t]==='فيلا'?'فلل':'أراضٍ', sel.length?areaAr():'كل مناطق عجمان'];
     var bt=budgetText(); parts.push(bt||'بدون ميزانية');
     $('summary').innerHTML='سيفتح: <b>'+esc(parts.join(' · '))+'</b>';
   }
@@ -310,7 +334,13 @@ input::placeholder{color:var(--muted);opacity:.8}
     $('pmin').value=same?'':(x[1]?fmt(x[1]):''); $('pmax').value=same?'':(x[2]?fmt(x[2]):''); refresh();
   });
   ['pmin','pmax'].forEach(function(id){$(id).addEventListener('input',refresh);});
-  areaSel.addEventListener('change',function(){sub=0;refresh();});
+  areaSel.addEventListener('change',function(){
+    var k=areaSel.value;
+    if(!k){sel=[];}
+    else if(!SUBS[k]){toggleArea(k,0);}
+    else if(!sel.some(function(x){return x.split('|')[0]===k;})){toggleArea(k,0);}
+    refresh();
+  });
 
   var STATS=[
     {n:'1,140',l:'صفقة في أكتوبر 2026 بقيمة 1.95 مليار درهم',u:'https://www.gulftoday.ae/business/2026/11/10/ajman-records-dhs195-billion-in-real-estate-transactions-in-october',s:'Gulf Today'},
@@ -335,9 +365,9 @@ input::placeholder{color:var(--muted);opacity:.8}
     {t:'فيلا زاوية، رسوم التسجيل مشمولة، قابل للتفاوض',v:2750000,ty:'villas',a:'al-alia',m:'العالية، عجمان',s:'Dubizzle',u:'https://ajman.dubizzle.com/property-for-sale/',b:'افتح نتائج دوبيزل'}
   ];
   function renderListings(){
-    var b=budget(), t=typeSel.value, a=areaSel.value;
+    var b=budget(), t=typeSel.value, AL=areaList();
     var rows=deal==='rent'?[]:L.filter(function(x){
-      return (t==='all'||x.ty===t)&&(!a||x.a===a)&&(!b[0]||x.v>=b[0])&&(!b[1]||x.v<=b[1]);
+      return (t==='all'||x.ty===t)&&(!AL.length||AL.some(function(o){return o.k===x.a;}))&&(!b[0]||x.v>=b[0])&&(!b[1]||x.v<=b[1]);
     });
     $('listings').innerHTML=rows.length?rows.map(function(x){
       return '<div class="card"><span class="tag">'+esc(x.s)+'</span><div class="price">'+fmt(x.v)+' <span class="meta">درهم</span></div><h3>'+esc(x.t)+
@@ -393,7 +423,7 @@ input::placeholder{color:var(--muted);opacity:.8}
         .then(function(){btn.disabled=false;});
     });
   })();
-  function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?'ميزانيتك السنوية (درهم)':'ميزانيتك (درهم)';renderSeg();renderChips();renderSub();renderSummary();renderPlatforms();renderListings();}
+  function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?'ميزانيتك السنوية (درهم)':'ميزانيتك (درهم)';renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();}
   refresh();
 
   /* ---------- install as an app ---------- */
