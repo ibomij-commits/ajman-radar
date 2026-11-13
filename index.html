@@ -217,6 +217,25 @@ header p{color:#dfe5f5}
 .mbox .go{width:100%;border:0;cursor:pointer;font:inherit;font-weight:700}
 .admbar{position:fixed;bottom:0;inset-inline:0;background:#14213d;color:#fff;padding:8px 14px;z-index:40;display:flex;gap:10px;align-items:center;justify-content:space-between;font-size:14px}
 .admbar button{height:36px;padding:0 14px;border-radius:9px;border:0;background:var(--gold);color:#14213d;font:inherit;font-weight:700;cursor:pointer}
+
+/* v28: عقارات LYD */
+.lydhead{display:flex;align-items:center;gap:8px;margin:4px 0 10px}
+.lydhead h2{margin:0}
+.lydhead .bdg{background:var(--gold,#d9b45a);color:#1a1405;border-radius:999px;font-size:12px;font-weight:800;padding:3px 10px}
+.lcard{background:var(--surface);border:1px solid var(--line,rgba(128,128,128,.25));border-radius:16px;overflow:hidden;cursor:pointer;display:flex;flex-direction:column}
+.lcard .ph{position:relative;aspect-ratio:16/10;background:#222 center/cover no-repeat}
+.lcard .ph .cnt{position:absolute;inset-inline-end:8px;bottom:8px;background:rgba(0,0,0,.6);color:#fff;border-radius:8px;font-size:12px;padding:2px 8px}
+.lcard .ph .smp{position:absolute;inset-inline-start:8px;top:8px;background:#c0392b;color:#fff;border-radius:8px;font-size:12px;padding:2px 8px}
+.lcard .bd{padding:12px 14px 14px}
+.lcard .pr{font-size:21px;font-weight:800}
+.lcard .sp{display:flex;gap:12px;margin:6px 0;opacity:.85;font-size:14px;flex-wrap:wrap}
+.lcard h3{margin:4px 0;font-size:16px}
+.lcard p{margin:0;opacity:.75;font-size:14px}
+.gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:6px;border-radius:12px;margin:-4px 0 12px}
+.gal img{flex:0 0 100%;scroll-snap-align:center;width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:12px}
+.chips2{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.chips2 span{background:rgba(128,128,128,.15);border-radius:999px;padding:4px 12px;font-size:14px}
+.mbox.big{max-width:560px}
 </style>
 </head>
 <body>
@@ -244,6 +263,7 @@ header p{color:#dfe5f5}
   <section aria-labelledby="h-p" id="s-results">
     <h2 id="h-p" data-t="hP">افتح الإعلانات الفعلية</h2>
     <p class="sub" data-t="subP">كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق. منصات التواصل (فيسبوك وإنستغرام وتيك توك) لا تفرز بالسعر، فنرسل إليها النوع والمنطقة والميزانية ككلمات بحث وأنت تتصفح النتائج.</p>
+    <div id="lydWrap" hidden><div class="lydhead"><h2 id="lydT"></h2><span class="bdg" id="lydB"></span></div><div class="grid" id="lydGrid"></div></div>
     <div class="adslot" id="ad1" data-slot="top"></div>
     <div class="grid" id="platforms"></div>
     <div class="adslot" id="ad2" data-slot="bottom"></div>
@@ -369,6 +389,11 @@ header p{color:#dfe5f5}
   ];
   var $=function(id){return document.getElementById(id)};
   var areaSel=$('area'), typeSel={value:'all'};
+  /* ===== v28: عقارات LYD (عقاراتك أنت، تبقى داخل التطبيق) ===== */
+  /* أضف عقاراتك هنا. الصور: روابط صورك أنت. لا تنسخ صور وسطاء آخرين دون إذنهم. */
+  var LYD=[];
+  /* نموذج للمعاينة، يظهر لك فقط في وضع المالك (#admin) ولا يراه الزوار */
+  var LYD_SAMPLE={id:'sample',smp:1,t:'نموذج: شقة غرفة وصالة للبيع في عجمان',te:'Sample: 1-bed apartment for sale in Ajman',d:'هذا نموذج لشكل البطاقة وصفحة التفاصيل. استبدله بعقار حقيقي من عقاراتك مع صورك ووصفك.',de:'This is a preview of the card and detail page. Replace it with a real listing of yours, with your own photos and description.',m:'النعيمية، عجمان',me:'Al Nuaimiya, Ajman',a:'al-nuaimiya',ty:'apartments',deal:'sale',v:315000,beds:1,baths:2,sqft:905,ref:'LYD-SAMPLE',photos:['https://images.unsplash.com/photo-1485172519194-996068591de1?auto=format&fit=crop&w=900&q=70','https://images.unsplash.com/photo-1769251846390-772c3a74b0da?auto=format&fit=crop&w=900&q=70','https://images.unsplash.com/photo-1746517757473-7c88850e539b?auto=format&fit=crop&w=900&q=70']};
   var deal='sale';
   function DEALS(){return [['sale',tr('buy')],['rent',tr('rent')]];}
   function TA(){return [['all',tr('all')],['apartments',tr('apts')],['villas',tr('villas')],['land',tr('lands')]];}
@@ -709,7 +734,7 @@ header p{color:#dfe5f5}
       });
     });
   })();
-  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();injectSponsor();renderListings();renderAds();renderAdv();}
+  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();injectSponsor();renderListings();renderLyd();renderAds();renderAdv();}
   function setInstall(){ $('installText').textContent=(isiOS&&!standalone)?tr('iosT'):tr('installT'); }
   function applyLang(){
     var h=document.documentElement; h.lang=lang; h.dir=lang==='en'?'ltr':'rtl';
@@ -742,9 +767,42 @@ header p{color:#dfe5f5}
   });
   window.addEventListener('appinstalled',function(){box.classList.remove('show');});
 
+
+  function lydAdmin(){try{return sessionStorage.getItem('lyd_admin')==='1';}catch(e){return false;}}
+  function lydRows(){
+    var b=budget(),t=typeSel.value,AL=areaList(),all=LYD.slice();
+    if(lydAdmin())all.push(LYD_SAMPLE);
+    return all.filter(function(x){
+      return (deal==='rent'?x.deal==='rent':x.deal!=='rent')&&(t==='all'||x.ty===t)&&(!AL.length||AL.some(function(o){return o.k===x.a;}))&&(!b[0]||x.v>=b[0])&&(!b[1]||x.v<=b[1]);
+    });
+  }
+  function renderLyd(){
+    var rows=lydRows(),w=$('lydWrap');
+    if(!rows.length){w.hidden=true;return;}
+    w.hidden=false;
+    $('lydT').textContent=lang==='en'?'LYD listings':'عقارات LYD';
+    $('lydB').textContent=lang==='en'?'Stay in the app':'داخل التطبيق';
+    $('lydGrid').innerHTML=rows.map(function(x,i){
+      var ph=x.photos&&x.photos[0]?x.photos[0]:'';
+      return '<div class="lcard" data-l="'+i+'"><div class="ph" style="background-image:url(\''+esc(ph)+'\')">'+(x.smp?'<span class="smp">'+(lang==='en'?'Sample':'نموذج')+'</span>':'')+(x.photos&&x.photos.length>1?'<span class="cnt">'+x.photos.length+' 📷</span>':'')+'</div><div class="bd"><div class="pr">'+fmt(x.v)+' <small>'+esc(tr('aed').trim())+'</small></div><div class="sp">'+(x.beds!=null?'<span>🛏 '+x.beds+'</span>':'')+(x.baths!=null?'<span>🛁 '+x.baths+'</span>':'')+(x.sqft?'<span>📐 '+fmt(x.sqft)+' sqft</span>':'')+'</div><h3 dir="auto">'+esc(lang==='en'?x.te:x.t)+'</h3><p>'+esc(lang==='en'?x.me:x.m)+'</p></div></div>';
+    }).join('');
+  }
+  function lydOpen(x){
+    var en=lang==='en',txt=(en?'Hello, I am interested in: ':'مرحباً، أنا مهتم بالعقار: ')+(en?x.te:x.t)+' ('+x.ref+')';
+    var wa=BROKER_WA?'https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(txt):'';
+    $('mdlB').innerHTML='<div class="gal">'+(x.photos||[]).map(function(u){return '<img loading="lazy" alt="" referrerpolicy="no-referrer" src="'+esc(u)+'">';}).join('')+'</div>'+
+      '<div class="pr" style="font-size:24px;font-weight:800">'+fmt(x.v)+' '+esc(tr('aed').trim())+'</div>'+
+      '<h3 dir="auto" style="margin:6px 0">'+esc(en?x.te:x.t)+'</h3><p style="margin:0;opacity:.75">'+esc(en?x.me:x.m)+'</p>'+
+      '<div class="chips2">'+(x.beds!=null?'<span>🛏 '+x.beds+(en?' bed':' غرف')+'</span>':'')+(x.baths!=null?'<span>🛁 '+x.baths+(en?' baths':' حمام')+'</span>':'')+(x.sqft?'<span>📐 '+fmt(x.sqft)+' sqft</span>':'')+'<span>#'+esc(x.ref)+'</span></div>'+
+      '<p style="line-height:1.8" dir="auto">'+esc(en?x.de:x.d)+'</p>'+
+      (wa?'<a class="go" target="_blank" rel="noopener noreferrer" href="'+esc(wa)+'">'+(en?'Contact on WhatsApp':'تواصل عبر واتساب')+'</a>':'');
+    $('mdl').querySelector('.mbox').classList.add('big');
+    $('mdl').hidden=false;
+  }
+  $('lydGrid').addEventListener('click',function(e){var c=e.target.closest('.lcard');if(!c)return;var r=lydRows()[+c.getAttribute('data-l')];if(r)lydOpen(r);});
   /* ===== Android / install button ===== */
   function openM(h){$('mdlB').innerHTML=h;$('mdl').hidden=false;}
-  function closeM(){$('mdl').hidden=true;}
+  function closeM(){$('mdl').hidden=true;var b=$('mdl').querySelector('.mbox');if(b)b.classList.remove('big');}
   $('mdlX').addEventListener('click',closeM);
   $('mdl').addEventListener('click',function(e){if(e.target===$('mdl'))closeM();});
   function getAppLabel(){var t=$('getAppT');if(t)t.textContent=lang==='en'?'Get the app on Android':'حمّل التطبيق على أندرويد';}
@@ -768,7 +826,7 @@ header p{color:#dfe5f5}
       }).catch(function(){$('admErr').textContent='Error';});
     });
   }
-  function adminOn(){
+  function adminOn(){try{renderLyd();}catch(e){}
     if($('admbar'))return;
     var bar=document.createElement('div');bar.className='admbar';bar.id='admbar';
     bar.innerHTML='<span>🔐 '+(lang==='en'?'Owner mode':'وضع المالك')+'</span><span><button type="button" id="admSp">'+(lang==='en'?'Sponsored card':'بطاقة ممولة')+'</button> <button type="button" id="admOut">'+(lang==='en'?'Exit':'خروج')+'</button></span>';
