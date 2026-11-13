@@ -66,8 +66,8 @@ input::placeholder{color:var(--muted);opacity:.8}
 #seg button{height:52px;border-bottom:1px solid var(--line)}
 @keyframes icpop{0%{transform:scale(.4) rotate(-25deg)}60%{transform:scale(1.35) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
 @keyframes segin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-#h-f{display:flex;align-items:center;gap:8px}
-#h-f:before{content:'🔎';font-size:20px;animation:sway 2.6s ease-in-out infinite;display:inline-block}
+#h-f{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
 @keyframes sway{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(12deg) scale(1.1)}}
 @media (prefers-reduced-motion:reduce){.seg button,.seg button .ic,#h-f:before{animation:none!important;transition:none!important}}
 .seg button+button{border-inline-start:1px solid var(--line)}
@@ -154,7 +154,7 @@ header:after{content:'';position:absolute;inset:auto 0 0 0;height:4px;background
 header h1{font-size:26px;letter-spacing:.2px}
 header p{color:#dfe5f5}
 #s-find{min-height:calc(100svh - 120px);margin-top:-44px;position:relative;display:flex;flex-direction:column}
-#s-find h2{color:#fff;border-inline-start-color:var(--gold);margin-bottom:14px}
+
 #s-find .filters{border-radius:22px;padding:18px;box-shadow:0 18px 40px rgba(10,18,40,.18);border:1px solid rgba(201,162,75,.35);backdrop-filter:blur(6px)}
 #s-find .gorow{margin-top:auto;position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:5;padding-top:18px;direction:inherit;justify-content:center}
 .gobtn{width:100%;max-width:520px;justify-content:center;height:60px;font-size:20px;border-radius:18px;background:linear-gradient(135deg,#c9a24b,#e6c66f);color:#14213d;box-shadow:0 10px 26px rgba(201,162,75,.45);position:relative;overflow:hidden}
@@ -190,6 +190,10 @@ header p{color:#dfe5f5}
 .adslot span.s{font-size:13px;color:var(--muted)}
 .adslot a.adbtn{margin-top:6px;display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 18px;border-radius:10px;background:var(--gold);color:var(--on-gold);font-weight:700;text-decoration:none;font-size:14px}
 @media (prefers-reduced-motion:reduce){.gobtn:before,.gobtn .arr,#platforms .card{animation:none!important;opacity:1!important;transform:none!important}}
+
+.card.spons{border:1.5px solid var(--gold);background:linear-gradient(180deg,rgba(201,162,75,.10),var(--surface));position:relative}
+.card.spons .adl2{position:absolute;top:10px;inset-inline-end:10px;z-index:2;background:#14213d;color:#fff;font-size:11px;padding:2px 9px;border-radius:99px}
+.card.spons ul{margin:0;padding-inline-start:18px;color:var(--muted);font-size:14px}
 </style>
 </head>
 <body>
@@ -497,6 +501,18 @@ header p{color:#dfe5f5}
      To earn from clicks: set ADSENSE_CLIENT (ca-pub-XXXX) and AD_SLOT_TOP/AD_SLOT_BOTTOM from your Google AdSense account.
      Until then each slot shows your own LYD offer (advertise-here via WhatsApp). */
   var ADSENSE_CLIENT='', AD_SLOT_TOP='', AD_SLOT_BOTTOM='';
+
+  /* ===== Sponsored cards (native ads) =====
+     Add paid advertisers here: {t:'title',img:'https://...jpg',pts:['point 1','point 2'],url:'https://...',b:'Register Now'} */
+  var SPONSORS=[];
+  function sponsorHtml(){
+    var sp=SPONSORS.length?SPONSORS[Math.floor(Date.now()/60000)%SPONSORS.length]:null;
+    var cov=sp&&sp.img?'<a class="cover" target="_blank" rel="sponsored noopener noreferrer" href="'+esc(sp.url)+'"><img loading="lazy" referrerpolicy="no-referrer" alt="" src="'+esc(sp.img)+'"></a>':'<div class="cover">'+coverSvg(tr('adT'),7)+'</div>';
+    var t=sp?sp.t:tr('adT'), pts=sp?sp.pts:[tr('adS')];
+    var btn=sp?'<a class="go" target="_blank" rel="sponsored noopener noreferrer" href="'+esc(sp.url)+'">'+esc(sp.b||tr('adB'))+'</a>':(BROKER_WA?'<a class="go" target="_blank" rel="noopener noreferrer" href="https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(tr('adMsg'))+'">'+tr('adB')+'</a>':'');
+    return '<div class="card spons"><span class="adl2">'+tr('adLbl')+'</span>'+cov+'<h3 dir="auto">'+esc(t)+'</h3><ul>'+pts.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>'+btn+'</div>';
+  }
+  function injectSponsor(){var g=$('platforms');if(!g)return;var c=g.children;var at=Math.min(3,c.length);var d=document.createElement('div');d.innerHTML=sponsorHtml();if(c[at])g.insertBefore(d.firstChild,c[at]);else g.appendChild(d.firstChild);}
   function renderAds(){
     [['ad1',AD_SLOT_TOP],['ad2',AD_SLOT_BOTTOM]].forEach(function(a){
       var el=$(a[0]); if(!el)return;
@@ -650,7 +666,7 @@ header p{color:#dfe5f5}
       });
     });
   })();
-  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();renderAds();}
+  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();injectSponsor();renderListings();renderAds();}
   function setInstall(){ $('installText').textContent=(isiOS&&!standalone)?tr('iosT'):tr('installT'); }
   function applyLang(){
     var h=document.documentElement; h.lang=lang; h.dir=lang==='en'?'ltr':'rtl';
