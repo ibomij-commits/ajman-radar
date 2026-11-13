@@ -201,10 +201,26 @@ header p{color:#dfe5f5}
 .pk .pn{font-size:16px;font-weight:700}
 .pk.hot{border:1.5px solid var(--gold);background:linear-gradient(180deg,rgba(201,162,75,.14),var(--surface))}
 .pk .go{align-self:stretch}
+
+.getapp{margin-top:12px;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:12px;border:1.5px solid var(--gold);background:rgba(255,255,255,.08);color:#fff;font:inherit;font-weight:700;cursor:pointer;transition:transform .18s,background .2s}
+.getapp:hover{transform:translateY(-2px);background:rgba(201,162,75,.25)}
+.getapp span:first-child{font-size:20px;animation:bob 1.6s ease-in-out infinite}
+.mdl{position:fixed;inset:0;background:rgba(8,14,30,.6);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
+.mdl[hidden]{display:none}
+.mbox{background:var(--surface);color:var(--ink);border-radius:18px;max-width:460px;width:100%;max-height:88vh;overflow:auto;padding:20px;position:relative;animation:subin .22s ease-out}
+.mbox h3{margin:0 0 10px;font-size:19px}
+.mbox ol{margin:8px 0 0;padding-inline-start:22px;line-height:1.9}
+.mbox input,.mbox textarea{width:100%;margin:4px 0 10px;border:1px solid var(--line);border-radius:10px;background:var(--field);color:var(--ink);font:inherit;padding:10px}
+.mbox textarea{min-height:76px}
+.mbox label{font-size:13px;color:var(--muted)}
+.mx{position:absolute;top:8px;inset-inline-end:10px;border:0;background:none;color:var(--muted);font-size:20px;cursor:pointer}
+.mbox .go{width:100%;border:0;cursor:pointer;font:inherit;font-weight:700}
+.admbar{position:fixed;bottom:0;inset-inline:0;background:#14213d;color:#fff;padding:8px 14px;z-index:40;display:flex;gap:10px;align-items:center;justify-content:space-between;font-size:14px}
+.admbar button{height:36px;padding:0 14px;border-radius:9px;border:0;background:var(--gold);color:#14213d;font:inherit;font-weight:700;cursor:pointer}
 </style>
 </head>
 <body>
-<header><div class="wrap"><button type="button" class="langbtn" id="langBtn" aria-label="Language / اللغة">EN</button><h1 data-t="title">رادار صفقات عجمان</h1><p data-t="tag">اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.</p></div></header>
+<header><div class="wrap"><button type="button" class="langbtn" id="langBtn" aria-label="Language / اللغة">EN</button><h1 data-t="title">رادار صفقات عجمان</h1><p data-t="tag">اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.</p><button type="button" class="getapp" id="getApp"><span aria-hidden="true">📲</span><span id="getAppT">حمّل التطبيق على أندرويد</span></button></div></header>
 
 <div class="wrap"><main>
 
@@ -285,6 +301,8 @@ header p{color:#dfe5f5}
 
   <div class="note" data-th="note"><b>عن الصور وأرقام التواصل:</b> تظهر على صفحة كل إعلان لدى المنصة، ومعها اسم الوكيل ورقم رخصته. هذا التطبيق لا يجمع الأرقام ولا ينسخ الإعلانات، ويفتح لك المصدر مباشرة.</div>
 
+
+<div class="mdl" id="mdl" hidden><div class="mbox" role="dialog" aria-modal="true"><button type="button" class="mx" id="mdlX" aria-label="close">✕</button><div id="mdlB"></div></div></div>
 </main></div>
 
 <script>
@@ -722,6 +740,66 @@ header p{color:#dfe5f5}
     deferred.userChoice.then(function(){deferred=null;box.classList.remove('show');});
   });
   window.addEventListener('appinstalled',function(){box.classList.remove('show');});
+
+  /* ===== Android / install button ===== */
+  function openM(h){$('mdlB').innerHTML=h;$('mdl').hidden=false;}
+  function closeM(){$('mdl').hidden=true;}
+  $('mdlX').addEventListener('click',closeM);
+  $('mdl').addEventListener('click',function(e){if(e.target===$('mdl'))closeM();});
+  function getAppLabel(){var t=$('getAppT');if(t)t.textContent=lang==='en'?'Get the app on Android':'حمّل التطبيق على أندرويد';}
+  getAppLabel();
+  var _al=applyLang; 
+  $('getApp').addEventListener('click',function(){
+    if(deferred){deferred.prompt();return;}
+    var en=lang==='en';
+    openM('<h3>'+(en?'Install on Android':'تثبيت التطبيق على أندرويد')+'</h3>'+(standalone?'<p>'+(en?'The app is already installed on this device.':'التطبيق مثبّت بالفعل على هذا الجهاز.')+'</p>':'<ol>'+(en?'<li>Open this page in <b>Chrome</b> on your phone.</li><li>Tap the <b>⋮</b> menu (top right).</li><li>Choose <b>Install app</b> or <b>Add to Home screen</b>.</li><li>Tap <b>Install</b>. The app icon appears on your home screen.</li>':'<li>افتح هذه الصفحة في متصفح <b>Chrome</b> على جوالك.</li><li>اضغط قائمة <b>⋮</b> (أعلى الشاشة).</li><li>اختر <b>تثبيت التطبيق</b> أو <b>إضافة إلى الشاشة الرئيسية</b>.</li><li>اضغط <b>تثبيت</b>، وستظهر أيقونة التطبيق على شاشتك.</li>')+'</ol>'));
+  });
+  /* ===== Owner (admin) mode: open with #admin in the link, or tap the logo title 5 times ===== */
+  var ADMIN_HASH='1af62a09f2c9490911f7a24ab299af7fdb5e450061684be7464b3b176a02fcf7';
+  function sha(t){var b=new TextEncoder().encode('lyd|'+t);return crypto.subtle.digest('SHA-256',b).then(function(d){return Array.prototype.map.call(new Uint8Array(d),function(x){return ('0'+x.toString(16)).slice(-2);}).join('');});}
+  function adminAsk(){
+    var en=lang==='en';
+    openM('<h3>'+(en?'Owner login':'دخول المالك')+'</h3><label>'+(en?'PIN code':'رمز الدخول')+'</label><input id="admPin" type="password" inputmode="numeric" autocomplete="off"><p id="admErr" class="meta"></p><button type="button" class="go" id="admGo">'+(en?'Enter':'دخول')+'</button>');
+    $('admGo').addEventListener('click',function(){
+      sha($('admPin').value.trim()).then(function(h){
+        if(h===ADMIN_HASH){try{sessionStorage.setItem('lyd_admin','1');}catch(e){} closeM(); adminOn();}
+        else{$('admErr').textContent=en?'Wrong code':'الرمز غير صحيح';}
+      }).catch(function(){$('admErr').textContent='Error';});
+    });
+  }
+  function adminOn(){
+    if($('admbar'))return;
+    var bar=document.createElement('div');bar.className='admbar';bar.id='admbar';
+    bar.innerHTML='<span>🔐 '+(lang==='en'?'Owner mode':'وضع المالك')+'</span><span><button type="button" id="admSp">'+(lang==='en'?'Sponsored card':'بطاقة ممولة')+'</button> <button type="button" id="admOut">'+(lang==='en'?'Exit':'خروج')+'</button></span>';
+    document.body.appendChild(bar);
+    $('admOut').addEventListener('click',function(){try{sessionStorage.removeItem('lyd_admin');}catch(e){} bar.remove();});
+    $('admSp').addEventListener('click',adminSponsor);
+  }
+  function adminSponsor(){
+    var en=lang==='en', cur={};try{cur=JSON.parse(localStorage.getItem('lyd_sponsor')||'{}');}catch(e){}
+    openM('<h3>'+(en?'Sponsored card':'بطاقة ممولة')+'</h3>'+
+      '<label>'+(en?'Title':'العنوان')+'</label><input id="spT" value="'+esc(cur.t||'')+'">'+
+      '<label>'+(en?'Image link (https://...)':'رابط الصورة (https://...)')+'</label><input id="spI" dir="ltr" value="'+esc(cur.img||'')+'">'+
+      '<label>'+(en?'Points (one per line)':'النقاط (كل نقطة في سطر)')+'</label><textarea id="spP">'+esc((cur.pts||[]).join('\n'))+'</textarea>'+
+      '<label>'+(en?'Destination link':'رابط الوجهة')+'</label><input id="spU" dir="ltr" value="'+esc(cur.url||'')+'">'+
+      '<label>'+(en?'Button text':'نص الزر')+'</label><input id="spB" value="'+esc(cur.b||'')+'">'+
+      '<button type="button" class="go" id="spSave">'+(en?'Preview here and copy code':'معاينة على جهازي ونسخ الكود')+'</button><p class="meta" id="spMsg"></p>');
+    $('spSave').addEventListener('click',function(){
+      var o={t:$('spT').value.trim(),img:$('spI').value.trim(),pts:$('spP').value.split('\n').map(function(x){return x.trim();}).filter(Boolean),url:$('spU').value.trim(),b:$('spB').value.trim()};
+      if(!o.t||!/^https?:\/\//.test(o.url)){$('spMsg').textContent=en?'Title and a valid link are required':'العنوان ورابط صحيح مطلوبان';return;}
+      try{localStorage.setItem('lyd_sponsor',JSON.stringify(o));}catch(e){}
+      var code=JSON.stringify(o);
+      try{navigator.clipboard.writeText(code).catch(function(){});}catch(e){}
+      $('spMsg').textContent=en?'Saved on this device and code copied. Send it to Claude to publish it for all visitors.':'حُفظت على جهازك ونُسخ الكود. أرسله لـ Claude ليُنشر لكل الزوار.';
+      refresh();
+    });
+  }
+  try{var ls=JSON.parse(localStorage.getItem('lyd_sponsor')||'null'); if(ls&&sessionStorage.getItem('lyd_admin')==='1'&&ls.t){SPONSORS=SPONSORS.concat([ls]);}}catch(e){}
+  (function(){var n=0,t=0,h=document.querySelector('header h1');
+    if(h)h.addEventListener('click',function(){var now=Date.now();if(now-t>2500)n=0;t=now;n++;if(n>=5){n=0;adminAsk();}});
+    if(location.hash==='#admin'){adminAsk();}
+    try{if(sessionStorage.getItem('lyd_admin')==='1')adminOn();}catch(e){}
+  })();
   try{ if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('sw.js').catch(function(){}); }catch(e){}
 })();
 </script>
