@@ -405,14 +405,16 @@ header h1,header p{padding-inline-end:64px}
   function coverSvg(n,ci){var c=COV[n]||(ci!==undefined?['#4b5563','#8b94a3']:['#0f1f3d','#2a4a85']),g='cv'+Math.abs(hash(n+ci));
     return '<svg viewBox="0 0 320 104" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="'+g+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+c[0]+'"/><stop offset="1" stop-color="'+c[1]+'"/></linearGradient></defs><rect width="320" height="104" fill="url(#'+g+')"/><circle cx="268" cy="30" r="14" fill="#fff" opacity=".25"/><g fill="#fff"><rect x="22" y="58" width="26" height="46" opacity=".22"/><rect x="54" y="38" width="30" height="66" opacity=".32"/><rect x="90" y="50" width="22" height="54" opacity=".22"/><rect x="118" y="26" width="34" height="78" opacity=".38"/><rect x="158" y="46" width="26" height="58" opacity=".26"/><rect x="190" y="34" width="30" height="70" opacity=".34"/><rect x="226" y="56" width="24" height="48" opacity=".22"/><rect x="256" y="44" width="32" height="60" opacity=".3"/></g><g fill="#fff" opacity=".5"><rect x="62" y="48" width="4" height="5"/><rect x="72" y="48" width="4" height="5"/><rect x="62" y="60" width="4" height="5"/><rect x="72" y="60" width="4" height="5"/><rect x="127" y="38" width="4" height="5"/><rect x="137" y="38" width="4" height="5"/><rect x="127" y="52" width="4" height="5"/><rect x="137" y="52" width="4" height="5"/><rect x="199" y="46" width="4" height="5"/><rect x="209" y="46" width="4" height="5"/></g><path d="M0 92 Q40 84 80 92 T160 92 T240 92 T320 92 V104 H0Z" fill="#fff" opacity=".3"/></svg>';}
   function hash(t){var h=0;for(var i=0;i<t.length;i++)h=(h*31+t.charCodeAt(i))|0;return h;}
+  var covN=0;
   var PH={ext:['photo-1485172519194-996068591de1','photo-1766321258844-6541b34b2940','photo-1768164630015-1ad8a3a574fe'],vil:['photo-1757361653037-dbf0d0a820ae','photo-1721222204126-e7042f2893b1','photo-1757362141189-8d2f7af341b0'],int:['photo-1769251846390-772c3a74b0da','photo-1746517757473-7c88850e539b'],bed:['photo-1631049421450-348ccd7f8949','photo-1750271334785-4f6008035021']};
   function coverImg(n,ci){if(ci!==undefined)return '';var t=typeSel.value,pool;
     if(t==='villas')pool=PH.vil;else if(t==='bed')pool=PH.bed;else if(t==='partition')pool=PH.int.concat(PH.bed);else if(t==='apartments')pool=PH.ext.concat(PH.int);else if(t==='land')pool=PH.vil.concat(PH.ext);else pool=PH.ext.concat(PH.vil,PH.int);
     if(t==='all'&&/Instagram|Marketplace|Facebook|TikTok/.test(n))pool=PH.int.concat(PH.bed,PH.vil);
-    var i=Math.abs(hash(n+t))%pool.length;
+    var i=(covN++ + Math.abs(hash(t)))%pool.length;
     return '<img loading="lazy" alt="" referrerpolicy="no-referrer" src="https://images.unsplash.com/'+pool[i]+'?auto=format&fit=crop&w=640&h=210&q=70" onerror="this.remove()">';}
   function coverHref(p){return p.multi&&p.multi.length?p.multi[0].u:p.u;}
   function renderPlatforms(){
+    covN=0;
     $('platforms').innerHTML=links().map(function(p){
       if(p.brand)return brandCard();
       return '<div class="card"><a class="cover" href="'+esc(coverHref(p))+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(p.n)+'" tabindex="-1">'+coverSvg(p.n,p.ci)+coverImg(p.n,p.ci)+'</a><span class="tag'+(p.ok?' ok':'')+'">'+esc(p.k)+'</span><h3 dir="auto">'+esc(p.n)+'</h3><p>'+esc(p.d)+
