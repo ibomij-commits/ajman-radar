@@ -107,89 +107,141 @@ input::placeholder{color:var(--muted);opacity:.8}
 .subpanel button.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold);font-weight:800}
 .seltags{display:none;margin-top:10px;gap:8px;flex-wrap:wrap}
 .seltags.open{display:flex}
-.seltags span{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--on-gold);font-weight:800;border-radius:999px;padding:6px 8px 6px 14px}
+.seltags span{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:var(--on-gold);font-weight:800;border-radius:999px;padding:6px 14px 6px 8px}
+[dir=rtl] .seltags span{padding:6px 8px 6px 14px}
 .seltags button{width:26px;height:26px;border-radius:50%;border:0;background:#0003;color:inherit;font:inherit;cursor:pointer;line-height:1}
 .multi{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 .multi a{font-size:14px;height:40px}
+header .wrap{position:relative}
+.langbtn{position:absolute;top:0;inset-inline-end:0;height:38px;min-width:54px;padding:0 14px;border-radius:99px;border:1.5px solid var(--gold);background:transparent;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+header h1,header p{padding-inline-end:64px}
 .rm{background:none;border:0;color:#c0392b;font:inherit;cursor:pointer;margin-top:6px}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>رادار صفقات عجمان</h1><p>اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.</p></div></header>
+<header><div class="wrap"><button type="button" class="langbtn" id="langBtn" aria-label="Language / اللغة">EN</button><h1 data-t="title">رادار صفقات عجمان</h1><p data-t="tag">اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.</p></div></header>
 
 <div class="wrap"><main>
 
-  <div class="install" id="install"><span id="installText">ثبّت التطبيق على شاشتك الرئيسية.</span><button type="button" id="installBtn" hidden>تثبيت</button></div>
+  <div class="install" id="install"><span id="installText">ثبّت التطبيق على شاشتك الرئيسية.</span><button type="button" id="installBtn" data-t="installB" hidden>تثبيت</button></div>
 
   <section aria-labelledby="h-f">
-    <h2 id="h-f">ماذا تبحث؟</h2>
+    <h2 id="h-f" data-t="hF">ماذا تبحث؟</h2>
     <div class="filters">
-      <div class="full"><span class="lbl" id="lbl-deal">الصفقة</span>
+      <div class="full"><span class="lbl" id="lbl-deal" data-t="lDeal">الصفقة</span>
         <div class="seg seg2" id="dealSeg" role="group" aria-labelledby="lbl-deal"></div></div>
-      <div class="full"><span class="lbl" id="lbl-type">نوع العقار</span>
+      <div class="full"><span class="lbl" id="lbl-type" data-t="lType">نوع العقار</span>
         <div class="seg" id="seg" role="group" aria-labelledby="lbl-type"></div></div>
-      <div class="full"><label for="area">المنطقة</label><select id="area"></select><div class="seltags" id="selTags"></div><div class="subpanel" id="subPanel" aria-live="polite"></div></div>
+      <div class="full"><label for="area" data-t="lArea">المنطقة</label><select id="area"></select><div class="seltags" id="selTags"></div><div class="subpanel" id="subPanel" aria-live="polite"></div></div>
       <div class="full"><label for="pmin" id="budgetLbl">ميزانيتك (درهم)</label>
-        <div class="range"><input id="pmin" inputmode="numeric" placeholder="من" autocomplete="off"><input id="pmax" inputmode="numeric" placeholder="إلى" autocomplete="off"></div>
-        <div class="chips" id="chips" role="group" aria-label="شرائح الميزانية"></div></div>
+        <div class="range"><input id="pmin" inputmode="numeric" data-ph="from" placeholder="من" autocomplete="off"><input id="pmax" inputmode="numeric" data-ph="to" placeholder="إلى" autocomplete="off"></div>
+        <div class="chips" id="chips" role="group" data-al="chipsAria" aria-label="شرائح الميزانية"></div></div>
     </div>
     <div class="summary" id="summary" aria-live="polite"></div>
   </section>
 
   <section aria-labelledby="h-p">
-    <h2 id="h-p">افتح الإعلانات الفعلية</h2>
-    <p class="sub">كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق.</p>
+    <h2 id="h-p" data-t="hP">افتح الإعلانات الفعلية</h2>
+    <p class="sub" data-t="subP">كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق.</p>
     <div class="grid" id="platforms"></div>
-    <button type="button" class="addbtn" id="addBtn">+ إضافة موقع أو صفحة</button>
-    <button type="button" class="addbtn" id="updBtn">⟳ تحديث التطبيق والقائمة</button>
+    <button type="button" class="addbtn" id="addBtn" data-t="addBtn">+ إضافة موقع أو صفحة</button>
+    <button type="button" class="addbtn" id="updBtn" data-t="updBtn">⟳ تحديث التطبيق والقائمة</button>
     <div class="addform" id="addForm">
-      <input id="cName" placeholder="اسم الموقع أو الصفحة" dir="auto">
-      <input id="cUrl" placeholder="الرابط https://..." dir="ltr" inputmode="url">
-      <small>اختياري: ضع {q} في الرابط ليُستبدل ببحثك (النوع + المنطقة + الميزانية)، مثل https://www.tiktok.com/search?q={q}</small>
-      <button type="button" class="go" id="cSave">حفظ</button>
+      <input id="cName" data-ph="cName" placeholder="اسم الموقع أو الصفحة" dir="auto">
+      <input id="cUrl" data-ph="cUrl" placeholder="الرابط https://..." dir="ltr" inputmode="url">
+      <small data-t="cHint">اختياري: ضع {q} في الرابط ليُستبدل ببحثك (النوع + المنطقة + الميزانية)، مثل https://www.tiktok.com/search?q={q}</small>
+      <button type="button" class="go" id="cSave" data-t="cSave">حفظ</button>
     </div>
   </section>
 
   <section aria-labelledby="h-o">
-    <h2 id="h-o">هل تملك عقارًا وتريد عرضه؟</h2>
-    <p class="sub">أرسل بيانات عقارك إلى الوسيط، وسيتواصل معك لعرضه على الزبائن.</p>
-    <button type="button" class="ownbtn" id="ownBtn">+ أريد عرض عقاري</button>
+    <h2 id="h-o" data-t="hO">هل تملك عقارًا وتريد عرضه؟</h2>
+    <p class="sub" data-t="subO">أرسل بيانات عقارك إلى الوسيط، وسيتواصل معك لعرضه على الزبائن.</p>
+    <button type="button" class="ownbtn" id="ownBtn" data-t="ownBtn">+ أريد عرض عقاري</button>
     <form class="ownform" id="ownForm" autocomplete="off">
-      <div class="two"><div><label>الصفقة</label><select id="oDeal"><option>بيع</option><option>إيجار</option></select></div>
-      <div><label>نوع العقار</label><select id="oType"><option>شقة</option><option>فيلا</option><option>أرض</option><option>محل / مكتب</option></select></div></div>
-      <div><label>المنطقة</label><select id="oArea"></select></div>
-      <div><label>رابط الموقع على الخريطة (اختياري)</label><input id="oMap" dir="ltr" inputmode="url" placeholder="https://maps.google.com/..."></div>
-      <div class="two"><div><label>عدد الغرف</label><input id="oBeds" inputmode="numeric"></div><div><label>عدد الحمامات</label><input id="oBaths" inputmode="numeric"></div></div>
-      <div class="two"><div><label>المساحة (قدم² أو م²)</label><input id="oSize"></div><div><label>السعر المطلوب (درهم)</label><input id="oPrice" inputmode="numeric"></div></div>
-      <div class="two"><div><label>اسمك</label><input id="oName"></div><div><label>رقم هاتفك</label><input id="oPhone" dir="ltr" inputmode="tel"></div></div>
-      <div><label>ملاحظات (طابق، تشطيب، مفروش...)</label><textarea id="oNote"></textarea></div>
-      <button type="submit" class="ownbtn" id="oSend">إرسال الطلب</button>
+      <div class="two"><div><label data-t="lDeal">الصفقة</label><select id="oDeal"><option value="بيع" data-t="sell">بيع</option><option value="إيجار" data-t="rent">إيجار</option></select></div>
+      <div><label data-t="lType">نوع العقار</label><select id="oType"><option value="شقة" data-t="tApt">شقة</option><option value="فيلا" data-t="tVilla">فيلا</option><option value="أرض" data-t="tLand">أرض</option><option value="محل / مكتب" data-t="tShop">محل / مكتب</option></select></div></div>
+      <div><label data-t="lArea">المنطقة</label><select id="oArea"></select></div>
+      <div><label data-t="lMap">رابط الموقع على الخريطة (اختياري)</label><input id="oMap" dir="ltr" inputmode="url" placeholder="https://maps.google.com/..."></div>
+      <div class="two"><div><label data-t="lBeds">عدد الغرف</label><input id="oBeds" inputmode="numeric"></div><div><label data-t="lBaths">عدد الحمامات</label><input id="oBaths" inputmode="numeric"></div></div>
+      <div class="two"><div><label data-t="lSize">المساحة (قدم² أو م²)</label><input id="oSize"></div><div><label data-t="lPrice">السعر المطلوب (درهم)</label><input id="oPrice" inputmode="numeric"></div></div>
+      <div class="two"><div><label data-t="lName">اسمك</label><input id="oName"></div><div><label data-t="lPhone">رقم هاتفك</label><input id="oPhone" dir="ltr" inputmode="tel"></div></div>
+      <div><label data-t="lNote">ملاحظات (طابق، تشطيب، مفروش...)</label><textarea id="oNote"></textarea></div>
+      <button type="submit" class="ownbtn" id="oSend" data-t="send">إرسال الطلب</button>
       <p id="oStatus" aria-live="polite" style="margin:0;font-weight:700"></p>
     </form>
   </section>
 
   <section aria-labelledby="h-m">
-    <h2 id="h-m">نبض السوق (أرقام رسمية)</h2>
-    <p class="sub">من دائرة الأراضي وتنظيم العقار في عجمان، كما نُشرت في الصحافة.</p>
+    <h2 id="h-m" data-t="hM">نبض السوق (أرقام رسمية)</h2>
+    <p class="sub" data-t="subM">من دائرة الأراضي وتنظيم العقار في عجمان، كما نُشرت في الصحافة.</p>
     <div class="grid" id="stats"></div>
   </section>
 
   <section aria-labelledby="h-l">
-    <h2 id="h-l">عيّنات من إعلانات اليوم</h2>
-    <p class="sub">وُجدت يوم 13 نوفمبر 2026 على المنصات. قد يُباع العقار أو يتغير سعره، فتأكد من صفحة الإعلان.</p>
+    <h2 id="h-l" data-t="hL">عيّنات من إعلانات اليوم</h2>
+    <p class="sub" data-t="subL">وُجدت يوم 13 نوفمبر 2026 على المنصات. قد يُباع العقار أو يتغير سعره، فتأكد من صفحة الإعلان.</p>
     <div class="grid" id="listings"></div>
   </section>
 
-  <div class="note"><b>عن الصور وأرقام التواصل:</b> تظهر على صفحة كل إعلان لدى المنصة، ومعها اسم الوكيل ورقم رخصته. هذا التطبيق لا يجمع الأرقام ولا ينسخ الإعلانات، ويفتح لك المصدر مباشرة.</div>
+  <div class="note" data-th="note"><b>عن الصور وأرقام التواصل:</b> تظهر على صفحة كل إعلان لدى المنصة، ومعها اسم الوكيل ورقم رخصته. هذا التطبيق لا يجمع الأرقام ولا ينسخ الإعلانات، ويفتح لك المصدر مباشرة.</div>
 
 </main></div>
 
 <script>
 (function(){
+  var lang='ar'; try{var sl=localStorage.getItem('ajman_lang'); if(sl==='en'||sl==='ar')lang=sl; else if(/^en/i.test(navigator.language||''))lang='en';}catch(e){}
+  var T={
+  ar:{title:'رادار صفقات عجمان',tag:'اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.',
+   installT:'ثبّت التطبيق على شاشتك الرئيسية.',installB:'تثبيت',iosT:'لتثبيت التطبيق: اضغط زر المشاركة في سفاري، ثم «إضافة إلى الشاشة الرئيسية».',
+   hF:'ماذا تبحث؟',lDeal:'الصفقة',lType:'نوع العقار',lArea:'المنطقة',budget:'ميزانيتك (درهم)',budgetRent:'ميزانيتك السنوية (درهم)',from:'من',to:'إلى',chipsAria:'شرائح الميزانية',
+   buy:'شراء',rent:'إيجار',sell:'بيع',all:'الكل',apts:'شقق',villas:'فلل',lands:'أراضٍ',allTypes:'كل الأنواع',tApt:'شقة',tVilla:'فيلا',tLand:'أرض',tShop:'محل / مكتب',
+   hP:'افتح الإعلانات الفعلية',subP:'كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق.',
+   addBtn:'+ إضافة موقع أو صفحة',updBtn:'⟳ تحديث التطبيق والقائمة',updating:'جارٍ التحديث...',cName:'اسم الموقع أو الصفحة',cUrl:'الرابط https://...',
+   cHint:'اختياري: ضع {q} في الرابط ليُستبدل ببحثك (النوع + المنطقة + الميزانية)، مثل https://www.tiktok.com/search?q={q}',cSave:'حفظ',
+   hO:'هل تملك عقارًا وتريد عرضه؟',subO:'أرسل بيانات عقارك إلى الوسيط، وسيتواصل معك لعرضه على الزبائن.',ownBtn:'+ أريد عرض عقاري',
+   lMap:'رابط الموقع على الخريطة (اختياري)',lBeds:'عدد الغرف',lBaths:'عدد الحمامات',lSize:'المساحة (قدم² أو م²)',lPrice:'السعر المطلوب (درهم)',lName:'اسمك',lPhone:'رقم هاتفك',lNote:'ملاحظات (طابق، تشطيب، مفروش...)',send:'إرسال الطلب',chooseArea:'اختر المنطقة',
+   sending:'جارٍ الإرسال...',sentOk:'✓ وصل طلبك إلى الوسيط، وسيتواصل معك قريبًا.',sentFail:'تعذّر الإرسال المباشر. أرسله عبر واتساب:',
+   hM:'نبض السوق (أرقام رسمية)',subM:'من دائرة الأراضي وتنظيم العقار في عجمان، كما نُشرت في الصحافة.',hL:'عيّنات من إعلانات اليوم',subL:'وُجدت يوم 13 نوفمبر 2026 على المنصات. قد يُباع العقار أو يتغير سعره، فتأكد من صفحة الإعلان.',
+   note:'<b>عن الصور وأرقام التواصل:</b> تظهر على صفحة كل إعلان لدى المنصة، ومعها اسم الوكيل ورقم رخصته. هذا التطبيق لا يجمع الأرقام ولا ينسخ الإعلانات، ويفتح لك المصدر مباشرة.',
+   ajman:'عجمان',forSale:'للبيع',forRentW:'للإيجار',willOpen:'سيفتح:',noBudget:'بدون ميزانية',
+   perYear:' درهم سنويًا',aed:' درهم',between:'بين {a} و {b}',upto:'حتى {b}',fromN:'من {a}',
+   filt:'مفلتر بميزانيتك',portal:'منصة عقارية',gsearch:'بحث موجّه في Google',needAcc:'يتطلب حسابًا',hashtag:'وسم',video:'فيديو',general:'بحث عام',added:'مضاف',mine:'موقع أضفته أنت.',
+   dBayut:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',dPF:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',dFB:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',
+   dMktRent:'عقارات للإيجار في سوق فيسبوك. يتطلب تسجيل دخولك.',dMktSale:'عقارات للبيع في سوق فيسبوك. يتطلب تسجيل دخولك.',dIGRent:'منشورات الوسطاء تحت وسم ايجارات عجمان.',dIGSale:'منشورات الوسطاء تحت وسم عقارات عجمان.',
+   dTT:'فيديوهات الوسطاء وجولات العقارات. لا تُعرض فيها أسعار مفلترة.',dGG:'بحث عام يجمع ما سبق ومواقع الوكالات الصغيرة.',
+   openP:'فتح: ',noBud:' — بدون ميزانية',openRes:'فتح النتائج',allPrices:'بدون ميزانية (كل الأسعار)',similar:'بحث عن إعلانات مماثلة (Google)',rm:'حذف من القائمة',
+   brandSub:'وسيط عقاري في عجمان · عروض مباشرة من المُلّاك',brandGo:'أريد عرض عقاري',brandApp:'· تطبيقي: رادار صفقات عجمان',
+   allOf:'كل {n}',remove:'إزالة',src:'المصدر: ',openL:'فتح الإعلان',emptyL:'لا توجد عيّنات ضمن هذا الاختيار. افتح المنصات أعلاه لرؤية النتائج الحالية.',orderTitle:'طلب عرض عقار'},
+  en:{title:'Ajman Deal Radar',tag:'Pick type, area and budget, then open the live listings on each platform.',
+   installT:'Install the app on your home screen.',installB:'Install',iosT:'To install: tap Share in Safari, then "Add to Home Screen".',
+   hF:'What are you looking for?',lDeal:'Deal',lType:'Property type',lArea:'Area',budget:'Your budget (AED)',budgetRent:'Your yearly budget (AED)',from:'From',to:'To',chipsAria:'Budget bands',
+   buy:'Buy',rent:'Rent',sell:'Sell',all:'All',apts:'Apartments',villas:'Villas',lands:'Land',allTypes:'All types',tApt:'Apartment',tVilla:'Villa',tLand:'Land',tShop:'Shop / office',
+   hP:'Open live listings',subP:'Each button opens the current search results on the platform itself, with photos, details and advertiser info. If nothing matches your budget in this area, a platform may show other properties, so widen the budget or pick all areas.',
+   addBtn:'+ Add a site or page',updBtn:'⟳ Update app & list',updating:'Updating...',cName:'Site or page name',cUrl:'Link https://...',
+   cHint:'Optional: put {q} in the link to be replaced by your search (type + area + budget), e.g. https://www.tiktok.com/search?q={q}',cSave:'Save',
+   hO:'Own a property and want to list it?',subO:'Send your property details to the broker, who will contact you to present it to clients.',ownBtn:'+ List my property',
+   lMap:'Map location link (optional)',lBeds:'Bedrooms',lBaths:'Bathrooms',lSize:'Size (sq ft or m²)',lPrice:'Asking price (AED)',lName:'Your name',lPhone:'Your phone number',lNote:'Notes (floor, finishing, furnished...)',send:'Send request',chooseArea:'Choose area',
+   sending:'Sending...',sentOk:'✓ Your request reached the broker, who will contact you soon.',sentFail:'Direct send failed. Send it via WhatsApp:',
+   hM:'Market pulse (official figures)',subM:'From Ajman Department of Land and Real Estate Regulation, as reported in the press.',hL:'Sample listings from today',subL:'Found on 13 November 2026 on the platforms. A property may be sold or its price may change, so check the listing page.',
+   note:'<b>About photos and contact numbers:</b> they appear on each listing page on the platform, along with the agent name and licence number. This app does not collect numbers or copy listings; it opens the source directly.',
+   ajman:'Ajman',forSale:'for sale',forRentW:'for rent',willOpen:'Will open:',noBudget:'No budget',
+   perYear:' AED per year',aed:' AED',between:'Between {a} and {b}',upto:'Up to {b}',fromN:'From {a}',
+   filt:'Filtered to your budget',portal:'Property portal',gsearch:'Targeted Google search',needAcc:'Account required',hashtag:'Hashtag',video:'Video',general:'General search',added:'Added',mine:'A site you added.',
+   dBayut:'Property portal with licensed agents, a map and area price comparison.',dPF:'Listings from agents and developers, with photos and project payment plans.',dFB:'Public posts from agents and owners in pages and groups.',
+   dMktRent:'Rental properties on Facebook Marketplace. Requires you to sign in.',dMktSale:'Properties for sale on Facebook Marketplace. Requires you to sign in.',dIGRent:'Broker posts under the #ajmanrentals hashtag.',dIGSale:'Broker posts under the #ajmanrealestate hashtag.',
+   dTT:'Broker videos and property tours. Filtered prices are not shown.',dGG:'General search covering all of the above plus small agency sites.',
+   openP:'Open: ',noBud:' — no budget',openRes:'Open results',allPrices:'No budget (all prices)',similar:'Find similar listings (Google)',rm:'Remove from list',
+   brandSub:'Real estate broker in Ajman · direct offers from owners',brandGo:'List my property',brandApp:'· My app: Ajman Deal Radar',
+   allOf:'All {n}',remove:'Remove',src:'Source: ',openL:'Open listing',emptyL:'No samples match this selection. Open the platforms above to see current results.',orderTitle:'Property listing request'}
+  };
+  function tr(k){return T[lang][k]||T.ar[k]||k;}
+  var AREA_EN={'':'All Ajman areas','al-nuaimiya':'Al Nuaimiya','al-rashidiya':'Al Rashidiya','emirates-city':'Emirates City','ajman-downtown':'Ajman Downtown','ajman-uptown':'Ajman Uptown','al-helio':'Al Helio','al-yasmeen':'Al Yasmeen','al-zahya':'Al Zahya','al-zorah':'Al Zorah','al-amerah':'Al Amerah','al-mowaihat':'Al Mowaihat','al-rawda':'Al Rawda','al-alia':'Al Alia','al-bahia':'Al Bahia','al-bustan':'Al Bustan','al-jurf':'Al Jurf','al-sawan':'Al Sawan','al-raqaib':'Al Raqaib','al-hamidiya':'Al Hamidiya','garden-city':'Garden City','liwara-1':'Liwara 1','liwara-2':'Liwara 2','al-tallah-2':'Al Tallah 2','masfoot':'Masfout'};
+  var TYPE_W={ar:{all:'عقار',apartments:'شقة',villas:'فيلا',land:'أرض'},en:{all:'property',apartments:'apartment',villas:'villa',land:'land'}};
   /* [مفتاح Property Finder، مفتاح Bayut، الاسم]. الرمزان مأخوذان من قوائم المناطق في المنصتين. */
   var AREAS=[
     ['','','كل مناطق عجمان'],['al-nuaimiya','al-nuaimiya','النعيمية'],['al-rashidiya','al-rashidiya','الراشدية'],
-    ['emirates-city','emirates-city','مدينة الإمارات'],['ajman-downtown','ajman-downtown','وسط مدينة عجمان'],
+    ['emirates-city','emirates-city','إمارات ستي'],['ajman-downtown','ajman-downtown','وسط مدينة عجمان'],
     ['ajman-uptown','ajman-uptown','أبتاون عجمان'],['al-helio','al-helio','الحليو'],['al-yasmeen','al-yasmeen','الياسمين'],
     ['al-zahya','al-zahya','الزاهية'],['al-zorah','al-zorah','الزورا'],['al-amerah','al-amerah','العامرة'],
     ['al-mowaihat','al-mowaihat','الموهيات'],['al-rawda','al-rawda','الروضة'],['al-alia','al-alia','العالية'],
@@ -198,15 +250,14 @@ input::placeholder{color:var(--muted);opacity:.8}
     ['garden-city','garden-city','جاردن سيتي'],['liwara-1','liwara-1','ليوارة 1'],['liwara-2','liwara-2','ليوارة 2'],
     ['al-tallah-2','al-tallah-2','الطلة 2'],['masfoot','masfout','مصفوت']
   ];
-  var TYPE_AR={all:'عقار',apartments:'شقة',villas:'فيلا',land:'أرض'};
   var $=function(id){return document.getElementById(id)};
   var areaSel=$('area'), typeSel={value:'all'};
   var deal='sale';
-  var DEALS=[['sale','شراء'],['rent','إيجار']];
-  var TYPES_ALL=[['all','الكل'],['apartments','شقق'],['villas','فلل'],['land','أراضٍ']];
-  function types(){return deal==='rent'?TYPES_ALL.slice(0,3):TYPES_ALL;}
+  function DEALS(){return [['sale',tr('buy')],['rent',tr('rent')]];}
+  function TA(){return [['all',tr('all')],['apartments',tr('apts')],['villas',tr('villas')],['land',tr('lands')]];}
+  function types(){var a=TA();return deal==='rent'?a.slice(0,3):a;}
   function renderDeal(){
-    $('dealSeg').innerHTML=DEALS.map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(deal===x[0])+'">'+x[1]+'</button>';}).join('');
+    $('dealSeg').innerHTML=DEALS().map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(deal===x[0])+'">'+x[1]+'</button>';}).join('');
   }
   $('dealSeg').addEventListener('click',function(e){
     var b=e.target.closest('button'); if(!b||b.dataset.v===deal)return;
@@ -219,13 +270,20 @@ input::placeholder{color:var(--muted);opacity:.8}
     $('seg').innerHTML=types().map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(typeSel.value===x[0])+'">'+x[1]+'</button>';}).join('');
   }
   $('seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;typeSel.value=b.dataset.v;refresh();});
-  AREAS.forEach(function(a){var o=document.createElement('option');o.value=a[0];o.textContent=a[2];areaSel.appendChild(o);});
+  function fillAreas(){
+    var v=areaSel.value; areaSel.innerHTML='';
+    AREAS.forEach(function(a){var o=document.createElement('option');o.value=a[0];o.textContent=nameOf(a[0]);areaSel.appendChild(o);});
+    areaSel.value=v;
+    var ov=$('oArea').value;
+    $('oArea').innerHTML='<option value="">'+esc(tr('chooseArea'))+'</option>'+AREAS.map(function(a){return '<option value="'+esc(a[2])+'">'+esc(nameOf(a[0]))+'</option>';}).join('');
+    $('oArea').value=ov;
+  }
 
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function google(q){return 'https://www.google.com/search?q='+encodeURIComponent(q);}
   var SUBS={'al-nuaimiya':3,'al-rashidiya':3,'al-rawda':3,'al-jurf':3,'al-mowaihat':3,'al-helio':2}, sel=[];
   var EM=['🏙️','🏘️','🏡'];
-  function nameOf(k){for(var i=0;i<AREAS.length;i++)if(AREAS[i][0]===k)return AREAS[i][2];return k;}
+  function nameOf(k){for(var i=0;i<AREAS.length;i++)if(AREAS[i][0]===k)return lang==='en'?(AREA_EN[k]||AREAS[i][2]):AREAS[i][2];return k;}
   function bayutKeyOf(k){for(var i=0;i<AREAS.length;i++)if(AREAS[i][0]===k)return AREAS[i][1];return '';}
   function areaList(){return sel.map(function(x){var p=x.split('|');return {k:p[0],s:+p[1]};});}
   function lbl(o){return nameOf(o.k)+(o.s?' '+o.s:'');}
@@ -241,14 +299,14 @@ input::placeholder{color:var(--muted);opacity:.8}
   function renderSub(){
     var k=areaSel.value, n=SUBS[k]||0, el=$('subPanel');
     if(!n){el.className='subpanel';el.innerHTML='';return;}
-    var nm=nameOf(k), h='<button type="button" data-s="0" class="'+(sel.indexOf(k+'|0')>-1?'on':'')+'">📍 كل '+esc(nm)+'</button>';
+    var nm=nameOf(k), h='<button type="button" data-s="0" class="'+(sel.indexOf(k+'|0')>-1?'on':'')+'">📍 '+tr('allOf').replace('{n}',esc(nm))+'</button>';
     for(var i=1;i<=n;i++)h+='<button type="button" data-s="'+i+'" class="'+(sel.indexOf(k+'|'+i)>-1?'on':'')+'">'+EM[(i-1)%3]+' '+esc(nm)+' '+i+'</button>';
     el.innerHTML=h; el.className='subpanel open';
   }
   function renderTags(){
     var el=$('selTags');
     if(!sel.length){el.className='seltags';el.innerHTML='';return;}
-    el.innerHTML=areaList().map(function(o,i){return '<span>'+esc(lbl(o))+'<button type="button" data-x="'+i+'" aria-label="إزالة">×</button></span>';}).join('');
+    el.innerHTML=areaList().map(function(o,i){return '<span>'+esc(lbl(o))+'<button type="button" data-x="'+i+'" aria-label="'+tr('remove')+'">×</button></span>';}).join('');
     el.className='seltags open';
   }
   $('selTags').addEventListener('click',function(e){var x=e.target.getAttribute&&e.target.getAttribute('data-x');if(x===null||x===undefined)return;sel.splice(+x,1);refresh();});
@@ -258,19 +316,19 @@ input::placeholder{color:var(--muted);opacity:.8}
   function budget(){var lo=num($('pmin').value),hi=num($('pmax').value);if(hi&&lo>hi){var x=lo;lo=hi;hi=x;}return [lo,hi];}
   function budgetText(){
     var b=budget();
-    var suf=deal==='rent'?' درهم سنويًا':' درهم';
-    if(b[0]&&b[1])return 'بين '+fmt(b[0])+' و '+fmt(b[1])+suf;
-    if(b[1])return 'حتى '+fmt(b[1])+suf;
-    if(b[0])return 'من '+fmt(b[0])+suf;
+    var suf=deal==='rent'?tr('perYear'):tr('aed');
+    if(b[0]&&b[1])return tr('between').replace('{a}',fmt(b[0])).replace('{b}',fmt(b[1]))+suf;
+    if(b[1])return tr('upto').replace('{b}',fmt(b[1]))+suf;
+    if(b[0])return tr('fromN').replace('{a}',fmt(b[0]))+suf;
     return '';
   }
 
   function links(){
-    var t=typeSel.value, AL=areaList(), a=AL.length, ar=areaAr(), tw=TYPE_AR[t], b=budget(), bt=budgetText();
+    var t=typeSel.value, AL=areaList(), a=AL.length, ar=areaAr(), tw=TYPE_W[lang][t], b=budget(), bt=budgetText();
     var bq=[], pq=[];
     if(b[0]){bq.push('price_min='+b[0]);pq.push('pf='+b[0]);}
     if(b[1]){bq.push('price_max='+b[1]);pq.push('pt='+b[1]);}
-    var rent=deal==='rent', dw=rent?'للإيجار':'للبيع';
+    var rent=deal==='rent', dw=rent?tr('forRentW'):tr('forSale'), AJ=tr('ajman');
     var tb=(t==='all'?'property':t), tp=(t==='all'?'properties':t), rb=(rent?'to-rent':'for-sale');
     function bU(o,q){return 'https://www.bayut.com/'+rb+'/'+tb+'/ajman/'+(o?bayutPathOf(o):'')+(q&&bq.length?'?'+bq.join('&'):'');}
     function pU(o,q){return 'https://www.propertyfinder.ae/en/'+(rent?'rent':'buy')+'/ajman/'+tp+(rent?'-for-rent':'-for-sale')+(o?'-'+o.k:'')+'.html'+(q&&pq.length?'?'+pq.join('&'):'');}
@@ -279,59 +337,59 @@ input::placeholder{color:var(--muted);opacity:.8}
     var filtered=(t!=='all')||a||bt||rent;
     var duby='https://ajman.dubizzle.com/'+(rent?'property-for-rent/':'property-for-sale/');
     var duby2=google('site:ajman.dubizzle.com '+tw+' '+dw+' '+ar+' '+bt);
-    var fb=google('site:facebook.com '+tw+' '+dw+' '+ar+' عجمان '+bt);
-    var ig='https://www.instagram.com/explore/tags/'+encodeURIComponent(rent?'ايجارات_عجمان':'عقارات_عجمان')+'/';
-    var gg=google(tw+' '+dw+' '+ar+' عجمان '+bt);
+    var fb=google('site:facebook.com '+tw+' '+dw+' '+ar+' '+AJ+' '+bt);
+    var ig='https://www.instagram.com/explore/tags/'+encodeURIComponent(lang==='en'?(rent?'ajmanrentals':'ajmanrealestate'):(rent?'ايجارات_عجمان':'عقارات_عجمان'))+'/';
+    var gg=google(tw+' '+dw+' '+ar+' '+AJ+' '+bt);
     var mkt=rent?'https://www.facebook.com/marketplace/category/propertyrentals':'https://www.facebook.com/marketplace/category/propertyforsale';
     var base=[
-      {n:'Bayut',d:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:bayut,u2:bt?bayut0:'',ok:1,multi:multiOf(bU)},
-      {n:'Property Finder',d:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',k:bt?'مفلتر بميزانيتك':'منصة عقارية',u:pf,u2:bt?pf0:'',ok:1,multi:multiOf(pU)},
+      {n:'Bayut',d:tr('dBayut'),k:bt?tr('filt'):tr('portal'),u:bayut,u2:bt?bayut0:'',ok:1,multi:multiOf(bU)},
+      {n:'Property Finder',d:tr('dPF'),k:bt?tr('filt'):tr('portal'),u:pf,u2:bt?pf0:'',ok:1,multi:multiOf(pU)},
       {brand:1,n:'LYD Real Estate'},
-      {n:'Facebook',d:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',k:'بحث موجّه في Google',u:fb,ok:0},
-      {n:'Facebook Marketplace',d:(rent?'عقارات للإيجار':'عقارات للبيع')+' في سوق فيسبوك. يتطلب تسجيل دخولك.',k:'يتطلب حسابًا',u:mkt,ok:0},
-      {n:'Instagram',d:'منشورات الوسطاء تحت وسم '+(rent?'ايجارات عجمان.':'عقارات عجمان.'),k:'وسم',u:ig,ok:0},
-      {n:'TikTok',d:'فيديوهات الوسطاء وجولات العقارات. لا تُعرض فيها أسعار مفلترة.',k:'فيديو',u:'https://www.tiktok.com/search?q='+encodeURIComponent(tw+' '+dw+' '+ar+' عجمان'),ok:0},
-      {n:'Google',d:'بحث عام يجمع ما سبق ومواقع الوكالات الصغيرة.',k:'بحث عام',u:gg,ok:0}
+      {n:'Facebook',d:tr('dFB'),k:tr('gsearch'),u:fb,ok:0},
+      {n:'Facebook Marketplace',d:rent?tr('dMktRent'):tr('dMktSale'),k:tr('needAcc'),u:mkt,ok:0},
+      {n:'Instagram',d:rent?tr('dIGRent'):tr('dIGSale'),k:tr('hashtag'),u:ig,ok:0},
+      {n:'TikTok',d:tr('dTT'),k:tr('video'),u:'https://www.tiktok.com/search?q='+encodeURIComponent(tw+' '+dw+' '+ar+' '+AJ),ok:0},
+      {n:'Google',d:tr('dGG'),k:tr('general'),u:gg,ok:0}
     ];
-    var q=[tw,dw,ar,'عجمان',bt].join(' ').replace(/\s+/g,' ').trim();
+    var q=[tw,dw,ar,AJ,bt].join(' ').replace(/\s+/g,' ').trim();
     loadCustom().forEach(function(c,i){
       var u=c.u.indexOf('{q}')>-1?c.u.split('{q}').join(encodeURIComponent(q)):c.u;
-      base.push({n:c.n,d:'موقع أضفته أنت.',k:'مضاف',u:u,ok:0,ci:i});
+      base.push({n:c.n,d:tr('mine'),k:tr('added'),u:u,ok:0,ci:i});
     });
     return base;
   }
   function loadCustom(){try{var v=JSON.parse(localStorage.getItem('ajman_custom')||'[]');return Array.isArray(v)?v:[];}catch(e){return [];}}
   function saveCustom(a){try{localStorage.setItem('ajman_custom',JSON.stringify(a));}catch(e){}}
-  var BRAND_CARD='<div class="card brand"><div class="brow"><svg class="blogo" viewBox="85 5 130 130" aria-hidden="true"><rect x="85" y="5" width="130" height="130" rx="30" fill="#0f1f3d"/><path d="M110 88 L150 52 L190 88" fill="none" stroke="#c9a14a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M122 84 V112 H178 V84" fill="none" stroke="#c9a14a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><rect x="142" y="94" width="16" height="18" rx="3" fill="#c9a14a"/></svg><div><h3 dir="ltr" style="margin:0">LYD Real Estate</h3><p style="margin:4px 0 0">وسيط عقاري في عجمان · عروض مباشرة من المُلّاك</p></div></div><a class="go" href="#h-o" id="brandGo">أريد عرض عقاري</a><div class="brow sub2"><svg class="blogo sm" viewBox="85 5 130 130" aria-hidden="true"><rect x="85" y="5" width="130" height="130" rx="30" fill="#c9a14a"/><rect x="112" y="32" width="76" height="76" rx="10" fill="none" stroke="#0f1f3d" stroke-width="8"/><rect x="130" y="50" width="40" height="40" rx="5" fill="#0f1f3d"/><g stroke="#0f1f3d" stroke-width="6" stroke-linecap="round"><path d="M125 22v10M150 22v10M175 22v10M125 108v10M150 108v10M175 108v10M102 55h10M102 85h10M188 55h10M188 85h10"/></g></svg><span dir="ltr">LYD Digital</span><span>· تطبيقي: رادار صفقات عجمان</span></div></div>';
+  function brandCard(){return '<div class="card brand"><div class="brow"><svg class="blogo" viewBox="85 5 130 130" aria-hidden="true"><rect x="85" y="5" width="130" height="130" rx="30" fill="#0f1f3d"/><path d="M110 88 L150 52 L190 88" fill="none" stroke="#c9a14a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><path d="M122 84 V112 H178 V84" fill="none" stroke="#c9a14a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/><rect x="142" y="94" width="16" height="18" rx="3" fill="#c9a14a"/></svg><div><h3 dir="ltr" style="margin:0">LYD Real Estate</h3><p style="margin:4px 0 0">'+tr('brandSub')+'</p></div></div><a class="go" href="#h-o" id="brandGo">'+tr('brandGo')+'</a><div class="brow sub2"><svg class="blogo sm" viewBox="85 5 130 130" aria-hidden="true"><rect x="85" y="5" width="130" height="130" rx="30" fill="#c9a14a"/><rect x="112" y="32" width="76" height="76" rx="10" fill="none" stroke="#0f1f3d" stroke-width="8"/><rect x="130" y="50" width="40" height="40" rx="5" fill="#0f1f3d"/><g stroke="#0f1f3d" stroke-width="6" stroke-linecap="round"><path d="M125 22v10M150 22v10M175 22v10M125 108v10M150 108v10M175 108v10M102 55h10M102 85h10M188 55h10M188 85h10"/></g></svg><span dir="ltr">LYD Digital</span><span>'+tr('brandApp')+'</span></div></div>';}
   function renderPlatforms(){
     $('platforms').innerHTML=links().map(function(p){
-      if(p.brand)return BRAND_CARD;
+      if(p.brand)return brandCard();
       return '<div class="card"><span class="tag'+(p.ok?' ok':'')+'">'+esc(p.k)+'</span><h3 dir="auto">'+esc(p.n)+'</h3><p>'+esc(p.d)+
-        '</p>'+(p.multi?'<div class="multi">'+p.multi.map(function(m){return '<a class="go" href="'+esc(m.u)+'" target="_blank" rel="noopener noreferrer">فتح: '+esc(m.l)+'</a>'+(m.u0?'<a class="go alt" href="'+esc(m.u0)+'" target="_blank" rel="noopener noreferrer">'+esc(m.l)+' — بدون ميزانية</a>':'');}).join('')+'</div>':'<a class="go" href="'+esc(p.u)+'" target="_blank" rel="noopener noreferrer">فتح النتائج</a>')+
-        (p.u2&&!p.multi?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">'+(p.n==='Dubizzle'?'بحث عن إعلانات مماثلة (Google)':'بدون ميزانية (كل الأسعار)')+'</a>':'')+
-        (p.ci!==undefined?'<button type="button" class="rm" data-rm="'+p.ci+'">حذف من القائمة</button>':'')+'</div>';
+        '</p>'+(p.multi?'<div class="multi">'+p.multi.map(function(m){return '<a class="go" href="'+esc(m.u)+'" target="_blank" rel="noopener noreferrer">'+tr('openP')+esc(m.l)+'</a>'+(m.u0?'<a class="go alt" href="'+esc(m.u0)+'" target="_blank" rel="noopener noreferrer">'+esc(m.l)+tr('noBud')+'</a>':'');}).join('')+'</div>':'<a class="go" href="'+esc(p.u)+'" target="_blank" rel="noopener noreferrer">'+tr('openRes')+'</a>')+
+        (p.u2&&!p.multi?'<a class="go alt" href="'+esc(p.u2)+'" target="_blank" rel="noopener noreferrer">'+(p.n==='Dubizzle'?tr('similar'):tr('allPrices'))+'</a>':'')+
+        (p.ci!==undefined?'<button type="button" class="rm" data-rm="'+p.ci+'">'+tr('rm')+'</button>':'')+'</div>';
     }).join('');
   }
   function renderSummary(){
-    var t=typeSel.value, parts=[deal==='rent'?'إيجار':'شراء', t==='all'?'كل الأنواع':TYPE_AR[t]==='شقة'?'شقق':TYPE_AR[t]==='فيلا'?'فلل':'أراضٍ', sel.length?areaAr():'كل مناطق عجمان'];
-    var bt=budgetText(); parts.push(bt||'بدون ميزانية');
-    $('summary').innerHTML='سيفتح: <b>'+esc(parts.join(' · '))+'</b>';
+    var t=typeSel.value, tl=t==='all'?tr('allTypes'):TA().filter(function(x){return x[0]===t;})[0][1], parts=[deal==='rent'?tr('rent'):tr('buy'), tl, sel.length?areaAr():nameOf('')];
+    var bt=budgetText(); parts.push(bt||tr('noBudget'));
+    $('summary').innerHTML=esc(tr('willOpen'))+' <b>'+esc(parts.join(' · '))+'</b>';
   }
 
-  var BANDS_SALE=[['أقل من 300 ألف',0,300000],['300 – 500 ألف',300000,500000],['500 – 800 ألف',500000,800000],['800 ألف – 1.5 مليون',800000,1500000],['أكثر من 1.5 مليون',1500000,0]];
-  var BANDS_RENT=[['أقل من 20 ألف',0,20000],['20 – 40 ألف',20000,40000],['40 – 70 ألف',40000,70000],['70 – 120 ألف',70000,120000],['أكثر من 120 ألف',120000,0]];
+  var BANDS_SALE=[['أقل من 300 ألف','Under 300K',0,300000],['300 – 500 ألف','300 – 500K',300000,500000],['500 – 800 ألف','500 – 800K',500000,800000],['800 ألف – 1.5 مليون','800K – 1.5M',800000,1500000],['أكثر من 1.5 مليون','Over 1.5M',1500000,0]];
+  var BANDS_RENT=[['أقل من 20 ألف','Under 20K',0,20000],['20 – 40 ألف','20 – 40K',20000,40000],['40 – 70 ألف','40 – 70K',40000,70000],['70 – 120 ألف','70 – 120K',70000,120000],['أكثر من 120 ألف','Over 120K',120000,0]];
   function bands(){return deal==='rent'?BANDS_RENT:BANDS_SALE;}
   function renderChips(){
     var b=budget();
     $('chips').innerHTML=bands().map(function(x,i){
-      var on=(b[0]===x[1]&&b[1]===x[2]&&(b[0]||b[1]))?'true':'false';
-      return '<button type="button" data-i="'+i+'" aria-pressed="'+on+'">'+x[0]+'</button>';
+      var on=(b[0]===x[2]&&b[1]===x[3]&&(b[0]||b[1]))?'true':'false';
+      return '<button type="button" data-i="'+i+'" aria-pressed="'+on+'">'+(lang==='en'?x[1]:x[0])+'</button>';
     }).join('');
   }
   $('chips').addEventListener('click',function(e){
     var btn=e.target.closest('button'); if(!btn)return; var x=bands()[+btn.dataset.i];
-    var b=budget(), same=b[0]===x[1]&&b[1]===x[2];
-    $('pmin').value=same?'':(x[1]?fmt(x[1]):''); $('pmax').value=same?'':(x[2]?fmt(x[2]):''); refresh();
+    var b=budget(), same=b[0]===x[2]&&b[1]===x[3];
+    $('pmin').value=same?'':(x[2]?fmt(x[2]):''); $('pmax').value=same?'':(x[3]?fmt(x[3]):''); refresh();
   });
   ['pmin','pmax'].forEach(function(id){$(id).addEventListener('input',refresh);});
   areaSel.addEventListener('change',function(){
@@ -343,26 +401,26 @@ input::placeholder{color:var(--muted);opacity:.8}
   });
 
   var STATS=[
-    {n:'1,140',l:'صفقة في أكتوبر 2026 بقيمة 1.95 مليار درهم',u:'https://www.gulftoday.ae/business/2026/11/10/ajman-records-dhs195-billion-in-real-estate-transactions-in-october',s:'Gulf Today'},
-    {n:'1,143',l:'صفقة في سبتمبر 2026 بقيمة 1.9 مليار درهم',u:'https://www.gulftoday.ae/business/2026/10/06/ajman-real-estate-transactions-hit-dhs19-billion-in-september',s:'Gulf Today'},
-    {n:'6,815',l:'صفقة في النصف الأول 2026 بقيمة 10.8 مليار درهم',u:'https://mena.entrepreneur.com/business-news/ajman-real-estate-transactions-reach-aed10-8-billion-in-first-half-of-2026',s:'Entrepreneur Middle East'},
-    {n:'215 مليون',l:'أعلى صفقة بيع في النصف الأول 2026، في منطقة العامرة',u:'https://mena.entrepreneur.com/?p=38358',s:'Entrepreneur Middle East'},
-    {n:'مدينة الإمارات',l:'الأكثر تداولًا في النصف الأول 2026، تليها سيتي تاورز ثم أجمان وان',u:'https://mena.entrepreneur.com/business-news/ajman-real-estate-transactions-reach-aed10-8-billion-in-first-half-of-2026',s:'Entrepreneur Middle East'},
-    {n:'7.64 مليار',l:'قيمة 5,435 معاملة بيع وتداول في النصف الأول 2026',u:'https://www.gulftoday.ae/business/2026/07/14/ajman-real-estate-transactions-reach-dhs108-billion-in-h1-2026',s:'Gulf Today'}
+    {n:'1,140',ne:'1,140',le:'deals in October 2026 worth AED 1.95 billion',l:'صفقة في أكتوبر 2026 بقيمة 1.95 مليار درهم',u:'https://www.gulftoday.ae/business/2026/11/10/ajman-records-dhs195-billion-in-real-estate-transactions-in-october',s:'Gulf Today'},
+    {n:'1,143',ne:'1,143',le:'deals in September 2026 worth AED 1.9 billion',l:'صفقة في سبتمبر 2026 بقيمة 1.9 مليار درهم',u:'https://www.gulftoday.ae/business/2026/10/06/ajman-real-estate-transactions-hit-dhs19-billion-in-september',s:'Gulf Today'},
+    {n:'6,815',ne:'6,815',le:'deals in H1 2026 worth AED 10.8 billion',l:'صفقة في النصف الأول 2026 بقيمة 10.8 مليار درهم',u:'https://mena.entrepreneur.com/business-news/ajman-real-estate-transactions-reach-aed10-8-billion-in-first-half-of-2026',s:'Entrepreneur Middle East'},
+    {n:'215 مليون',ne:'AED 215M',le:'highest sale in H1 2026, in Al Amerah',l:'أعلى صفقة بيع في النصف الأول 2026، في منطقة العامرة',u:'https://mena.entrepreneur.com/?p=38358',s:'Entrepreneur Middle East'},
+    {n:'إمارات ستي',ne:'Emirates City',le:'Most traded in H1 2026, followed by City Towers then Ajman One',l:'الأكثر تداولًا في النصف الأول 2026، تليها سيتي تاورز ثم أجمان وان',u:'https://mena.entrepreneur.com/business-news/ajman-real-estate-transactions-reach-aed10-8-billion-in-first-half-of-2026',s:'Entrepreneur Middle East'},
+    {n:'7.64 مليار',ne:'AED 7.64B',le:'value of 5,435 sale and trading transactions in H1 2026',l:'قيمة 5,435 معاملة بيع وتداول في النصف الأول 2026',u:'https://www.gulftoday.ae/business/2026/07/14/ajman-real-estate-transactions-reach-dhs108-billion-in-h1-2026',s:'Gulf Today'}
   ];
-  $('stats').innerHTML=STATS.map(function(s){
-    return '<div class="card stat"><div class="n">'+esc(s.n)+'</div><div class="l">'+esc(s.l)+'</div><a href="'+esc(s.u)+'" target="_blank" rel="noopener noreferrer">المصدر: '+esc(s.s)+'</a></div>';
-  }).join('');
+  function renderStats(){ $('stats').innerHTML=STATS.map(function(s){
+    return '<div class="card stat"><div class="n">'+esc(lang==='en'?s.ne:s.n)+'</div><div class="l">'+esc(lang==='en'?s.le:s.l)+'</div><a href="'+esc(s.u)+'" target="_blank" rel="noopener noreferrer">'+tr('src')+esc(s.s)+'</a></div>';
+  }).join(''); }
 
   var L=[
-    {t:'استوديو فارغ في نعيمية تاور C مع موقف',v:255000,ty:'apartments',a:'al-nuaimiya',m:'النعيمية، عجمان',s:'Bayut',u:'https://www.bayut.com/property/details-17177361.html'},
-    {t:'شقة غرفة وصالة في نعيمية تاور B6، 794 قدم²، شاغرة',v:275000,ty:'apartments',a:'al-nuaimiya',m:'النعيمية، عجمان',s:'Bayut',u:'https://www.bayut.com/property/details-17177944.html'},
-    {t:'غرفتان للبيع في أجمان بيرل تاور، إطلالة بحرية',v:430000,ty:'apartments',a:'al-nuaimiya',m:'النعيمية، عجمان',s:'Property Finder',u:'https://www.propertyfinder.ae/en/buy/ajman/apartments-for-sale-al-nuaimiya.html',b:'افتح نتائج المنطقة'},
-    {t:'شقة غرفتين في سيتي تاور',v:499300,ty:'apartments',a:'al-nuaimiya',m:'النعيمية، عجمان',s:'Bayut',u:'https://www.bayut.com/property/details-17171183.html'},
-    {t:'فيلا حديثة من المالك مباشرة، رسوم التسجيل مشمولة، تملك حر',v:1420000,ty:'villas',a:'al-helio',m:'الحليو 2، عجمان',s:'Bayut',u:'https://www.bayut.com/for-sale/villas/ajman/al-helio/?price_min=1400000&price_max=1430000',b:'افتح نتائج المنطقة'},
-    {t:'فيلا مقابل حديقة الحميدية، طابقان وسطح، رسوم التسجيل مشمولة',v:1250000,ty:'villas',a:'al-helio',m:'الحليو 2، عجمان',s:'Bayut',u:'https://www.bayut.com/for-sale/villas/ajman/al-helio/?price_min=1200000&price_max=1300000',b:'افتح نتائج المنطقة'},
-    {t:'بيت عربي على أرض 600 م²، رخصة هدم وموافقة بناء أرضي + 6 طوابق',v:2100000,ty:'land',a:'al-nuaimiya',m:'النعيمية 3، عجمان',s:'Dubizzle',u:'https://uae.dubizzle.com/property-for-sale/land/2026/10/31/al-nuaimiya-3-ajman-a-prime-residential-14-189964/'},
-    {t:'فيلا زاوية، رسوم التسجيل مشمولة، قابل للتفاوض',v:2750000,ty:'villas',a:'al-alia',m:'العالية، عجمان',s:'Dubizzle',u:'https://ajman.dubizzle.com/property-for-sale/',b:'افتح نتائج دوبيزل'}
+    {t:'استوديو فارغ في نعيمية تاور C مع موقف',te:'Unfurnished studio in Nuaimiya Tower C with parking',me:'Al Nuaimiya, Ajman',v:255000,ty:'apartments',a:'al-nuaimiya',m:'النعيمية، عجمان',s:'Bayut',u:'https://www.bayut.com/property/details-17177361.html'},
+    {t:'شقة غرفة وصالة في نعيمية تاور B6، 794 قدم²، شاغرة',te:'1-bed in Nuaimiya Tower B6, 794 sq ft, vacant',me:'Al Nuaimiya, Ajman',v:275000,ty:'apartments',a:'al-nuaimiya',m:'النعيمية، عجمان',s:'Bayut',u:'https://www.bayut.com/property/details-17177944.html'},
+    {t:'غرفتان للبيع في أجمان بيرل تاور، إطلالة بحرية',te:'2-bed for sale in Ajman Pearl Tower, sea view',me:'Al Nuaimiya, Ajman',v:430000,ty:'apartments',a:'al-nuaimiya',m:'النعيمية، عجمان',s:'Property Finder',u:'https://www.propertyfinder.ae/en/buy/ajman/apartments-for-sale-al-nuaimiya.html',b:'افتح نتائج المنطقة',be:'Open area results'},
+    {t:'شقة غرفتين في سيتي تاور',te:'2-bed apartment in City Tower',me:'Al Nuaimiya, Ajman',v:499300,ty:'apartments',a:'al-nuaimiya',m:'النعيمية، عجمان',s:'Bayut',u:'https://www.bayut.com/property/details-17171183.html'},
+    {t:'فيلا حديثة من المالك مباشرة، رسوم التسجيل مشمولة، تملك حر',te:'Modern villa direct from owner, registration fees included, freehold',me:'Al Helio 2, Ajman',v:1420000,ty:'villas',a:'al-helio',m:'الحليو 2، عجمان',s:'Bayut',u:'https://www.bayut.com/for-sale/villas/ajman/al-helio/?price_min=1400000&price_max=1430000',b:'افتح نتائج المنطقة',be:'Open area results'},
+    {t:'فيلا مقابل حديقة الحميدية، طابقان وسطح، رسوم التسجيل مشمولة',te:'Villa opposite Al Hamidiya Park, two floors and roof, registration fees included',me:'Al Helio 2, Ajman',v:1250000,ty:'villas',a:'al-helio',m:'الحليو 2، عجمان',s:'Bayut',u:'https://www.bayut.com/for-sale/villas/ajman/al-helio/?price_min=1200000&price_max=1300000',b:'افتح نتائج المنطقة',be:'Open area results'},
+    {t:'بيت عربي على أرض 600 م²، رخصة هدم وموافقة بناء أرضي + 6 طوابق',te:'Arabic house on 600 m² land, demolition licence and approval for ground + 6 floors',me:'Al Nuaimiya 3, Ajman',v:2100000,ty:'land',a:'al-nuaimiya',m:'النعيمية 3، عجمان',s:'Dubizzle',u:'https://uae.dubizzle.com/property-for-sale/land/2026/10/31/al-nuaimiya-3-ajman-a-prime-residential-14-189964/'},
+    {t:'فيلا زاوية، رسوم التسجيل مشمولة، قابل للتفاوض',te:'Corner villa, registration fees included, negotiable',me:'Al Alia, Ajman',v:2750000,ty:'villas',a:'al-alia',m:'العالية، عجمان',s:'Dubizzle',u:'https://ajman.dubizzle.com/property-for-sale/',b:'افتح نتائج دوبيزل',be:'Open Dubizzle results'}
   ];
   function renderListings(){
     var b=budget(), t=typeSel.value, AL=areaList();
@@ -370,9 +428,9 @@ input::placeholder{color:var(--muted);opacity:.8}
       return (t==='all'||x.ty===t)&&(!AL.length||AL.some(function(o){return o.k===x.a;}))&&(!b[0]||x.v>=b[0])&&(!b[1]||x.v<=b[1]);
     });
     $('listings').innerHTML=rows.length?rows.map(function(x){
-      return '<div class="card"><span class="tag">'+esc(x.s)+'</span><div class="price">'+fmt(x.v)+' <span class="meta">درهم</span></div><h3>'+esc(x.t)+
-        '</h3><p>'+esc(x.m)+'</p><a class="go alt" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">'+esc(x.b||'فتح الإعلان')+'</a></div>';
-    }).join(''):'<p class="empty">لا توجد عيّنات ضمن هذا الاختيار. افتح المنصات أعلاه لرؤية النتائج الحالية.</p>';
+      return '<div class="card"><span class="tag">'+esc(x.s)+'</span><div class="price">'+fmt(x.v)+' <span class="meta">'+esc(tr('aed').trim())+'</span></div><h3>'+esc(lang==='en'?x.te:x.t)+
+        '</h3><p>'+esc(lang==='en'?x.me:x.m)+'</p><a class="go alt" href="'+esc(x.u)+'" target="_blank" rel="noopener noreferrer">'+esc(lang==='en'?(x.be||tr('openL')):(x.b||tr('openL')))+'</a></div>';
+    }).join(''):'<p class="empty">'+esc(tr('emptyL'))+'</p>';
   }
   $('addBtn').addEventListener('click',function(){$('addForm').classList.toggle('open');});
   $('cSave').addEventListener('click',function(){
@@ -389,7 +447,7 @@ input::placeholder{color:var(--muted);opacity:.8}
     var a=loadCustom();a.splice(+r,1);saveCustom(a);renderPlatforms();
   });
   $('updBtn').addEventListener('click',function(){
-    var b=this; b.textContent='جارٍ التحديث...';
+    var b=this; b.textContent=tr('updating');
     var done=function(){location.reload();};
     try{
       var tasks=[];
@@ -401,7 +459,6 @@ input::placeholder{color:var(--muted);opacity:.8}
   var NTFY_TOPIC='ajman-radar-7fc751bf5ac85b76'; /* موضوع الإشعارات الخاص بالوسيط */
   var BROKER_WA=''; /* رقم واتساب الوسيط مع رمز الدولة، مثال: 9715XXXXXXXX */
   (function(){
-    $('oArea').innerHTML='<option value="">اختر المنطقة</option>'+AREAS.map(function(a){return '<option>'+esc(a[2])+'</option>';}).join('');
     $('ownBtn').addEventListener('click',function(){$('ownForm').classList.toggle('open');});
     $('ownForm').addEventListener('submit',function(e){
       e.preventDefault();
@@ -413,28 +470,42 @@ input::placeholder{color:var(--muted);opacity:.8}
         'الاسم: '+v('oName'),'الهاتف: '+v('oPhone')];
       if(v('oNote'))L.push('ملاحظات: '+v('oNote'));
       var msg=L.join('\n'), st=$('oStatus'), btn=$('oSend');
-      btn.disabled=true; st.textContent='جارٍ الإرسال...';
+      btn.disabled=true; st.textContent=tr('sending');
       fetch('https://ntfy.sh/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic:NTFY_TOPIC,title:'طلب عرض عقار: '+v('oType')+' '+v('oDeal')+(v('oArea')?' - '+v('oArea'):''),message:msg,priority:4,tags:['house']})})
-        .then(function(r){if(!r.ok)throw 0; st.textContent='✓ وصل طلبك إلى الوسيط، وسيتواصل معك قريبًا.'; $('ownForm').reset();})
+        .then(function(r){if(!r.ok)throw 0; st.textContent=tr('sentOk'); $('ownForm').reset();})
         .catch(function(){
-          st.textContent='تعذّر الإرسال المباشر. أرسله عبر واتساب:';
+          st.textContent=tr('sentFail');
           window.open('https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(msg),'_blank','noopener');
         })
         .then(function(){btn.disabled=false;});
     });
   })();
-  function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?'ميزانيتك السنوية (درهم)':'ميزانيتك (درهم)';renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();}
-  refresh();
-
-  /* ---------- install as an app ---------- */
+  function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?tr('budgetRent'):tr('budget');renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();}
+  function setInstall(){ $('installText').textContent=(isiOS&&!standalone)?tr('iosT'):tr('installT'); }
+  function applyLang(){
+    var h=document.documentElement; h.lang=lang; h.dir=lang==='en'?'ltr':'rtl';
+    document.title=tr('title');
+    [].forEach.call(document.querySelectorAll('[data-t]'),function(el){el.textContent=tr(el.getAttribute('data-t'));});
+    [].forEach.call(document.querySelectorAll('[data-th]'),function(el){el.innerHTML=tr(el.getAttribute('data-th'));});
+    [].forEach.call(document.querySelectorAll('[data-ph]'),function(el){el.placeholder=tr(el.getAttribute('data-ph'));});
+    [].forEach.call(document.querySelectorAll('[data-al]'),function(el){el.setAttribute('aria-label',tr(el.getAttribute('data-al')));});
+    $('langBtn').textContent=lang==='en'?'عربي':'EN';
+    fillAreas(); renderStats(); setInstall(); refresh();
+  }
+  $('langBtn').addEventListener('click',function(){
+    lang=lang==='en'?'ar':'en'; try{localStorage.setItem('ajman_lang',lang);}catch(e){} applyLang();
+  });
   var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;
   var isiOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  applyLang();
+
+  /* ---------- install as an app ---------- */
   var box=$('install'), btn=$('installBtn'), deferred=null;
   if(!standalone){
     window.addEventListener('beforeinstallprompt',function(e){
-      e.preventDefault(); deferred=e; $('installText').textContent='ثبّت التطبيق على شاشتك الرئيسية.'; btn.hidden=false; box.classList.add('show');
+      e.preventDefault(); deferred=e; setInstall(); btn.hidden=false; box.classList.add('show');
     });
-    if(isiOS){$('installText').textContent='لتثبيت التطبيق: اضغط زر المشاركة في سفاري، ثم «إضافة إلى الشاشة الرئيسية».'; box.classList.add('show');}
+    if(isiOS){setInstall(); box.classList.add('show');}
   }
   btn.addEventListener('click',function(){
     if(!deferred)return; deferred.prompt();
