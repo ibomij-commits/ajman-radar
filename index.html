@@ -100,6 +100,11 @@ input::placeholder{color:var(--muted);opacity:.8}
 .brow{display:flex;gap:12px;align-items:center;margin-bottom:10px}
 .blogo{width:56px;height:56px;flex:none}.blogo.sm{width:30px;height:30px}
 .sub2{margin:12px 0 0;font-size:13px;opacity:.85}
+.subpanel{display:none;margin-top:10px;padding:10px;border:1px solid var(--line);border-radius:14px;gap:8px;flex-wrap:wrap}
+.subpanel.open{display:flex;animation:subin .22s ease-out}
+@keyframes subin{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+.subpanel button{height:40px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:transparent;color:inherit;font:inherit;cursor:pointer}
+.subpanel button.on{background:var(--gold);color:var(--on-gold);border-color:var(--gold);font-weight:800}
 .rm{background:none;border:0;color:#c0392b;font:inherit;cursor:pointer;margin-top:6px}
 </style>
 </head>
@@ -117,7 +122,7 @@ input::placeholder{color:var(--muted);opacity:.8}
         <div class="seg seg2" id="dealSeg" role="group" aria-labelledby="lbl-deal"></div></div>
       <div class="full"><span class="lbl" id="lbl-type">نوع العقار</span>
         <div class="seg" id="seg" role="group" aria-labelledby="lbl-type"></div></div>
-      <div class="full"><label for="area">المنطقة</label><select id="area"></select></div>
+      <div class="full"><label for="area">المنطقة</label><select id="area"></select><div class="subpanel" id="subPanel" aria-live="polite"></div></div>
       <div class="full"><label for="pmin" id="budgetLbl">ميزانيتك (درهم)</label>
         <div class="range"><input id="pmin" inputmode="numeric" placeholder="من" autocomplete="off"><input id="pmax" inputmode="numeric" placeholder="إلى" autocomplete="off"></div>
         <div class="chips" id="chips" role="group" aria-label="شرائح الميزانية"></div></div>
@@ -212,7 +217,18 @@ input::placeholder{color:var(--muted);opacity:.8}
 
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
   function google(q){return 'https://www.google.com/search?q='+encodeURIComponent(q);}
-  function areaAr(){return areaSel.value?areaSel.options[areaSel.selectedIndex].textContent:'';}
+  var SUBS={'al-nuaimiya':3,'al-rashidiya':3,'al-rawda':3,'al-jurf':3,'al-mowaihat':3,'al-helio':2}, sub=0;
+  function areaAr(){return areaSel.value?areaSel.options[areaSel.selectedIndex].textContent+(sub?' '+sub:''):'';}
+  function bayutPath(){var k=bayutKey();return k?k+'/'+(sub?areaSel.value+'-'+sub+'/':''):'';}
+  var EM=['🏙️','🏘️','🏡'];
+  function renderSub(){
+    var n=SUBS[areaSel.value]||0, el=$('subPanel');
+    if(!n){el.className='subpanel';el.innerHTML='';return;}
+    var nm=areaSel.options[areaSel.selectedIndex].textContent, h='<button type="button" data-s="0" class="'+(sub===0?'on':'')+'">📍 كل '+esc(nm)+'</button>';
+    for(var i=1;i<=n;i++)h+='<button type="button" data-s="'+i+'" class="'+(sub===i?'on':'')+'">'+EM[(i-1)%3]+' '+esc(nm)+' '+i+'</button>';
+    el.innerHTML=h; el.className='subpanel open';
+  }
+  $('subPanel').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;sub=+b.getAttribute('data-s');refresh();});
   function bayutKey(){var k=areaSel.value;for(var i=0;i<AREAS.length;i++)if(AREAS[i][0]===k)return AREAS[i][1];return '';}
   function num(s){var d=String(s).replace(/[٠-٩]/g,function(c){return c.charCodeAt(0)-1632;}).replace(/\D/g,'');return d?parseInt(d,10):0;}
   function fmt(n){return n.toLocaleString('en-US');}
@@ -232,9 +248,9 @@ input::placeholder{color:var(--muted);opacity:.8}
     if(b[0]){bq.push('price_min='+b[0]);pq.push('pf='+b[0]);}
     if(b[1]){bq.push('price_max='+b[1]);pq.push('pt='+b[1]);}
     var rent=deal==='rent', dw=rent?'للإيجار':'للبيع';
-    var bayut='https://www.bayut.com/'+(rent?'to-rent':'for-sale')+'/'+(t==='all'?'property':t)+'/ajman/'+(a?bayutKey()+'/':'')+(bq.length?'?'+bq.join('&'):'');
+    var bayut='https://www.bayut.com/'+(rent?'to-rent':'for-sale')+'/'+(t==='all'?'property':t)+'/ajman/'+(a?bayutPath():'')+(bq.length?'?'+bq.join('&'):'');
     var pf='https://www.propertyfinder.ae/en/'+(rent?'rent':'buy')+'/ajman/'+(t==='all'?'properties':t)+(rent?'-for-rent':'-for-sale')+(a?'-'+a:'')+'.html'+(pq.length?'?'+pq.join('&'):'');
-    var bayut0='https://www.bayut.com/'+(rent?'to-rent':'for-sale')+'/'+(t==='all'?'property':t)+'/ajman/'+(a?bayutKey()+'/':'');
+    var bayut0='https://www.bayut.com/'+(rent?'to-rent':'for-sale')+'/'+(t==='all'?'property':t)+'/ajman/'+(a?bayutPath():'');
     var pf0='https://www.propertyfinder.ae/en/'+(rent?'rent':'buy')+'/ajman/'+(t==='all'?'properties':t)+(rent?'-for-rent':'-for-sale')+(a?'-'+a:'')+'.html';
     var filtered=(t!=='all')||a||bt||rent;
     var duby='https://ajman.dubizzle.com/'+(rent?'property-for-rent/':'property-for-sale/');
@@ -294,7 +310,7 @@ input::placeholder{color:var(--muted);opacity:.8}
     $('pmin').value=same?'':(x[1]?fmt(x[1]):''); $('pmax').value=same?'':(x[2]?fmt(x[2]):''); refresh();
   });
   ['pmin','pmax'].forEach(function(id){$(id).addEventListener('input',refresh);});
-  areaSel.addEventListener('change',refresh);
+  areaSel.addEventListener('change',function(){sub=0;refresh();});
 
   var STATS=[
     {n:'1,140',l:'صفقة في أكتوبر 2026 بقيمة 1.95 مليار درهم',u:'https://www.gulftoday.ae/business/2026/11/10/ajman-records-dhs195-billion-in-real-estate-transactions-in-october',s:'Gulf Today'},
@@ -377,7 +393,7 @@ input::placeholder{color:var(--muted);opacity:.8}
         .then(function(){btn.disabled=false;});
     });
   })();
-  function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?'ميزانيتك السنوية (درهم)':'ميزانيتك (درهم)';renderSeg();renderChips();renderSummary();renderPlatforms();renderListings();}
+  function refresh(){renderDeal();$('budgetLbl').textContent=deal==='rent'?'ميزانيتك السنوية (درهم)':'ميزانيتك (درهم)';renderSeg();renderChips();renderSub();renderSummary();renderPlatforms();renderListings();}
   refresh();
 
   /* ---------- install as an app ---------- */
