@@ -496,6 +496,14 @@ header h1,header p{padding-inline-end:64px}
     }catch(e){done();}
   });
   var NTFY_TOPIC='ajman-radar-7fc751bf5ac85b76'; /* موضوع الإشعارات الخاص بالوسيط */
+  var SB_URL='https://mcqklirwecrvijlwnanf.supabase.co', SB_KEY='sb_publishable_aIQI6wlCYyQBXdED0eBvbA_leFuBCfN'; /* مفتاح عام آمن: الكتابة فقط عبر سياسة RLS */
+  var PT={'شقة':'apartment','فيلا':'villa','أرض':'land','محل / مكتب':'commercial','بارتيشن':'partition','سرير (بد سبيس)':'bed'};
+  function saveToDb(v){
+    if(!SB_URL)return Promise.resolve(false);
+    var n=function(x){var d=num(x);return d?d:null;};
+    var row={deal:v('oDeal')==='إيجار'?'rent':'sale',ptype:PT[v('oType')]||'apartment',area:v('oArea')||'-',location_url:v('oMap')||null,beds:n(v('oBeds')),baths:n(v('oBaths')),size_sqft:n(v('oSize')),price:n(v('oPrice'))||0,owner_name:v('oName'),owner_phone:v('oPhone'),notes:v('oNote')||null,source:'owner_form',status:'new'};
+    return fetch(SB_URL+'/rest/v1/properties',{method:'POST',headers:{'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Prefer':'return=minimal'},body:JSON.stringify(row)}).then(function(r){return r.ok;}).catch(function(){return false;});
+  }
   var BROKER_WA=''; /* رقم واتساب الوسيط مع رمز الدولة، مثال: 9715XXXXXXXX */
   (function(){
     $('ownBtn').addEventListener('click',function(){$('ownForm').classList.toggle('open');});
@@ -510,13 +518,13 @@ header h1,header p{padding-inline-end:64px}
       if(v('oNote'))L.push('ملاحظات: '+v('oNote'));
       var msg=L.join('\n'), st=$('oStatus'), btn=$('oSend');
       btn.disabled=true; st.textContent=tr('sending');
-      fetch('https://ntfy.sh/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic:NTFY_TOPIC,title:'طلب عرض عقار: '+v('oType')+' '+v('oDeal')+(v('oArea')?' - '+v('oArea'):''),message:msg,priority:4,tags:['house']})})
-        .then(function(r){if(!r.ok)throw 0; st.textContent=tr('sentOk'); $('ownForm').reset();})
-        .catch(function(){
-          st.textContent=tr('sentFail');
-          window.open('https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(msg),'_blank','noopener');
-        })
-        .then(function(){btn.disabled=false;});
+      var dbP=saveToDb(v);
+      var nP=fetch('https://ntfy.sh/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic:NTFY_TOPIC,title:'طلب عرض عقار: '+v('oType')+' '+v('oDeal')+(v('oArea')?' - '+v('oArea'):''),message:msg,priority:4,tags:['house']})}).then(function(r){return r.ok;}).catch(function(){return false;});
+      Promise.all([dbP,nP]).then(function(r){
+        if(r[0]||r[1]){st.textContent=tr('sentOk'); $('ownForm').reset();}
+        else{st.textContent=tr('sentFail'); window.open('https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(msg),'_blank','noopener');}
+        btn.disabled=false;
+      });
     });
   })();
   function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();renderListings();}
