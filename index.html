@@ -194,6 +194,12 @@ header p{color:#dfe5f5}
 .card.spons{border:1.5px solid var(--gold);background:linear-gradient(180deg,rgba(201,162,75,.10),var(--surface));position:relative}
 .card.spons .adl2{position:absolute;top:10px;inset-inline-end:10px;z-index:2;background:#14213d;color:#fff;font-size:11px;padding:2px 9px;border-radius:99px}
 .card.spons ul{margin:0;padding-inline-start:18px;color:var(--muted);font-size:14px}
+
+.pk{align-items:flex-start}
+.pk .pp{font-size:24px;font-weight:800;color:var(--ink)}
+.pk .pn{font-size:16px;font-weight:700}
+.pk.hot{border:1.5px solid var(--gold);background:linear-gradient(180deg,rgba(201,162,75,.14),var(--surface))}
+.pk .go{align-self:stretch}
 </style>
 </head>
 <body>
@@ -232,6 +238,12 @@ header p{color:#dfe5f5}
       <small data-t="cHint">اختياري: ضع {q} في الرابط ليُستبدل ببحثك (النوع + المنطقة + الميزانية)، مثل https://www.tiktok.com/search?q={q}</small>
       <button type="button" class="go" id="cSave" data-t="cSave">حفظ</button>
     </div>
+  </section>
+
+  <section aria-labelledby="h-adv" id="s-adv">
+    <h2 id="h-adv" data-t="hAdv">أعلن معنا</h2>
+    <p class="sub" data-t="advSub"></p>
+    <div class="grid" id="advPk"></div>
   </section>
 
   <section aria-labelledby="h-o">
@@ -290,7 +302,7 @@ header p{color:#dfe5f5}
    sending:'جارٍ الإرسال...',sentOk:'✓ وصل طلبك إلى الوسيط، وسيتواصل معك قريبًا.',sentFail:'تعذّر الإرسال المباشر. أرسله عبر واتساب:',
    hC:'منحنيات السوق (2026)',subC:'أرقام شهرية رسمية من دائرة الأراضي وتنظيم العقار في عجمان. الأشهر الناقصة تُترك فارغة ولا تُقدَّر. هذه أرقام شهرية وليست لحظية.',cVal:'قيمة الصفقات (مليار درهم)',cCnt:'عدد الصفقات',cMonth:'رقم الشهر في 2026 (1 = يناير)',cLast:'آخر قراءة',cSrc:'المصادر: ',hM:'نبض السوق (أرقام رسمية)',subM:'من دائرة الأراضي وتنظيم العقار في عجمان، كما نُشرت في الصحافة.',hL:'عيّنات من إعلانات اليوم',subL:'وُجدت يوم 13 نوفمبر 2026 على المنصات. قد يُباع العقار أو يتغير سعره، فتأكد من صفحة الإعلان.',
    note:'<b>عن الصور وأرقام التواصل:</b> تظهر على صفحة كل إعلان لدى المنصة، ومعها اسم الوكيل ورقم رخصته. هذا التطبيق لا يجمع الأرقام ولا ينسخ الإعلانات، ويفتح لك المصدر مباشرة.',
-   ajman:'عجمان',forSale:'للبيع',forRentW:'للإيجار',willOpen:'سيفتح:',adLbl:'إعلان',adT:'📣 أعلن هنا · مساحة إعلانية',adS:'اوصل لآلاف الباحثين عن عقار في عجمان',adB:'تواصل معنا',adMsg:'مرحبًا، أرغب بالإعلان في تطبيق LYD Real Estate',noBudget:'بدون ميزانية',
+   ajman:'عجمان',forSale:'للبيع',forRentW:'للإيجار',willOpen:'سيفتح:',adLbl:'إعلان',hAdv:'أعلن معنا',advSub:'اعرض مشروعك أو وكالتك أمام الباحثين عن عقار في عجمان. بطاقة ممولة داخل نتائج البحث مع صورتك وزر مباشر إلى واتساب أو موقعك.',advP1:'بطاقة ممولة · 7 أيام',advP2:'بطاقة ممولة · 30 يومًا',advP3:'حزمة مميزة · 30 يومًا (بطاقة + لافتة أعلى النتائج)',advAsk:'اطلب عرض سعر',advMsgP:'مرحبًا، أرغب بالإعلان في LYD Real Estate: ',adT:'📣 أعلن هنا · مساحة إعلانية',adS:'اوصل لآلاف الباحثين عن عقار في عجمان',adB:'تواصل معنا',adMsg:'مرحبًا، أرغب بالإعلان في تطبيق LYD Real Estate',noBudget:'بدون ميزانية',
    perYear:' درهم سنويًا',aed:' درهم',between:'بين {a} و {b}',upto:'حتى {b}',fromN:'من {a}',
    filt:'مفلتر بميزانيتك',portal:'منصة عقارية',gsearch:'بحث موجّه في Google',needAcc:'يتطلب حسابًا',hashtag:'وسم',video:'فيديو',general:'بحث عام',added:'مضاف',mine:'موقع أضفته أنت.',
    dBayut:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',dPF:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',dFB:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',
@@ -311,7 +323,7 @@ header p{color:#dfe5f5}
    sending:'Sending...',sentOk:'✓ Your request reached the broker, who will contact you soon.',sentFail:'Direct send failed. Send it via WhatsApp:',
    hC:'Market curves (2026)',subC:'Official monthly figures from Ajman Department of Land and Real Estate Regulation. Missing months are left blank, not estimated. These are monthly numbers, not live.',cVal:'Deal value (AED billion)',cCnt:'Number of deals',cMonth:'Month of 2026 (1 = January)',cLast:'Latest',cSrc:'Sources: ',hM:'Market pulse (official figures)',subM:'From Ajman Department of Land and Real Estate Regulation, as reported in the press.',hL:'Sample listings from today',subL:'Found on 13 November 2026 on the platforms. A property may be sold or its price may change, so check the listing page.',
    note:'<b>About photos and contact numbers:</b> they appear on each listing page on the platform, along with the agent name and licence number. This app does not collect numbers or copy listings; it opens the source directly.',
-   ajman:'Ajman',forSale:'for sale',forRentW:'for rent',willOpen:'Will open:',adLbl:'Ad',adT:'📣 Advertise here · ad space',adS:'Reach thousands of Ajman property seekers',adB:'Contact us',adMsg:'Hello, I would like to advertise in LYD Real Estate',noBudget:'No budget',
+   ajman:'Ajman',forSale:'for sale',forRentW:'for rent',willOpen:'Will open:',adLbl:'Ad',hAdv:'Advertise with us',advSub:'Show your project or agency to people searching for property in Ajman. A sponsored card inside the results with your photo and a direct button to WhatsApp or your site.',advP1:'Sponsored card · 7 days',advP2:'Sponsored card · 30 days',advP3:'Premium bundle · 30 days (card + top banner)',advAsk:'Get a quote',advMsgP:'Hello, I would like to advertise in LYD Real Estate: ',adT:'📣 Advertise here · ad space',adS:'Reach thousands of Ajman property seekers',adB:'Contact us',adMsg:'Hello, I would like to advertise in LYD Real Estate',noBudget:'No budget',
    perYear:' AED per year',aed:' AED',between:'Between {a} and {b}',upto:'Up to {b}',fromN:'From {a}',
    filt:'Filtered to your budget',portal:'Property portal',gsearch:'Targeted Google search',needAcc:'Account required',hashtag:'Hashtag',video:'Video',general:'General search',added:'Added',mine:'A site you added.',
    dBayut:'Property portal with licensed agents, a map and area price comparison.',dPF:'Listings from agents and developers, with photos and project payment plans.',dFB:'Public posts from agents and owners in pages and groups.',
@@ -501,6 +513,8 @@ header p{color:#dfe5f5}
      To earn from clicks: set ADSENSE_CLIENT (ca-pub-XXXX) and AD_SLOT_TOP/AD_SLOT_BOTTOM from your Google AdSense account.
      Until then each slot shows your own LYD offer (advertise-here via WhatsApp). */
   var ADSENSE_CLIENT='', AD_SLOT_TOP='', AD_SLOT_BOTTOM='';
+  /* Other ad network (Adsterra, PropellerAds...): paste the banner code snippet between the quotes below */
+  var AD_NET_TOP='', AD_NET_BOTTOM='';
 
   /* ===== Sponsored cards (native ads) =====
      Add paid advertisers here: {t:'title',img:'https://...jpg',pts:['point 1','point 2'],url:'https://...',b:'Register Now'} */
@@ -513,12 +527,21 @@ header p{color:#dfe5f5}
     return '<div class="card spons"><span class="adl2">'+tr('adLbl')+'</span>'+cov+'<h3 dir="auto">'+esc(t)+'</h3><ul>'+pts.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>'+btn+'</div>';
   }
   function injectSponsor(){var g=$('platforms');if(!g)return;var c=g.children;var at=Math.min(3,c.length);var d=document.createElement('div');d.innerHTML=sponsorHtml();if(c[at])g.insertBefore(d.firstChild,c[at]);else g.appendChild(d.firstChild);}
+
+  /* ===== Advertiser packages: edit prices here (AED) ===== */
+  var ADV_PKGS=[{k:'advP1',p:200,i:'🏷️'},{k:'advP2',p:600,i:'🚀',hot:1},{k:'advP3',p:1200,i:'👑'}];
+  function renderAdv(){var el=$('advPk');if(!el)return;
+    el.innerHTML=ADV_PKGS.map(function(x){var m=tr('advMsgP')+tr(x.k)+' ('+x.p+' AED)';
+      var b=BROKER_WA?'<a class="go" target="_blank" rel="noopener noreferrer" href="https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(m)+'">'+tr('advAsk')+'</a>':'';
+      return '<div class="card pk'+(x.hot?' hot':'')+'"><span style="font-size:30px" aria-hidden="true">'+x.i+'</span><span class="pn">'+tr(x.k)+'</span><span class="pp">'+fmt(x.p)+' <span class="meta">'+tr('aed').trim()+'</span></span>'+b+'</div>';}).join('');}
   function renderAds(){
     [['ad1',AD_SLOT_TOP],['ad2',AD_SLOT_BOTTOM]].forEach(function(a){
       var el=$(a[0]); if(!el)return;
       if(ADSENSE_CLIENT&&a[1]){
         el.innerHTML='<span class="adl">'+tr('adLbl')+'</span><ins class="adsbygoogle" style="display:block;width:100%" data-ad-client="'+ADSENSE_CLIENT+'" data-ad-slot="'+a[1]+'" data-ad-format="auto" data-full-width-responsive="true"></ins>';
         try{if(!window.__adsLoaded){var sc=document.createElement('script');sc.async=true;sc.src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client='+ADSENSE_CLIENT;sc.crossOrigin='anonymous';document.head.appendChild(sc);window.__adsLoaded=1;}(window.adsbygoogle=window.adsbygoogle||[]).push({});}catch(e){}
+      }else if((a[0]==='ad1'?AD_NET_TOP:AD_NET_BOTTOM)){
+        el.innerHTML='<span class="adl">'+tr('adLbl')+'</span><iframe title="ad" sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox" style="border:0;width:100%;min-height:90px" srcdoc="'+(a[0]==='ad1'?AD_NET_TOP:AD_NET_BOTTOM).replace(/&/g,'&amp;').replace(/"/g,'&quot;')+'"></iframe>';
       }else{
         el.innerHTML='<span class="adl">'+tr('adLbl')+'</span><b>'+tr('adT')+'</b><span class="s">'+tr('adS')+'</span><a class="adbtn" target="_blank" rel="noopener noreferrer" href="https://wa.me/'+BROKER_WA+'?text='+encodeURIComponent(tr('adMsg'))+'">'+tr('adB')+'</a>';
       }
@@ -666,7 +689,7 @@ header p{color:#dfe5f5}
       });
     });
   })();
-  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();injectSponsor();renderListings();renderAds();}
+  function refresh(){renderDeal();$('budgetLbl').textContent=isRoom(typeSel.value)?tr('budgetMonth'):(deal==='rent'?tr('budgetRent'):tr('budget'));renderSeg();renderChips();renderSub();renderTags();renderSummary();renderPlatforms();injectSponsor();renderListings();renderAds();renderAdv();}
   function setInstall(){ $('installText').textContent=(isiOS&&!standalone)?tr('iosT'):tr('installT'); }
   function applyLang(){
     var h=document.documentElement; h.lang=lang; h.dir=lang==='en'?'ltr':'rtl';
