@@ -53,6 +53,23 @@ input::placeholder{color:var(--muted);opacity:.8}
 .seg{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .seg2{grid-template-columns:repeat(2,1fr)}
 .seg button{height:46px;border:0;background:var(--field);color:var(--ink);font:inherit;font-size:15px;cursor:pointer}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.seg button{display:flex;align-items:center;justify-content:center;gap:7px;transition:transform .18s ease,background .25s ease,color .25s ease,box-shadow .25s ease}
+.seg button .ic{display:inline-block;font-size:19px;line-height:1;transition:transform .25s ease}
+.seg button:hover .ic{transform:translateY(-2px) scale(1.18) rotate(-6deg)}
+.seg button:active{transform:scale(.96)}
+.seg button[aria-pressed="true"] .ic{animation:icpop .45s cubic-bezier(.3,1.6,.5,1)}
+.seg button[aria-pressed="true"]{box-shadow:inset 0 -3px 0 var(--gold,#c9a14a)}
+#seg button{animation:segin .45s ease both;animation-delay:var(--d,0ms)}
+#seg{grid-auto-rows:auto}
+#seg button{height:52px;border-bottom:1px solid var(--line)}
+@keyframes icpop{0%{transform:scale(.4) rotate(-25deg)}60%{transform:scale(1.35) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+@keyframes segin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+#h-f{display:flex;align-items:center;gap:8px}
+#h-f:before{content:'🔎';font-size:20px;animation:sway 2.6s ease-in-out infinite;display:inline-block}
+@keyframes sway{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(12deg) scale(1.1)}}
+@media (prefers-reduced-motion:reduce){.seg button,.seg button .ic,#h-f:before{animation:none!important;transition:none!important}}
 .seg button+button{border-inline-start:1px solid var(--line)}
 .seg button[aria-pressed="true"]{background:var(--navy);color:#fff;font-weight:700}
 :root[data-theme="dark"] .seg button[aria-pressed="true"]{background:var(--gold);color:var(--on-gold)}
@@ -133,7 +150,7 @@ header h1,header p{padding-inline-end:64px}
   <section aria-labelledby="h-f">
     <h2 id="h-f" data-t="hF">ماذا تبحث؟</h2>
     <div class="filters">
-      <div class="full"><span class="lbl" id="lbl-deal" data-t="lDeal">الصفقة</span>
+      <div class="full"><span class="lbl sr" id="lbl-deal" data-t="lDeal">الصفقة</span>
         <div class="seg seg2" id="dealSeg" role="group" aria-labelledby="lbl-deal"></div></div>
       <div class="full"><span class="lbl" id="lbl-type" data-t="lType">نوع العقار</span>
         <div class="seg" id="seg" role="group" aria-labelledby="lbl-type"></div></div>
@@ -205,7 +222,7 @@ header h1,header p{padding-inline-end:64px}
   var T={
   ar:{title:'LYD Real Estate · رادار عجمان',tag:'اختر النوع والمنطقة والميزانية، ثم افتح الإعلانات الفعلية في المنصات.',
    installT:'ثبّت التطبيق على شاشتك الرئيسية.',installB:'تثبيت',iosT:'لتثبيت التطبيق: اضغط زر المشاركة في سفاري، ثم «إضافة إلى الشاشة الرئيسية».',
-   hF:'ماذا تبحث؟',lDeal:'الصفقة',lType:'نوع العقار',lArea:'المنطقة',budget:'ميزانيتك (درهم)',budgetRent:'ميزانيتك السنوية (درهم)',budgetMonth:'ميزانيتك الشهرية (درهم)',perMonth:' درهم شهريًا',pPart:'بارتيشن',pBed:'سرير',dDubRoom:'غرف وبارتيشنات وأسرّة للإيجار في عجمان، مع بحث موجّه داخل فروع المنطقة.',dubRoomK:'غرف ومشاركة',from:'من',to:'إلى',chipsAria:'شرائح الميزانية',
+   hF:'ابحث',lDeal:'الصفقة',lType:'نوع العقار',lArea:'المنطقة',budget:'ميزانيتك (درهم)',budgetRent:'ميزانيتك السنوية (درهم)',budgetMonth:'ميزانيتك الشهرية (درهم)',perMonth:' درهم شهريًا',pPart:'بارتيشن',pBed:'سرير',dDubRoom:'غرف وبارتيشنات وأسرّة للإيجار في عجمان، مع بحث موجّه داخل فروع المنطقة.',dubRoomK:'غرف ومشاركة',from:'من',to:'إلى',chipsAria:'شرائح الميزانية',
    buy:'شراء',rent:'إيجار',sell:'بيع',all:'الكل',apts:'شقق',villas:'فلل',lands:'أراضٍ',allTypes:'كل الأنواع',tPart:'بارتيشن',tBed:'سرير (بد سبيس)',tApt:'شقة',tVilla:'فيلا',tLand:'أرض',tShop:'محل / مكتب',
    hP:'افتح الإعلانات الفعلية',subP:'كل زر يفتح نتائج البحث الحالية على المنصة نفسها، بالصور والتفاصيل وبيانات المعلن. إذا لم يوجد عندها شيء بميزانيتك في هذه المنطقة فقد تعرض عقارات أخرى، فوسّع الميزانية أو اختر كل المناطق.',
    addBtn:'+ إضافة موقع أو صفحة',updBtn:'⟳ تحديث التطبيق والقائمة',updating:'جارٍ التحديث...',cName:'اسم الموقع أو الصفحة',cUrl:'الرابط https://...',
@@ -226,7 +243,7 @@ header h1,header p{padding-inline-end:64px}
    allOf:'كل {n}',remove:'إزالة',src:'المصدر: ',openL:'فتح الإعلان',emptyL:'لا توجد عيّنات ضمن هذا الاختيار. افتح المنصات أعلاه لرؤية النتائج الحالية.',orderTitle:'طلب عرض عقار'},
   en:{title:'LYD Real Estate · Ajman Radar',tag:'Pick type, area and budget, then open the live listings on each platform.',
    installT:'Install the app on your home screen.',installB:'Install',iosT:'To install: tap Share in Safari, then "Add to Home Screen".',
-   hF:'What are you looking for?',lDeal:'Deal',lType:'Property type',lArea:'Area',budget:'Your budget (AED)',budgetRent:'Your yearly budget (AED)',budgetMonth:'Your monthly budget (AED)',perMonth:' AED per month',pPart:'Partition',pBed:'Bed space',dDubRoom:'Rooms, partitions and bed spaces for rent in Ajman, with a targeted search inside the area branches.',dubRoomK:'Rooms & sharing',from:'From',to:'To',chipsAria:'Budget bands',
+   hF:'Search',lDeal:'Deal',lType:'Property type',lArea:'Area',budget:'Your budget (AED)',budgetRent:'Your yearly budget (AED)',budgetMonth:'Your monthly budget (AED)',perMonth:' AED per month',pPart:'Partition',pBed:'Bed space',dDubRoom:'Rooms, partitions and bed spaces for rent in Ajman, with a targeted search inside the area branches.',dubRoomK:'Rooms & sharing',from:'From',to:'To',chipsAria:'Budget bands',
    buy:'Buy',rent:'Rent',sell:'Sell',all:'All',apts:'Apartments',villas:'Villas',lands:'Land',allTypes:'All types',tPart:'Partition',tBed:'Bed space',tApt:'Apartment',tVilla:'Villa',tLand:'Land',tShop:'Shop / office',
    hP:'Open live listings',subP:'Each button opens the current search results on the platform itself, with photos, details and advertiser info. If nothing matches your budget in this area, a platform may show other properties, so widen the budget or pick all areas.',
    addBtn:'+ Add a site or page',updBtn:'⟳ Update app & list',updating:'Updating...',cName:'Site or page name',cUrl:'Link https://...',
@@ -266,11 +283,12 @@ header h1,header p{padding-inline-end:64px}
   var deal='sale';
   function DEALS(){return [['sale',tr('buy')],['rent',tr('rent')]];}
   function TA(){return [['all',tr('all')],['apartments',tr('apts')],['villas',tr('villas')],['land',tr('lands')]];}
+  var TIC={all:'✨',apartments:'🏢',villas:'🏡',land:'🌴',partition:'🚪',bed:'🛏️',sale:'🏷️',rent:'🔑'};
   function ROOMT(){return [['partition',tr('pPart')],['bed',tr('pBed')]];}
   function isRoom(t){return t==='partition'||t==='bed';}
-  function types(){var a=TA();return deal==='rent'?a.slice(0,3).concat(ROOMT()):a;}
+  function types(){return TA().concat(ROOMT());}
   function renderDeal(){
-    $('dealSeg').innerHTML=DEALS().map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(deal===x[0])+'">'+x[1]+'</button>';}).join('');
+    $('dealSeg').innerHTML=DEALS().map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(deal===x[0])+'"><span class="ic" aria-hidden="true">'+TIC[x[0]]+'</span><span>'+x[1]+'</span></button>';}).join('');
   }
   $('dealSeg').addEventListener('click',function(e){
     var b=e.target.closest('button'); if(!b||b.dataset.v===deal)return;
@@ -278,11 +296,12 @@ header h1,header p{padding-inline-end:64px}
     if(deal==='rent'&&typeSel.value==='land')typeSel.value='all'; if(deal==='sale'&&isRoom(typeSel.value))typeSel.value='all';
     refresh();
   });
+  function i_(k){return ['all','apartments','villas','land','partition','bed'].indexOf(k)*45;}
   function renderSeg(){
-    $('seg').style.gridTemplateColumns='repeat('+(types().length>4?3:types().length)+',1fr)';
-    $('seg').innerHTML=types().map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(typeSel.value===x[0])+'">'+x[1]+'</button>';}).join('');
+    $('seg').style.gridTemplateColumns='repeat(3,1fr)';
+    $('seg').innerHTML=types().map(function(x){return '<button type="button" data-v="'+x[0]+'" aria-pressed="'+(typeSel.value===x[0])+'" style="--d:'+i_(x[0])+'ms"><span class="ic" aria-hidden="true">'+TIC[x[0]]+'</span><span>'+x[1]+'</span></button>';}).join('');
   }
-  $('seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var was=typeSel.value;typeSel.value=b.dataset.v;if(isRoom(was)!==isRoom(b.dataset.v)||(isRoom(was)&&was!==b.dataset.v)){$('pmin').value='';$('pmax').value='';}refresh();});
+  $('seg').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var was=typeSel.value;typeSel.value=b.dataset.v;var nd=isRoom(b.dataset.v)?'rent':(b.dataset.v==='land'?'sale':deal);if(nd!==deal){deal=nd;$('pmin').value='';$('pmax').value='';}if(isRoom(was)!==isRoom(b.dataset.v)||(isRoom(was)&&was!==b.dataset.v)){$('pmin').value='';$('pmax').value='';}refresh();});
   function fillAreas(){
     var v=areaSel.value; areaSel.innerHTML='';
     AREAS.forEach(function(a){var o=document.createElement('option');o.value=a[0];o.textContent=nameOf(a[0]);areaSel.appendChild(o);});
