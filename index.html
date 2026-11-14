@@ -252,11 +252,24 @@ function fillAreas(){
   areaSel.disabled=!list.length;$('areaHint').hidden=!!list.length;
 }
 var SUBS={
-  'ajman/al-nuaimiya':[['1','al-nuaimiya-1'],['2','al-nuaimiya-2'],['3','al-nuaimiya-3'],['أبراج النعيمية','al-nuaimiya-towers','Towers']],
-  'ajman/al-rawda':[['1','al-rawda-1'],['2','al-rawda-2'],['3','al-rawda-3']],
+  'ajman/al-nuaimiya':[['1','al-nuaimiya-1'],['2','al-nuaimiya-2'],['3','al-nuaimiya-3'],['أبراج النعيمية','al-nuaimiya-towers','Al Nuaimiya Towers']],
+  'ajman/corniche-ajman':[['عجمان كورنيش ريزيدنس','ajman-corniche-residence','Ajman Corniche Residence'],['كورنيش تاور','corniche-tower','Corniche Tower'],['موجان ريزيدنس','mawjan-residence','Mawjan Residence']],
+  'ajman/al-rashidiya':[['1','al-rashidiya-1'],['2','al-rashidiya-2'],['3','al-rashidiya-3'],['أبراج الراشدية','al-rashidiya-towers','Al Rashidiya Towers'],['برج الساعة عجمان','ajman-clock-tower','Ajman Clock Tower']],
+  'ajman/emirates-city':[['أبراج غولدكرست دريم','goldcrest-dream-towers','Goldcrest Dream Towers'],['باراديس ليكس','paradise-lakes','Paradise Lakes'],['أزها فيوز ريزيدنسز','azha-views-residences','Azha Views Residences'],['غاردن ريزيدنسز','garden-residences','Garden Residences'],['برج لافندر','lavender-tower','Lavender Tower'],['برج ليليز','lilies-tower','Lilies Tower'],['جلف تاور عجمان','gulf-tower-ajman','Gulf Tower Ajman'],['ليك تاور','lake-tower','Lake Tower'],['فورتشن ريزيدنسي','fortune-residency','Fortune Residency'],['أبراج ماجستيك','majestic-towers','Majestic Towers'],['سكاي غاردنز تاور','sky-gardens-tower','Sky Gardens Tower'],['ليك فيو تاور','lake-view-tower','Lake View Tower'],['ويفز تاور','waves-tower','Waves Tower'],['كراون ريزيدنسيا','crown-residencia','Crown Residencia']],
+  'ajman/ajman-downtown':[['هورايزن تاور','horizon-tower','Horizon Tower'],['أبراج الخور','al-khor-towers','Al Khor Towers'],['أبراج عجمان بيرل','ajman-pearl-towers','Ajman Pearl Towers']],
+  'ajman/ajman-uptown':[['كينتيا','kentia','Kentia'],['إريكا','erica','Erica'],['إريكا 1','erica-1','Erica 1'],['إريكا 2','erica-2','Erica 2'],['بيغونيا','begonia','Begonia'],['أكاسيا','acacia','Acacia']],
+  'ajman/al-helio':[['1','al-helio-1'],['2','al-helio-2'],['الحليو داون تاون','al-helio-downtown','Al Helio Downtown']],
+  'ajman/al-yasmeen':[['قرية الأميرة','al-ameera-village','Al Ameera Village']],
+  'ajman/al-zorah':[['جولف إستيتس','golf-estates','Golf Estates'],['كريكسايد ريزيدنس','creekside-residence','Creekside Residence'],['جيت واي','gateway','Gateway'],['ذا شورز','the-shores','The Shores'],['ديستريكت 9','district-9','District 9'],['سي لاين ريزيدنس','sealine-residence','Sealine Residence'],['بيتش فيلج','beach-village','Beach Village'],['سي غلينتس مانشنز','sea-glints-mansions','Sea Glints Mansions'],['إيدن جولف فيوز','eden-golf-views','Eden Golf Views'],['مارينا 1','marina-1','Marina 1'],['ذا فيرويز','the-fairways','The Fairways']],
+  'ajman/al-amerah':[['برج العامرة','al-aamra-tower','Al Aamra Tower'],['مجتمع أزها','azha-community','Azha Community'],['بلوبيل ريزيدنس','bluebell-residence','Bluebell Residence'],['سمارت تاور 1','smart-tower-1','Smart Tower 1'],['أليكسا تاور','alixa-tower','Alixa Tower']],
   'ajman/al-mowaihat':[['1','al-mowaihat-1'],['2','al-mowaihat-2'],['3','al-mowaihat-3']],
-  'ajman/al-rashidiya':[['1','al-rashidiya-1'],['2','al-rashidiya-2'],['3','al-rashidiya-3'],['أبراج الراشدية','al-rashidiya-towers','Towers']],
-  'ajman/al-jurf':[['1',null],['2',null],['3',null]],
+  'ajman/al-rawda':[['1','al-rawda-1'],['2','al-rawda-2'],['3','al-rawda-3']],
+  'ajman/al-alia':[['تايغر داون تاون عجمان','tiger-downtown-ajman','Tiger Downtown Ajman'],['روكهيل تاور','rockhill-tower','Rockhill Tower'],['أزورا تاور','azora-tower','Azora Tower']],
+  'ajman/al-bustan':[['أبراج أورينت','orient-towers','Orient Towers']],
+  'ajman/al-jurf':[['1','al-jurf-1'],['2','al-jurf-2'],['الجرف 3 الصناعية','al-jurf-3','Al Jurf 3'],['المنطقة الصناعية بالجرف','al-jurf-industrial-area','Al Jurf Industrial Area']],
+  'ajman/al-hamidiya':[['1','al-hamidiya-1']],
+  'ajman/garden-city':[['أبراج ماندرين','mandarin-towers','Mandarin Towers'],['أبراج ألموند','almond-towers','Almond Towers'],['أبراج جاسمين','jasmine-towers','Jasmine Towers']],
+  'ajman/al-tallah-2':[['الماس ريزيدنس','almas-residence','Almas Residence'],['مبنى أروسا','arosa-building','Arosa Building']],
   'sharjah/al-majaz':[['1','al-majaz-1'],['2','al-majaz-2'],['3','al-majaz-3']],
   'abu-dhabi/mohammed-bin-zayed-city':[['المنطقة 8','zone-8','Zone 8'],['المنطقة 12','zone-12','Zone 12']],
   'dubai/mirdif':[['ميردف هيلز','mirdif-hills','Mirdif Hills'],['أبتاون ميردف','uptown-mirdif','Uptown Mirdif'],['مشرف فيليج','mushrif-village','Mushrif Village']]
