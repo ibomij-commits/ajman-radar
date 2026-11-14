@@ -1,4 +1,4 @@
-var CACHE = 'uae-radar-v7';
+var CACHE = 'uae-radar-v8';
 var SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', function (e) {
