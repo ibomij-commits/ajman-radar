@@ -99,7 +99,7 @@ html[dir=ltr] .enb{display:none}
 @media print{
  @page{margin:12mm}
  body{background:#fff!important;color:#000!important;padding:0!important}
- header .lang,header .dl,.dlp,.install,.filters,.tools,.addbox,#sec-c,#sec-m,.note,#h-o-sec,section[aria-labelledby="h-ad"],.search,.chips,.seg{display:none!important}
+ header .lang,header .dl,.dlp,.install,.filters,.tools,.addbox,#sec-c,#sec-m,.note,#h-o-sec,section[aria-labelledby="h-ad"],.search,.chips,.seg,#agMap{display:none!important}
  header{background:#fff!important;color:#000!important;border-bottom:2px solid #000!important;padding:0 0 8px!important}
  header .wrap{min-height:0!important}header p,header .enb{display:none!important}
  header h1{color:#000!important;padding:0!important}
@@ -145,6 +145,13 @@ html[dir=ltr] .enb{display:none}
       <div><label for="cu" data-i="curl"></label><input id="cu" dir="ltr" placeholder="https://example.com/search/{q}"></div>
       <button class="go" type="button" id="cs" data-i="save"></button>
     </div>
+  </section>
+
+  <section aria-labelledby="h-ag" id="sec-ag">
+    <h2 id="h-ag" data-i="ag_h"></h2>
+    <p class="sub" data-i="ag_sub"></p>
+    <iframe id="agMap" title="map" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="width:100%;height:340px;border:1px solid var(--line);border-radius:16px;background:var(--surface)"></iframe>
+    <div class="tools"><a class="go" id="agOpen" target="_blank" rel="noopener noreferrer" data-i="ag_open"></a><a class="go alt" id="agDir" target="_blank" rel="noopener noreferrer" data-i="ag_dir"></a></div>
   </section>
 
   <section aria-labelledby="h-ad">
@@ -210,7 +217,7 @@ h_p:'افتح الإعلانات الفعلية',p_sub:'كل زر يفتح نت�
 open:'فتح النتائج',wide:'كل أسعار الإمارة (إن لم تظهر نتائج)',t_portal:'منصة عقارية',t_budget:'مفلتر بميزانيتك',t_gsearch:'بحث موجّه في Google',t_classif:'إعلانات مبوّبة',t_acct:'يتطلب حسابًا',t_tag:'وسم',t_video:'فيديو',t_gen:'بحث عام',t_ad:'إعلان',t_mine:'منصتك',
 d_bayut:'منصة إعلانات عقارية بوكلاء مرخّصين، مع خريطة وسعر مقارن للمنطقة.',d_pf:'إعلانات وكلاء ومطوّرين، مع الصور وخطط الدفع للمشاريع.',d_dub:'إعلانات مبوّبة، فيها عروض من المالك مباشرة وأراضٍ ومبانٍ كاملة.',d_fb:'منشورات الوكلاء والملاك العلنية في الصفحات والمجموعات.',d_mp:'عقارات في سوق فيسبوك. يتطلب تسجيل دخولك.',d_ig:'منشورات الوسطاء تحت وسم عقارات {e}.',d_tt:'فيديوهات الوسطاء وجولات العقارات. لا تُعرض فيها أسعار مفلترة.',d_g:'بحث عام يجمع ما سبق ومواقع الوكالات الصغيرة.',
 lyd:'وسيط عقاري في عجمان · عروض مباشرة من المُلّاك',wantlist:'أريد عرض عقاري',lydd:'LYD Digital · تطبيقي: رادار صفقات العقارات',adhere:'📣 أعلن هنا · مساحة إعلانية',reach:'اوصل لآلاف الباحثين عن عقار في {e}',contact:'تواصل معنا',custom:'موقع أضفته',
-add:'+ إضافة موقع أو صفحة',pdf:'📄 نسخة PDF من النتائج',xls:'📊 نسخة Excel (الاسم · الوكالة · العنوان)',cols:['الاسم','الوكالة / المنصة','العنوان','السعر (درهم)','الرابط'],xlsok:'تم حفظ ملف Excel',pdft:'نتائج البحث — رادار صفقات العقارات',refresh:'⟳ تحديث التطبيق والقائمة',cname:'اسم الموقع أو الصفحة',curl:'الرابط (ضع {q} مكان كلمة البحث، اختياري)',save:'حفظ',del:'حذف',
+add:'+ إضافة موقع أو صفحة',pdf:'📄 نسخة PDF من النتائج',ag_h:'وكلاء العقارات في منطقتك',ag_sub:'الخريطة تعرض مكاتب وكلاء العقارات القريبة من المنطقة التي اخترتها، ولكل مكتب موقعه ورقمه وتقييمه. تتغير مع كل بحث.',ag_q:'وكالة عقارات',ag_open:'🗺️ افتح الخريطة بقائمة الوكلاء',ag_dir:'دليل الوكلاء على Bayut',xls:'📊 نسخة Excel (الاسم · الوكالة · العنوان)',cols:['الاسم','الوكالة / المنصة','العنوان','السعر (درهم)','الرابط'],xlsok:'تم حفظ ملف Excel',pdft:'نتائج البحث — رادار صفقات العقارات',refresh:'⟳ تحديث التطبيق والقائمة',cname:'اسم الموقع أو الصفحة',curl:'الرابط (ضع {q} مكان كلمة البحث، اختياري)',save:'حفظ',del:'حذف',
 h_ad:'أعلن معنا',ad_sub:'اعرض مشروعك أو وكالتك أمام الباحثين عن عقار في الإمارات. بطاقة ممولة داخل نتائج البحث مع صورتك وزر مباشر إلى واتساب أو موقعك.',pk1:'بطاقة ممولة · 7 أيام',pk2:'بطاقة ممولة · 30 يومًا',pk3:'حزمة مميزة · 30 يومًا (بطاقة + لافتة أعلى النتائج)',aed:'درهم',quote:'اطلب عرض سعر',
 h_o:'هل تملك عقارًا وتريد عرضه؟',o_sub:'أرسل بيانات عقارك إلى الوسيط، وسيتواصل معك لعرضه على الزبائن.',f_map:'رابط الموقع على الخريطة (اختياري)',f_rooms:'عدد الغرف',f_baths:'عدد الحمامات',f_size:'المساحة (م²)',f_price:'السعر المطلوب (درهم)',f_name:'الاسم',f_phone:'رقم الهاتف',f_notes:'ملاحظات (الطابق، التشطيب، مفروش...)',f_send:'+ أريد عرض عقاري',f_hint:'تصل بياناتك إلى الوسيط مباشرة، وإن تعذّر الإرسال يُفتح واتساب برسالة جاهزة.',sending:'جارٍ الإرسال...',sentok:'وصل طلبك إلى الوسيط، سيتواصل معك قريبًا.',sentfail:'تعذّر الإرسال المباشر، فتحنا لك واتساب برسالة جاهزة.',need:'اكتب الاسم ورقم الهاتف.',
 h_c:'منحنيات السوق (2026)',c_sub:'أرقام شهرية رسمية من دائرة الأراضي وتنظيم العقار في عجمان. الأشهر الناقصة تُترك فارغة ولا تُقدَّر. هذه أرقام شهرية وليست لحظية.',c1:'قيمة الصفقات (مليار درهم)',c2:'عدد الصفقات',csrc:'المصادر: Skyline (Jan) · Gulf Today (Mar) · Emirates 24|7 (May) · Travels Dubai (Jul) · Travels Dubai (Aug) · Travels Dubai (Sep) · Economy Middle East (Oct). الرقم تحت العمود = رقم الشهر (1 = يناير).',
@@ -224,7 +231,7 @@ h_p:'Open live listings',p_sub:'Each button opens the current search results on 
 open:'Open results',wide:'All prices in the emirate (if no results)',t_portal:'Property portal',t_budget:'Filtered by your budget',t_gsearch:'Targeted Google search',t_classif:'Classifieds',t_acct:'Login required',t_tag:'Hashtag',t_video:'Video',t_gen:'General search',t_ad:'Ad',t_mine:'Our platform',
 d_bayut:'Property portal with licensed agents, map and area price comparison.',d_pf:'Agent and developer listings with photos and project payment plans.',d_dub:'Classifieds, including direct-from-owner offers, land and whole buildings.',d_fb:'Public posts by agents and owners in pages and groups.',d_mp:'Properties on Facebook Marketplace. Requires you to be logged in.',d_ig:'Brokers\' posts under the {e} real estate hashtag.',d_tt:'Broker videos and property tours. No price filtering.',d_g:'General search covering all of the above plus small agencies\' sites.',
 lyd:'Real estate broker in Ajman · direct-from-owner offers',wantlist:'List my property',lydd:'LYD Digital · my app: RADAR REAL ESTATE UAE',adhere:'📣 Advertise here · ad space',reach:'Reach thousands of property seekers in {e}',contact:'Contact us',custom:'Added site',
-add:'+ Add a site or page',pdf:'📄 PDF copy of results',xls:'📊 Excel copy (Name · Agency · Address)',cols:['Name','Agency / Platform','Address','Price (AED)','Link'],xlsok:'Excel file saved',pdft:'Search results — Radar Real Estate UAE',refresh:'⟳ Refresh app & list',cname:'Site or page name',curl:'Link (put {q} where the search goes, optional)',save:'Save',del:'Delete',
+add:'+ Add a site or page',pdf:'📄 PDF copy of results',ag_h:'Real estate agents in your area',ag_sub:'The map shows real estate agent offices near the area you chose, each with its location, phone and rating. It changes with every search.',ag_q:'real estate agency',ag_open:'🗺️ Open map with agent list',ag_dir:'Bayut agent directory',xls:'📊 Excel copy (Name · Agency · Address)',cols:['Name','Agency / Platform','Address','Price (AED)','Link'],xlsok:'Excel file saved',pdft:'Search results — Radar Real Estate UAE',refresh:'⟳ Refresh app & list',cname:'Site or page name',curl:'Link (put {q} where the search goes, optional)',save:'Save',del:'Delete',
 h_ad:'Advertise with us',ad_sub:'Put your project or agency in front of property seekers across the UAE. A sponsored card inside results with your picture and a direct button to WhatsApp or your site.',pk1:'Sponsored card · 7 days',pk2:'Sponsored card · 30 days',pk3:'Premium pack · 30 days (card + top banner)',aed:'AED',quote:'Request a quote',
 h_o:'Own a property and want to list it?',o_sub:'Send your property details to the broker, who will contact you to show it to buyers.',f_map:'Map location link (optional)',f_rooms:'Bedrooms',f_baths:'Bathrooms',f_size:'Size (m²)',f_price:'Asking price (AED)',f_name:'Name',f_phone:'Phone number',f_notes:'Notes (floor, finish, furnished...)',f_send:'+ List my property',f_hint:'Your details go straight to the broker; if sending fails, WhatsApp opens with a ready message.',sending:'Sending...',sentok:'Your request reached the broker, who will contact you soon.',sentfail:'Direct sending failed, so we opened WhatsApp with a ready message.',need:'Please enter your name and phone number.',
 h_c:'Market curves (2026)',c_sub:'Official monthly figures from Ajman Land & Real Estate Regulatory Department. Missing months are left blank, not estimated. These are monthly figures, not live.',c1:'Transaction value (AED billion)',c2:'Number of transactions',csrc:'Sources: Skyline (Jan) · Gulf Today (Mar) · Emirates 24|7 (May) · Travels Dubai (Jul) · Travels Dubai (Aug) · Travels Dubai (Sep) · Economy Middle East (Oct). Number under each bar = month (1 = January).',
@@ -393,8 +400,16 @@ function renderLabels(){
   $('blabel').textContent=S.deal==='buy'?t('bud'):(monthly()?t('budm'):t('budy'));
   $('pmin').placeholder=t('from');$('pmax').placeholder=t('to');$('kw').placeholder=t('kwph');
 }
+var agT=0;
+function updateAgents(){
+  var em=document.querySelector('#em button[aria-pressed="true"]'),ar=areaSel.value?areaSel.options[areaSel.selectedIndex].textContent:'';
+  var q=[t('ag_q'),subTxt()||kwTxt()||ar,em?em.textContent:''].filter(Boolean).join(' ');
+  $('agOpen').href='https://www.google.com/maps/search/'+encodeURIComponent(q);
+  $('agDir').href='https://www.bayut.com/companies/'+S.em+'/';
+  clearTimeout(agT);agT=setTimeout(function(){var u='https://www.google.com/maps?q='+encodeURIComponent(q)+'&hl='+(en()?'en':'ar')+'&output=embed';if($('agMap').getAttribute('src')!==u)$('agMap').setAttribute('src',u);},500);
+}
 function refresh(){
-  renderDeal();renderEm();renderSeg();renderLabels();renderChips();renderSummary();renderPlatforms();renderListings();
+  renderDeal();renderEm();renderSeg();renderLabels();renderChips();renderSummary();renderPlatforms();renderListings();updateAgents();
   var aj=isAj();$('sec-c').hidden=!aj;$('sec-m').hidden=!aj;$('sec-l').hidden=!(aj&&S.deal==='buy');
 }
   var STATS=[
