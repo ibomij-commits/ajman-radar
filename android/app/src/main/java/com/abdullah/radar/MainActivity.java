@@ -23,7 +23,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class MainActivity extends Activity {
-    private static final String HOME = "https://ibomij-commits.github.io/ajman-radar/";
+    private static final String HOME = BuildConfig.HOME_URL;
     private WebView web;
 
     @Override protected void onCreate(Bundle b) {

@@ -22,6 +22,7 @@ jobs:
       - name: Publish release
         env: { GH_TOKEN: '${{ github.token }}' }
         run: |
-          cp android/app/build/outputs/apk/release/app-release.apk radar.apk
+          cp android/app/build/outputs/apk/public/release/app-public-release.apk radar.apk
+          cp android/app/build/outputs/apk/control/release/app-control-release.apk radar-control.apk
           gh release delete apk-latest --yes --cleanup-tag || true
-          gh release create apk-latest radar.apk --title "رادار العقارات APK" --notes "تطبيق أندرويد: حمّل radar.apk وثبّته"
+          gh release create apk-latest radar.apk radar-control.apk --title "رادار العقارات APK" --notes "radar.apk للجمهور، radar-control.apk لك للتحكم"

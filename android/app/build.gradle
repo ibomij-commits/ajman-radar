@@ -9,6 +9,21 @@ android {
         versionCode 1
         versionName '1.0'
     }
+    buildFeatures { buildConfig true }
+    flavorDimensions 'v'
+    productFlavors {
+        'public' {
+            dimension 'v'
+            buildConfigField 'String', 'HOME_URL', '"https://ibomij-commits.github.io/ajman-radar/"'
+            resValue 'string', 'app_name', 'رادار العقارات'
+        }
+        control {
+            dimension 'v'
+            applicationIdSuffix '.control'
+            buildConfigField 'String', 'HOME_URL', '"https://ibomij-commits.github.io/ajman-radar/control.html"'
+            resValue 'string', 'app_name', 'رادار — تحكم'
+        }
+    }
     buildTypes { release { minifyEnabled false; signingConfig signingConfigs.debug } }
     compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
 }
